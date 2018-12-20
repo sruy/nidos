@@ -1,3 +1,11 @@
-<p>
-  sp-list works!
-</p>
+<div class="ui-g-12" style="padding-left: 0">
+  <div [ngClass]="{'ui-g-12': mode === 'compact', 'ui-g-6': !mode || mode !== 'compact'}" style="padding: .5em 0">
+    <p-dataTable [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" 
+                 [paginator]="mode !== 'compact'" [totalRecords]="mode !== 'compact' && 5 || list.length"
+                 (onLazyLoad)="paginatePoints($event)">
+      <p-header>{{ listTitle }}</p-header>
+      <p-column field="name" header="Nombre"></p-column>
+      <p-column field="description" header="Referencias"></p-column>
+    </p-dataTable>
+  </div>
+</div>
