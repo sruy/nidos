@@ -1,5 +1,5 @@
 <div class="ui-g-12" style="padding-left: 0">
-  <div [ngClass]="{'ui-g-12': mode === 'compact', 'ui-g-6': !mode || mode !== 'compact'}" style="padding: .5em 0">
+  <div class="i-g-12" style="padding: .5em 0">
     <p-dataTable [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" 
                  [paginator]="mode !== 'compact'" [totalRecords]="mode !== 'compact' && 5 || list.length"
                  (onLazyLoad)="paginatePoints($event)">

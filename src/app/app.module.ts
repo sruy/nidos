@@ -4,13 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 
 const routes: Routes = [
- { path: '', component: DesktopComponent },
- // { path: 'path', component: FeatureComponent },
+ { path: '', redirectTo: 'home', pathMatch: 'full' },
+ { path: 'home', component: DesktopComponent },
+ { path: 'points', component: SpListComponent },
  // { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), SpawnPointsModule],
+  imports: [RouterModule.forRoot(routes, { useHash: false}), SpawnPointsModule],
   exports: [RouterModule],
   declarations: [DesktopComponent]
 })
@@ -20,17 +21,20 @@ import { AppComponent } from './app.component';
 import { TopHeaderComponent } from './top-header/top-header.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { SpawnPointsModule } from './spawn-points/spawn-points.module';
+import { HttpClientModule } from '@angular/common/http';
+import { SpListComponent } from './spawn-points/sp-list/sp-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TopHeaderComponent,
+    TopHeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SpawnPointsModule,
-    MenubarModule
+    MenubarModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -21,7 +21,9 @@ export class AppComponent implements OnInit {
             icon: 'pi pw pi-plus'
           },
           {
-            label: 'Lista'
+            label: 'Lista',
+            url: 'points',
+            routerLink: 'points'
           }
         ]
       },
