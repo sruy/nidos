@@ -6,6 +6,7 @@ import { SpawnPoint } from './models/spawn-point';
   providedIn: 'root'
 })
 export class SpawnPointsService {
+  static cachedSpawnPoints: SpawnPoint[];
 
   constructor(private http: HttpClient) { }
 
@@ -14,5 +15,16 @@ export class SpawnPointsService {
       .toPromise()
       .then(result => <SpawnPoint[]>result)
       .then(data => data);
+  }
+
+  newSpawnPoint(point: SpawnPoint) {
+    return this.http.post('https://jsonplaceholder.typicode.com/todos/', point)
+      .toPromise()
+      .catch(err => console.log(err))
+      .then(() => {
+        if (SpawnPointsService.cachedSpawnPoints) {
+          SpawnPointsService.cachedSpawnPoints.push(point);
+        }
+      });
   }
 }

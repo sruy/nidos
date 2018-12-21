@@ -2,11 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
  { path: '', redirectTo: 'home', pathMatch: 'full' },
  { path: 'home', component: DesktopComponent },
  { path: 'points', component: SpListComponent },
+ { path: 'new-point', component: SpCrudComponent}
  // { path: '**', component: PageNotFoundComponent },
 ];
 
@@ -23,6 +25,7 @@ import { DesktopComponent } from './desktop/desktop.component';
 import { SpawnPointsModule } from './spawn-points/spawn-points.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SpListComponent } from './spawn-points/sp-list/sp-list.component';
+import { SpCrudComponent } from './spawn-points/sp-crud/sp-crud.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import { SpListComponent } from './spawn-points/sp-list/sp-list.component';
     AppRoutingModule,
     SpawnPointsModule,
     MenubarModule,
-    HttpClientModule
+    HttpClientModule,
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

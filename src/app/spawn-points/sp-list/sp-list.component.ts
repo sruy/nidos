@@ -24,8 +24,11 @@ export class SpListComponent implements OnInit {
 
   ngOnInit() {
     this.spawnPointsService.getSpawnPointList().then(points => {
-      console.log(points);
-      this.list = points;
+      if (!SpawnPointsService.cachedSpawnPoints) {
+        this.list = points;
+      } else {
+        this.list = SpawnPointsService.cachedSpawnPoints;
+      }
 
       if (this.list && this.list.length && this.list.length > 0) {
         this.paginatedList = this.list.slice(0, this.mode !== 'compact' && 10 || 5);

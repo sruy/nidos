@@ -4,19 +4,24 @@ import { HttpClientModule } from '@angular/common/http';
 import { SpListComponent } from './sp-list/sp-list.component';
 import { SpCrudComponent } from './sp-crud/sp-crud.component';
 import { DataTableModule } from 'primeng/datatable';
-import { RouterModule } from '@angular/router';
+import { InputTextModule } from 'primeng/inputtext';
+import { PanelModule } from 'primeng/panel';
+import { ButtonModule } from 'primeng/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [SpListComponent, SpCrudComponent],
   imports: [
     CommonModule,
     DataTableModule,
+    InputTextModule,
+    PanelModule,
+    ButtonModule,
     HttpClientModule,
-    RouterModule.forChild([
-      {path: '', component: SpListComponent}
-    ])
+    FormsModule,
+    ReactiveFormsModule
   ],
-  exports: [SpListComponent, RouterModule],
+  exports: [SpListComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SpawnPointsModule { }

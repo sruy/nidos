@@ -18,11 +18,11 @@ export class AppComponent implements OnInit {
         items: [
           {
             label: 'Nuevo',
-            icon: 'pi pw pi-plus'
+            icon: 'pi pw pi-plus',
+            routerLink: 'new-point'
           },
           {
             label: 'Lista',
-            url: 'points',
             routerLink: 'points'
           }
         ]

@@ -1,3 +1,42 @@
-<p>
-  sp-crud works!
-</p>
+<div class="ui-g-12">
+  <form [formGroup]="form" (ngSubmit)="savePoint($event)">
+    <div class="ui-g-12">
+      <div class="ui-g-4">Nombre</div>
+      <div class="ui-g-8">
+        <input id="name" type="text" pInputText class="form-control" formControlName="name" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Descripción</div>
+      <div class="ui-g-8">
+        <input id="attributes" type="text" pInputText class="form-control" formControlName="attributes" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Latitud</div>
+      <div class="ui-g-8">
+        <input id="lat" type="number" pInputText class="form-control" formControlName="lat" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Longitud</div>
+      <div class="ui-g-8">
+        <input id="long" type="number" pInputText class="form-control" formControlName="long" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Link (Atlas Silph)</div>
+      <div class="ui-g-8">
+        <input id="link" type="text" pInputText class="form-control" formControlName="link" />
+      </div>
+    </div>
+  </form>
+  <div class="ui-g-12">
+    <div class="ui-g-6">
+      <button pButton type="button" class="ui-button-secondary" label="Borrar" (click)="clearForm($event)"></button>
+    </div>
+    <div class="ui-g-6">
+      <button pButton type="button" class="ui-button-info" label="Guardar" (click)="savePoint($event)"></button>
+    </div>
+  </div>
+</div>
