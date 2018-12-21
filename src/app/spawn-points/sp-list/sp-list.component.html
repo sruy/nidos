@@ -1,8 +1,8 @@
 <div class="ui-g-12" style="padding-left: 0">
   <div class="i-g-12" style="padding: .5em 0">
+    <h2>{{ listTitle }}</h2>
     <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
       [totalRecords]="mode !== 'compact' && 5 || list.length" (onLazyLoad)="paginatePoints($event)">
-      <p-header>{{ listTitle }}</p-header>
       <ng-template pTemplate="header">
         <tr>
           <th>Nombre</th>
