@@ -1,11 +1,26 @@
 <div class="ui-g-12" style="padding-left: 0">
   <div class="i-g-12" style="padding: .5em 0">
-    <p-dataTable [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" 
-                 [paginator]="mode !== 'compact'" [totalRecords]="mode !== 'compact' && 5 || list.length"
-                 (onLazyLoad)="paginatePoints($event)">
+    <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
+      [totalRecords]="mode !== 'compact' && 5 || list.length" (onLazyLoad)="paginatePoints($event)">
       <p-header>{{ listTitle }}</p-header>
-      <p-column field="name" header="Nombre"></p-column>
-      <p-column field="description" header="Referencias"></p-column>
-    </p-dataTable>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nombre</th>
+          <th>Referencias</th>
+          <th>Link</th>
+          <th [hidden]="mode === 'compact'">Latitud</th>
+          <th [hidden]="mode === 'compact'">Longitud</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-point>
+        <tr>
+          <td>{{ point.name }}</td>
+          <td>{{ point.attributes }}</td>
+          <td style="overflow: hidden">{{ point.link }}</td>
+          <td [hidden]="mode === 'compact'">{{ point.lat }}</td>
+          <td [hidden]="mode === 'compact'">{{ point.long }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </div>

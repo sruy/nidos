@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { SpListComponent } from './sp-list/sp-list.component';
 import { SpCrudComponent } from './sp-crud/sp-crud.component';
-import { DataTableModule } from 'primeng/datatable';
+import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
@@ -13,7 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [SpListComponent, SpCrudComponent],
   imports: [
     CommonModule,
-    DataTableModule,
+    TableModule,
     InputTextModule,
     PanelModule,
     ButtonModule,
