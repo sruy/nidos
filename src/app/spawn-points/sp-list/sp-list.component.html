@@ -1,6 +1,6 @@
 <div class="ui-g-12" style="padding-left: 0">
   <div class="i-g-12" style="padding: .5em 0">
-    <h2>{{ listTitle }}</h2>
+    <h3>{{ listTitle }}</h3>
     <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
       [totalRecords]="mode !== 'compact' && 5 || list.length" (onLazyLoad)="paginatePoints($event)">
       <ng-template pTemplate="header">
@@ -14,9 +14,9 @@
       </ng-template>
       <ng-template pTemplate="body" let-point>
         <tr>
-          <td>{{ point.name }}</td>
-          <td>{{ point.attributes }}</td>
-          <td style="overflow: hidden">{{ point.link }}</td>
+          <td class="smaller-cell">{{ point.name }}</td>
+          <td class="smaller-cell">{{ point.attributes }}</td>
+          <td class="smaller-cell" style="overflow: hidden"><a href="{{ point.link }}" target="_new">Nest Atlas</a></td>
           <td [hidden]="mode === 'compact'">{{ point.lat }}</td>
           <td [hidden]="mode === 'compact'">{{ point.long }}</td>
         </tr>

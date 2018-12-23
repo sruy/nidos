@@ -26,6 +26,7 @@ import { SpawnPointsModule } from './spawn-points/spawn-points.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SpListComponent } from './spawn-points/sp-list/sp-list.component';
 import { SpCrudComponent } from './spawn-points/sp-crud/sp-crud.component';
+import { ServicesModule } from './services/services.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SpCrudComponent } from './spawn-points/sp-crud/sp-crud.component';
     SpawnPointsModule,
     MenubarModule,
     HttpClientModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    ServicesModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -8,7 +8,7 @@ import { SpawnPointsService } from '../spawnpoints.service';
 @Component({
   selector: 'app-sp-list',
   templateUrl: './sp-list.component.html',
-  styleUrls: ['./sp-list.component.css']
+  styleUrls: ['./sp-list.component.scss']
 })
 export class SpListComponent implements OnInit {
   @Input() mode: string;
@@ -24,12 +24,8 @@ export class SpListComponent implements OnInit {
 
   ngOnInit() {
     this.spawnPointsService.getSpawnPointList().then(points => {
-      if (!SpawnPointsService.cachedSpawnPoints) {
-        this.list = points;
-      } else {
-        this.list = SpawnPointsService.cachedSpawnPoints;
-      }
-
+      this.list = points;
+      
       if (this.list && this.list.length && this.list.length > 0) {
         this.paginatedList = this.list.slice(0, this.mode !== 'compact' && 10 || 5);
       }

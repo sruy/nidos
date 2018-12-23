@@ -15,6 +15,7 @@ export class SpCrudComponent implements OnInit {
   lat: number;
   long: number;
   link: URL;
+  nestId: string;
 
   constructor(private fb: FormBuilder, private spService: SpawnPointsService) { }
 
@@ -25,15 +26,16 @@ export class SpCrudComponent implements OnInit {
       link: [this.link, Validators.required],
       lat: [this.lat],
       long: [this.long],
+      nestId: [this.nestId]
     });
   }
 
   savePoint(event) {
     if (this.form.valid) {
-      const { name, attributes, lat, long, link } = this.form.value;
+      const { name, attributes, lat, long, link, nestId } = this.form.value;
 
       this.spService.newSpawnPoint(new SpawnPoint(
-        name, attributes, lat, long, link
+        name, attributes, lat, long, link, nestId
       ));
     } else {
       console.log('form invalid');
