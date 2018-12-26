@@ -27,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SpListComponent } from './spawn-points/sp-list/sp-list.component';
 import { SpCrudComponent } from './spawn-points/sp-crud/sp-crud.component';
 import { ServicesModule } from './services/services.module';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { ServicesModule } from './services/services.module';
     NoopAnimationsModule,
     ServicesModule
   ],
-  providers: [],
+  providers: [{
+    provide: MessageService, useClass: MessageService
+  }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

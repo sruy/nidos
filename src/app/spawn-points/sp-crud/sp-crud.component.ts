@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SpawnPointsService } from '../spawnpoints.service';
 import { SpawnPoint } from '../models/spawn-point';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-sp-crud',
@@ -17,7 +18,7 @@ export class SpCrudComponent implements OnInit {
   link: URL;
   nestId: string;
 
-  constructor(private fb: FormBuilder, private spService: SpawnPointsService) { }
+  constructor(private fb: FormBuilder, private spService: SpawnPointsService, private messageService: MessageService) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -36,9 +37,15 @@ export class SpCrudComponent implements OnInit {
 
       this.spService.newSpawnPoint(new SpawnPoint(
         name, attributes, lat, long, link, nestId
-      ));
+      ), this.messageService);
+      this.clearPointForm();
     } else {
       console.log('form invalid');
+      this.messageService.add({ severity: 'warn', summary: '', detail: 'Chequea que los campos con (*) hayan sido rellenados.'});
     }
+  }
+
+  clearPointForm() {
+    this.form.reset();
   }
 }

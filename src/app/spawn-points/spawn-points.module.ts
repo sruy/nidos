@@ -9,6 +9,7 @@ import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServicesModule } from '../services/services.module';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [SpListComponent, SpCrudComponent],
@@ -21,7 +22,8 @@ import { ServicesModule } from '../services/services.module';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ServicesModule
+    ServicesModule,
+    ToastModule
   ],
   exports: [SpListComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
