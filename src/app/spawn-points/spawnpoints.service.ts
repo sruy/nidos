@@ -50,7 +50,7 @@ export class SpawnPointsService {
         this.store.save('spawnPoints', point);
 
         if (!!messageService) {
-          messageService.add({ severity: 'success', summary: 'Operación completada', detail: `Spawn Point <span style="font-weight: bold;">${name}</span> agregado!`});
+          messageService.add({ severity: 'success', summary: 'Operación completada', detail: `Spawn Point "${name}" agregado!`});
         }
         if (SpawnPointsService.cachedSpawnPoints) {
           SpawnPointsService.cachedSpawnPoints.push(point);
