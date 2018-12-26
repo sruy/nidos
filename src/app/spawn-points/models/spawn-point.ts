@@ -1,4 +1,5 @@
 export class SpawnPoint {
+    pointId: string;
     lat: number;
     long: number;
     link: URL;
@@ -13,5 +14,6 @@ export class SpawnPoint {
         this.long = long;
         this.link = link;
         this.nestId = nestId;
+
     }
 }

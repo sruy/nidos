@@ -10,6 +10,7 @@
           <th>Link</th>
           <th [hidden]="mode === 'compact'">Latitud</th>
           <th [hidden]="mode === 'compact'">Longitud</th>
+          <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-point>
@@ -19,6 +20,7 @@
           <td class="smaller-cell" style="overflow: hidden"><a href="{{ point.link }}" target="_new">Nest Atlas</a></td>
           <td [hidden]="mode === 'compact'">{{ point.lat }}</td>
           <td [hidden]="mode === 'compact'">{{ point.long }}</td>
+          <td><i class="pi pi-pencil" style="font-size: 2rem" (click)="editPoint(point)"></i></td>
         </tr>
       </ng-template>
     </p-table>

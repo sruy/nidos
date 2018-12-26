@@ -1,5 +1,6 @@
 [
     {
+        "pointId": "1",
         "name": "Plaza Republica del Libano",
         "description": "Cno Ariel y Molinos de Raffo",
         "lat": -34.83663,
@@ -7,6 +8,7 @@
         "link": "https://thesilphroad.com/atlas#14.25/-34.83663/-56.20643"
     },
     {
+        "pointId": "2",
         "name": "Parque Rodó (Gym Escultura Abstracta)",
         "description": "Tomás Giribaldi y Bv. Artigas",
         "lat": 0,
@@ -14,6 +16,7 @@
         "link": "https://thesilphroad.com/atlas#18.18/-34.913702/-56.163477"
     },
     {
+        "pointId": "3",
         "name": "Camino Castro y Carlos Brussa",
         "description": "Prado, cerca del Viaducto",
         "lat": 0,

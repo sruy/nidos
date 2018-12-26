@@ -33,8 +33,14 @@ export class StoreService {
     StoreService.store.setItem(model, JSON.stringify(existingElements));
   }
 
-  read(model: string) {
+  read(model: string, filter?: { itemId: any, propertyId: string }) {
     if (StoreService.store.getItem(model)) {
+      if (!!filter && !!filter.itemId && !!filter.propertyId) {
+        const modelData = JSON.parse(StoreService.store.getItem(model));
+
+        return modelData.filter((single) => <any>single[filter.propertyId] === filter.itemId)[0] || null;
+      }
+
       return JSON.parse(StoreService.store.getItem(model));
     } else {
       return null;

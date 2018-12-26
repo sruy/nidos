@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { SpawnPoint } from '../models/spawn-point';
 import { SpawnPointsService } from '../spawnpoints.service';
@@ -15,7 +16,7 @@ export class SpListComponent implements OnInit {
   list: SpawnPoint[] = [];
   paginatedList: SpawnPoint[] = [];
 
-  constructor(private spawnPointsService: SpawnPointsService) {
+  constructor(private spawnPointsService: SpawnPointsService, private router: Router) {
   }
 
   get listTitle() {
@@ -36,4 +37,9 @@ export class SpListComponent implements OnInit {
     this.paginatedList = this.list.slice(event.first, (!!event.first && event.first * event.rows) || event.rows);
   }
 
+  editPoint(point: SpawnPoint) {
+    if (!!point && point.pointId) {
+      this.router.navigate(['/edit-point', point.pointId]);
+    }
+  }
 }

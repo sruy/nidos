@@ -8,7 +8,8 @@ const routes: Routes = [
  { path: '', redirectTo: 'home', pathMatch: 'full' },
  { path: 'home', component: DesktopComponent },
  { path: 'points', component: SpListComponent },
- { path: 'new-point', component: SpCrudComponent}
+ { path: 'new-point', component: SpCrudComponent},
+ { path: 'edit-point/:pointId', component: SpCrudComponent }
  // { path: '**', component: PageNotFoundComponent },
 ];
 

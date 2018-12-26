@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { SpawnPoint } from './models/spawn-point';
 import { StoreService } from '../services/store.service';
 import { MessageService } from 'primeng/api';
+import { store } from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpawnPointsService {
   static cachedSpawnPoints: SpawnPoint[];
-
+  static id: number = 100;
   constructor(private http: HttpClient, private store: StoreService) { }
 
   getSpawnPointList() {
@@ -42,6 +43,10 @@ export class SpawnPointsService {
         }
       })
       .then(() => {
+        if (SpawnPointsService.id) {
+          point.pointId = ''+(++SpawnPointsService.id);
+        }
+
         this.store.save('spawnPoints', point);
 
         if (!!messageService) {
@@ -52,4 +57,17 @@ export class SpawnPointsService {
         }
       });
   }
+
+  getSpawnPoint(pointId: string) {
+    return this.http.get('https://jsonplaceholder.typicode.com/todos/' + pointId)
+      .subscribe(returnValue => {
+        const spawnPoint = this.store.read('spawnPoints', {itemId: pointId, propertyId: 'pointId'});
+
+        if (!!spawnPoint) {
+          return spawnPoint;
+        }
+
+        return false;
+      });
+    }
 }
