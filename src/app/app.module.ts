@@ -10,7 +10,9 @@ const routes: Routes = [
  { path: 'points', component: SpListComponent },
  { path: 'new-point', component: SpCrudComponent},
  { path: 'edit-point/:pointId', component: SpCrudComponent },
- { path: 'migrations', component: MgListComponent }
+ { path: 'migrations', component: MgListComponent },
+ { path: 'new-migration', component: MgCrudComponent},
+ { path: 'edit-migration/:id', component: MgCrudComponent},
  // { path: '**', component: PageNotFoundComponent },
 ];
 
@@ -32,6 +34,7 @@ import { ServicesModule } from './services/services.module';
 import { MessageService } from 'primeng/api';
 import { MigrationsModule } from './migrations/migrations.module';
 import { MgListComponent } from './migrations/mg-list/mg-list.component';
+import { MgCrudComponent } from './migrations/mg-crud/mg-crud.component';
 
 @NgModule({
   declarations: [

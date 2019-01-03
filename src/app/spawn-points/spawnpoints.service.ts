@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { SpawnPoint } from './models/spawn-point';
 import { StoreService } from '../services/store.service';
 import { MessageService } from 'primeng/api';
-import { store } from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'

@@ -2,10 +2,10 @@
   <div class="i-g-12" style="padding: .5em 0">
     <h3>{{ listTitle }}</h3>
     <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
-      [totalRecords]="mode !== 'compact' && 5 || list.length" (onLazyLoad)="paginatemigrations($event)">
+      [totalRecords]="mode !== 'compact' && 5 || list.length" (onLazyLoad)="paginateMigrations($event)">
       <ng-template pTemplate="header">
         <tr>
-          <th>Identificador</th>
+          <th class="smaller-header">Identificador</th>
           <th>Nombre</th>
           <th>Fecha</th>
           <th [hidden]="mode === 'compact'">Fecha fin rotación</th>
@@ -17,7 +17,7 @@
         <tr>
           <td class="smaller-cell">{{ migration.id }}</td>
           <td class="smaller-cell">{{ migration.visibleName }}</td>
-          <td class="smaller-cell" style="overflow: hidden">{{ migration.startDate }}</td>
+          <td class="smaller-cell" style="overflow: hidden; text-overflow: ellipsis">{{ migration.startDate }}</td>
           <td [hidden]="mode === 'compact'">{{ migration.endDate }}</td>
           <td [hidden]="mode === 'compact'">{{ migration.comments }}</td>
           <td><i class="pi pi-pencil" style="font-size: 2rem" (click)="editMigration(migration)"></i></td>
