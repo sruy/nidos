@@ -60,7 +60,8 @@ export class SpawnPointsService {
 
   getSpawnPoint(pointId: string) {
     return this.http.get('https://jsonplaceholder.typicode.com/todos/' + pointId)
-      .subscribe(returnValue => {
+      .toPromise()
+      .then((returnValue) => {
         const spawnPoint = this.store.read('spawnPoints', {itemId: pointId, propertyId: 'pointId'});
 
         if (!!spawnPoint) {
@@ -69,5 +70,33 @@ export class SpawnPointsService {
 
         return false;
       });
+    }
+
+    editSpawnPoint(pointId: string, values: any, messageService: MessageService) {
+      return this.http.put('https://jsonplaceholder.typicode.com/todos/' + pointId, values)
+        .toPromise()
+        .then(() => {
+          const spawnPoints = this.store.read('spawnPoints');
+          let found = -1;
+
+          spawnPoints.forEach((point: SpawnPoint, index: number) => {
+            if (point.pointId === pointId) {
+              found = index;
+            }
+          });
+
+          if (found > -1) {
+            if (spawnPoints[found]) {
+              values.pointId = pointId;
+              spawnPoints[found] = values;
+            }
+            
+            this.store.save('spawnPoints', spawnPoints);
+
+            if (!!messageService) {
+              messageService.add({ severity: 'success', summary: 'Edición completada', detail: `Spawn point "${values.name}" editado!`});
+            }
+          }
+        });
     }
 }

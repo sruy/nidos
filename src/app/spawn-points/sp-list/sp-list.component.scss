@@ -1,3 +1,15 @@
 .smaller-cell {
     font-size: 0.7rem;
+
+    &.link {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+.options-header {
+    width: 50px;
+}
+.compact-header {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
 }

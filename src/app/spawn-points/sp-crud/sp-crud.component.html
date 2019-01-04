@@ -3,46 +3,47 @@
     <div class="ui-g-12">
       <div class="ui-g-4">(*) Nombre</div>
       <div class="ui-g-8">
-        <input id="name" type="text" pInputText class="form-control" formControlName="name" />
+        <input id="name" type="text" pInputText class="form-control" formControlName="name" [value]="name" />
       </div>
     </div>
     <div class="ui-g-12">
       <div class="ui-g-4">Descripción</div>
       <div class="ui-g-8">
-        <input id="attributes" type="text" pInputText class="form-control" formControlName="attributes" />
+        <input id="attributes" type="text" pInputText class="form-control" formControlName="attributes" [value]="attributes" />
       </div>
     </div>
     <div class="ui-g-12">
       <div class="ui-g-4">Latitud</div>
       <div class="ui-g-8">
-        <input id="lat" type="number" pInputText class="form-control" formControlName="lat" />
+        <input id="lat" type="number" pInputText class="form-control" formControlName="lat" [value]="lat" />
       </div>
     </div>
     <div class="ui-g-12">
       <div class="ui-g-4">Longitud</div>
       <div class="ui-g-8">
-        <input id="long" type="number" pInputText class="form-control" formControlName="long" />
+        <input id="long" type="number" pInputText class="form-control" formControlName="long" [value]="long" />
       </div>
     </div>
     <div class="ui-g-12">
       <div class="ui-g-4">(*) Link (Atlas Silph)</div>
       <div class="ui-g-8">
-        <input id="link" type="text" pInputText class="form-control" formControlName="link" />
+        <input id="link" type="text" pInputText class="form-control" formControlName="link" [value]="link" />
       </div>
     </div>
     <div class="ui-g-12">
       <div class="ui-g-4"># de Nido (Atlas Silph)</div>
       <div class="ui-g-8">
-        <input id="nestId" type="text" pInputText class="form-control" formControlName="link" />
+        <input id="nestId" type="text" pInputText class="form-control" formControlName="nestId" [value]="nestId" />
       </div>
     </div>
   </form>
   <div class="ui-g-12">
-    <div class="ui-g-6" style="text-align: right">
-      <button pButton type="button" class="ui-button-secondary" label="Borrar" (click)="clearPointForm($event)"></button>
+    <div class="ui-g-4" style="text-align: right">
+      <button pButton type="button" class="ui-button-secondary" label="Volver" (click)="backToList()"></button>
     </div>
-    <div class="ui-g-6">
-      <button pButton type="button" class="ui-button-info" label="Guardar" (click)="savePoint($event)"></button>
+    <div class="ui-g-8" style="text-align: left">
+      <button pButton type="button" class="ui-button-raised ui-button-danger" label="Borrar" (click)="clearPointForm($event)" style="margin-right: 1em"></button>
+      <button pButton type="submit" class="ui-button-raised ui-button-info" label="Guardar" (click)="savePoint($event)"></button>
     </div>
   </div>
 </div>

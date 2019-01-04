@@ -4,7 +4,8 @@ import { SpawnPointsService } from '../spawnpoints.service';
 import { SpawnPoint } from '../models/spawn-point';
 import { MessageService } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-sp-crud',
@@ -20,28 +21,11 @@ export class SpCrudComponent implements OnInit {
   link: URL;
   nestId: string;
   paramPoint: SpawnPoint;
-  static lastSaved = 100// debug only
-  point$;
 
   constructor(private fb: FormBuilder, private spService: SpawnPointsService, private messageService: MessageService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    let pointId = this.route.snapshot.paramMap.get('pointId');
-
-    this.point$ = this.spService.getSpawnPoint(pointId);
-
-    if (pointId) {
-      this.point$.subscribe().map(point => {
-        this.name = point.name;
-        this.attributes = point.attributes;
-        this.link = point.link;
-        this.lat = point.lat;
-        this.long = point.long;
-        this.nestId = point.nestId;
-      });
-    }
-
     this.form = this.fb.group({
       name: [this.name, Validators.required],
       attributes: [this.attributes],
@@ -50,28 +34,53 @@ export class SpCrudComponent implements OnInit {
       long: [this.long],
       nestId: [this.nestId]
     });
+
+    let pointId = this.route.snapshot.paramMap.get('pointId');
+
+    if (pointId) {
+      this.spService.getSpawnPoint(pointId).then(point => {
+        this.paramPoint = point;
+
+        this.form.setValue({
+          name: point.name,
+          attributes: point.attributes || '',
+          link: point.link,
+          lat: point.lat || '',
+          long: point.long || '',
+          nestId: point.nestId || ''
+        });
+      });
+    }
   }
 
   savePoint(event) {
     if (this.form.valid) {
       const { name, attributes, lat, long, link, nestId } = this.form.value;
 
-      if (this.point$) {
-        //this.spService.editSpawnPoint(this.point$.pointId, this.form.value);
+      if (this.paramPoint) {
+        this.spService.editSpawnPoint(this.paramPoint.pointId, this.form.value, this.messageService);
+
+        window.setTimeout(() => {
+          this.router.navigate(['points']);
+        }, 2500)
       } else {
         // New Point
         this.spService.newSpawnPoint(new SpawnPoint(
           name, attributes, lat, long, link, nestId
         ), this.messageService);
+
+        this.clearPointForm();
       }
-      this.clearPointForm();
     } else {
-      console.log('form invalid');
       this.messageService.add({ severity: 'warn', summary: '', detail: 'Chequea que los campos con (*) hayan sido rellenados.' });
     }
   }
 
   clearPointForm() {
     this.form.reset();
+  }
+
+  backToList() {
+    window.history.back();
   }
 }
