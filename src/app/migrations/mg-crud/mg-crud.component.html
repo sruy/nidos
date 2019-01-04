@@ -32,11 +32,12 @@
     </div>    
   </form>
   <div class="ui-g-12">
-    <div class="ui-g-6" style="text-align: right">
-      <button pButton type="button" class="ui-button-secondary" label="Borrar" (click)="clearMigrationForm($event)"></button>
+    <div class="ui-g-4" style="text-align: right">
+      <button pButton type="button" class="ui-button-secondary" label="Volver" (click)="backToList()"></button>
     </div>
-    <div class="ui-g-6">
-      <button pButton type="button" class="ui-button-info" label="Guardar" (click)="saveMigration($event)"></button>
+    <div class="ui-g-8" style="text-align: left">
+      <button pButton type="button" class="ui-button-raised ui-button-danger" label="Borrar" (click)="clearMigrationForm($event)" style="margin-right: 1em"></button>
+      <button pButton type="submit" class="ui-button-raised ui-button-info" label="Guardar" (click)="saveMigration($event)"></button>
     </div>
   </div>
 </div>

@@ -59,4 +59,8 @@ export class MgCrudComponent implements OnInit {
   clearMigrationForm() {
     this.form.reset();
   }
+
+  backToList() {
+    history.back();
+  }
 }
