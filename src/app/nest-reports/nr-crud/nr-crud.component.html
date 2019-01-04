@@ -1,0 +1,64 @@
+<div class="ui-g-12">
+  <form [formGroup]="form" (ngSubmit)="saveReport($event)">
+    <div class="ui-g-12">
+      <div class="ui-g-4">(*) Migración de nidos</div>
+      <div class="ui-g-8">
+        <p-autoComplete formControlName="migration" [suggestions]="registeredMigrations" [forceSelection]="true"
+          (completeMethod)="searchMigration($event)" dataKey="id" (onSelect)="selectMigration($event)" field="visibleName">
+          <ng-template let-migration pTemplate="item">
+            {{ migration.visibleName }} - {{ migration.startDate }}
+          </ng-template>
+        </p-autoComplete>
+      </div>
+    </div>
+    <div class="ui-g-12">
+        <div class="ui-g-4">(*) Punto</div>
+        <div class="ui-g-8">
+          <p-autoComplete formControlName="spawnPoint" [suggestions]="registeredSpawnPoints" [forceSelection]="true"
+            (completeMethod)="searchSpawnPoints($event)" field="name"></p-autoComplete>
+        </div>
+      </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">(*) Especie</div>
+      <div class="ui-g-8">
+        <p-autoComplete formControlName="species" [suggestions]="nestingSpecies" [forceSelection]="true"
+          (completeMethod)="searchSpecies($event)" field="name"></p-autoComplete>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">(*) Encontrado por</div>
+      <div class="ui-g-8">
+        <input id="spottedBy" type="text" pInputText class="form-control" formControlName="spottedBy" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Estado del reporte</div>
+      <div class="ui-g-8">
+        <p-dropdown [options]="statusOptions" formControlName="status"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Confirmado por</div>
+      <div class="ui-g-8">
+        <input id="confirmedBy" type="text" pInputText class="form-control" formControlName="confirmedBy" />
+      </div>
+    </div>
+    <div class="ui-g-12" *ngIf="!!editingReport">
+      <div class="ui-g-4">Enviado</div>
+      <div class="ui-g-8">
+        <input id="broadcastStatus" type="text" pInputText class="form-control" formControlName="broadcastStatus" />
+      </div>
+    </div>
+  </form>
+  <div class="ui-g-12">
+    <div class="ui-g-4" style="text-align: right">
+      <button pButton type="button" class="ui-button-secondary" label="Volver" (click)="backToList()"></button>
+    </div>
+    <div class="ui-g-8" style="text-align: left">
+      <button pButton type="button" class="ui-button-raised ui-button-danger" label="Borrar" (click)="clearForm($event)"
+        style="margin-right: 1em"></button>
+      <button pButton type="submit" class="ui-button-raised ui-button-info" label="Guardar" (click)="saveReport($event)"></button>
+    </div>
+  </div>
+</div>
+<p-toast></p-toast>

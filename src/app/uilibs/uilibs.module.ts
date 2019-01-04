@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [],
@@ -21,7 +22,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     FormsModule,
     ReactiveFormsModule,
     ToastModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    DropdownModule
   ]
 })
 export class UILibsModule { }

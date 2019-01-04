@@ -18,10 +18,12 @@ export class AppComponent implements OnInit {
         items: [
           {
             label: 'Agregar Nuevo',
-            icon: 'pi pw pi-plus'
+            icon: 'pi pw pi-plus',
+            routerLink: 'new-report'
           },
           {
-            label: 'Lista Por Migración'
+            label: 'Lista Por Migración',
+            routerLink: 'reports'
           }
         ]
       },
