@@ -73,7 +73,7 @@ export class NrCrudComponent implements OnInit {
       }) || [];
     });
   }
-  
+
   selectMigration(event) {
     this.migration = event;
   }
