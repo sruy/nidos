@@ -15,9 +15,9 @@
       </ng-template>
       <ng-template pTemplate="body" let-migration>
         <tr>
-          <td class="smaller-cell">{{ migration.id }}</td>
-          <td class="smaller-cell">{{ migration.visibleName }}</td>
-          <td class="smaller-cell" style="overflow: hidden; text-overflow: ellipsis">{{ migration.startDate }}</td>
+          <td>{{ migration.id }}</td>
+          <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ migration.visibleName }}</td>
+          <td [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{ migration.startDate }}</td>
           <td [hidden]="mode === 'compact'">{{ migration.endDate }}</td>
           <td [hidden]="mode === 'compact'">{{ migration.comments }}</td>
           <td><i class="pi pi-pencil" style="font-size: 2rem" (click)="editMigration(migration)"></i></td>

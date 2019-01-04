@@ -14,20 +14,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.menuItems = [
       {
-        label: 'Punto',
-        items: [
-          {
-            label: 'Nuevo',
-            icon: 'pi pw pi-plus',
-            routerLink: 'new-point'
-          },
-          {
-            label: 'Lista',
-            routerLink: 'points'
-          }
-        ]
-      },
-      {
         label: 'Reportes',
         items: [
           {
@@ -36,13 +22,39 @@ export class AppComponent implements OnInit {
           },
           {
             label: 'Lista Por Migración'
-          },
-          {
-            label: 'Nueva Migración',
-            icon: 'pi pw pi-plus',
-            routerLink: 'new-migration'
           }
         ]
+      },
+      {
+        label: 'Configurar',
+        items: [{
+          label: 'Punto',
+          items: [
+            {
+              label: 'Nuevo',
+              icon: 'pi pw pi-plus',
+              routerLink: 'new-point'
+            },
+            {
+              label: 'Lista',
+              routerLink: 'points'
+            }
+          ]
+        },
+        {
+          label: 'Migración',
+          items: [
+            {
+              label: 'Nueva',
+              icon: 'pi pw pi-plus',
+              routerLink: 'new-migration'
+            },
+            {
+              label: 'Lista',
+              routerLink: 'migrations'
+            }
+          ]
+        }]
       },
       {
         label: 'Estadísticas',
