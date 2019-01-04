@@ -28,4 +28,18 @@ export class MigrationsService {
         return data;
       });
   }
+
+  getMigration(migrationId: string) {
+    return this.http.get('https://jsonplaceholder.typicode.com/todos/' + migrationId)
+      .toPromise()
+      .then(returnValue => {
+        const migration = this.store.read('migrations', {itemId: migrationId, propertyId: 'id'});
+
+        if (!!migration) {
+          return migration;
+        }
+
+        return false;
+      });
+    }
 }

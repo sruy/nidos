@@ -1,3 +1,43 @@
-<p>
-  mg-crud works!
-</p>
+<div class="ui-g-12">
+  <form [formGroup]="form" (ngSubmit)="saveMigration($event)">
+    <div class="ui-g-12">
+      <div class="ui-g-4">(*) Identificador</div>
+      <div class="ui-g-8">
+        <input id="migrationId" type="text" pInputText class="form-control" formControlName="migrationId" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">(*) Nombre</div>
+      <div class="ui-g-8">
+        <input id="visibleName" type="text" pInputText class="form-control" formControlName="visibleName" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">(*) Fecha de inicio</div>
+      <div class="ui-g-8">
+        <input id="startDate" type="text" pInputText class="form-control" formControlName="startDate" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Fecha de fin</div>
+      <div class="ui-g-8">
+        <input id="endDate" type="text" pInputText class="form-control" formControlName="endDate" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Comentarios</div>
+      <div class="ui-g-8">
+        <input id="comments" type="text" pInputText class="form-control" formControlName="comments" />
+      </div>
+    </div>    
+  </form>
+  <div class="ui-g-12">
+    <div class="ui-g-6" style="text-align: right">
+      <button pButton type="button" class="ui-button-secondary" label="Borrar" (click)="clearMigrationForm($event)"></button>
+    </div>
+    <div class="ui-g-6">
+      <button pButton type="button" class="ui-button-info" label="Guardar" (click)="saveMigration($event)"></button>
+    </div>
+  </div>
+</div>
+<p-toast></p-toast>

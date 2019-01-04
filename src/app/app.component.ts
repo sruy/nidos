@@ -36,6 +36,11 @@ export class AppComponent implements OnInit {
           },
           {
             label: 'Lista Por Migración'
+          },
+          {
+            label: 'Nueva Migración',
+            icon: 'pi pw pi-plus',
+            routerLink: 'new-migration'
           }
         ]
       },
