@@ -11,6 +11,7 @@ import { MigrationsService } from '../migrations/migrations.service';
     UILibsModule,
     ServicesModule
   ],
+  exports: [NrListComponent],
   providers: [
     { provide: MigrationsService, useClass: MigrationsService}
   ],

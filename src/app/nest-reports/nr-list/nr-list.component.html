@@ -1,3 +1,28 @@
-<p>
-  nr-list works!
-</p>
+<div class="ui-g-12" style="padding-left: 0">
+  <div class="ui-g-12" [ngStyle]="{'padding': mode === 'compact' && 0 }">
+    <h3>{{ listTitle }}</h3>
+    <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
+      [totalRecords]="mode !== 'compact' && 5 || list?.length" (onLazyLoad)="paginateReports($event)">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Punto</th>
+          <th>Especie</th>
+          <th class="smaller-header">Encontrado por</th>
+          <th [hidden]="mode === 'compact'">Estado</th>
+          <th [hidden]="mode === 'compact'">Enviado</th>
+          <th class="options-header"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-report>
+        <tr>
+          <td>{{ report?.spawnPoint?.name }}</td>
+          <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ report?.species?.name }}</td>
+          <td [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{ report.spottedBy }}</td>
+          <td [hidden]="mode === 'compact'">{{ report.status }}</td>
+          <td [hidden]="mode === 'compact'">{{ report.broadcastStatus }}</td>
+          <td><i class="pi pi-pencil" style="font-size: 2rem" (click)="editReport(report)"></i></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
