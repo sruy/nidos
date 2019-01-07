@@ -7,6 +7,9 @@ import { NestingSpecies } from '../models/nesting-species';
 import { NestingSpeciesService } from '../nesting-species.service';
 import { SpawnPoint } from '../../spawn-points/models/spawn-point';
 import { SpawnPointsService } from '../../spawn-points/spawnpoints.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NestReportsService } from '../nest-reports.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-nr-crud',
@@ -15,6 +18,7 @@ import { SpawnPointsService } from '../../spawn-points/spawnpoints.service';
 })
 export class NrCrudComponent implements OnInit {
   form: FormGroup;
+  city: string;
   migration: Migration;
   spawnPoint: SpawnPoint;
   species: NestingSpecies;
@@ -30,9 +34,12 @@ export class NrCrudComponent implements OnInit {
     { label: 'Pendiente', value: 'pending' },
     { label: 'Rechazado', value: 'rejected' }];
   editingReport = false;
+  paramReport: NestReport;
 
   constructor(private fb: FormBuilder, private mgService: MigrationsService,
-    private spService: SpawnPointsService, private nsService: NestingSpeciesService) { }
+    private spService: SpawnPointsService, private nsService: NestingSpeciesService,
+    private route: ActivatedRoute, private nrService: NestReportsService,
+    private messageService: MessageService, private router: Router) { }
 
   ngOnInit() {
     this.mgService.getMigrationsList().then((migrationList) => {
@@ -48,6 +55,7 @@ export class NrCrudComponent implements OnInit {
     });
 
     this.form = this.fb.group({
+      city: [this.city, Validators.required],
       migration: [this.migration && this.migration.id, Validators.required],
       spawnPoint: [this.spawnPoint && this.spawnPoint.pointId, Validators.required],
       species: [this.species && this.species.id, Validators.required],
@@ -56,6 +64,28 @@ export class NrCrudComponent implements OnInit {
       confirmedBy: [this.confirmedBy],
       broadcastStatus: [this.broadcastStatus]
     });
+
+    const id = +(this.route.snapshot.paramMap.get('id'));
+
+    if (id) {
+      this.nrService.getNestReport(id).then((report: NestReport) => {
+        this.paramReport = report;
+
+        if (!!report) {
+          this.editingReport = !this.editingReport;
+          this.form.setValue({
+            city: report.city,
+            migration: report.migration,
+            spawnPoint: report.spawnPoint,
+            species: report.species,
+            spottedBy: report.spottedBy || '',
+            status: report.status || 'Confirmado',
+            confirmedBy: report.confirmedBy || '',
+            broadcastStatus: report.broadcastStatus || ''
+          });
+        }
+      });
+    }
   }
 
   clearForm() {
@@ -103,9 +133,20 @@ export class NrCrudComponent implements OnInit {
   }
 
   saveReport(event) {
-    console.log(this.form.value);
     if (this.form.valid) {
+      if (this.paramReport && this.editingReport) {
+        this.nrService.editReport(this.paramReport.id, this.form.value, this.messageService);
+      } else {
+        this.nrService.newReport(new NestReport(<NestReport>this.form.value), this.messageService);
 
+        this.clearForm();
+      }
+
+      window.setTimeout(() => {
+        this.router.navigate(['reports']);
+      }, 2500);
+    } else {
+      this.messageService.add({ severity: 'warn', summary: '', detail: 'Chequea que los campos con (*) hayan sido rellenados.' });
     }
   }
 }

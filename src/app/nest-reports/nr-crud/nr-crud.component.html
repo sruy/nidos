@@ -1,6 +1,12 @@
 <div class="ui-g-12">
   <form [formGroup]="form" (ngSubmit)="saveReport($event)">
     <div class="ui-g-12">
+      <div class="ui-g-4">(*) Ciudad</div>
+      <div class="ui-g-8">
+        <input id="city" type="text" pInputText class="form-control" formControlName="city" />
+      </div>
+    </div>
+    <div class="ui-g-12">
       <div class="ui-g-4">(*) Migración de nidos</div>
       <div class="ui-g-8">
         <p-autoComplete formControlName="migration" [suggestions]="registeredMigrations" [forceSelection]="true"
@@ -12,12 +18,12 @@
       </div>
     </div>
     <div class="ui-g-12">
-        <div class="ui-g-4">(*) Punto</div>
-        <div class="ui-g-8">
-          <p-autoComplete formControlName="spawnPoint" [suggestions]="registeredSpawnPoints" [forceSelection]="true"
-            (completeMethod)="searchSpawnPoints($event)" field="name"></p-autoComplete>
-        </div>
+      <div class="ui-g-4">(*) Punto</div>
+      <div class="ui-g-8">
+        <p-autoComplete formControlName="spawnPoint" [suggestions]="registeredSpawnPoints" [forceSelection]="true"
+          (completeMethod)="searchSpawnPoints($event)" field="name"></p-autoComplete>
       </div>
+    </div>
     <div class="ui-g-12">
       <div class="ui-g-4">(*) Especie</div>
       <div class="ui-g-8">

@@ -1,10 +1,22 @@
 <div class="ui-g-12" style="padding-left: 0">
   <div class="ui-g-12" [ngStyle]="{'padding': mode === 'compact' && 0 }">
     <h3>{{ listTitle }}</h3>
+    <div class="ui-g-12" *ngIf="mode !== 'compact'">
+      <div class="ui-g-2">
+        <span>Migración:</span>
+      </div>
+      <div class="ui-g-10">
+        <p-autoComplete [(ngModel)]="migration" [suggestions]="registeredMigrations" (completeMethod)="filterMigration($event)"
+          [forceSelection]="true" field="visibleName" [autofocus]="true" (onSelect)="filterReportsByMigration($event)"></p-autoComplete>
+        &nbsp;
+        <button pButton type="reset" class="ui-button-raised ui-button-info" label="Limpiar" (click)="resetReportList()"></button>
+      </div>
+    </div>
     <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
       [totalRecords]="mode !== 'compact' && 5 || list?.length" (onLazyLoad)="paginateReports($event)">
       <ng-template pTemplate="header">
         <tr>
+          <th [hidden]="!!migration">Migración</th>
           <th>Punto</th>
           <th>Especie</th>
           <th class="smaller-header">Encontrado por</th>
@@ -15,9 +27,11 @@
       </ng-template>
       <ng-template pTemplate="body" let-report>
         <tr>
+          <td [hidden]="!!migration">{{ report?.migration?.visibleName }}</td>
           <td>{{ report?.spawnPoint?.name }}</td>
           <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ report?.species?.name }}</td>
-          <td [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{ report.spottedBy }}</td>
+          <td [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{
+            report.spottedBy }}</td>
           <td [hidden]="mode === 'compact'">{{ report.status }}</td>
           <td [hidden]="mode === 'compact'">{{ report.broadcastStatus }}</td>
           <td><i class="pi pi-pencil" style="font-size: 2rem" (click)="editReport(report)"></i></td>
