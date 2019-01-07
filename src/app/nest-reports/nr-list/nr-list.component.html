@@ -16,7 +16,7 @@
       [totalRecords]="mode !== 'compact' && 5 || list?.length" (onLazyLoad)="paginateReports($event)">
       <ng-template pTemplate="header">
         <tr>
-          <th [hidden]="!!migration">Migración</th>
+          <th [hidden]="!!migration" class="smaller-header">Migración</th>
           <th>Punto</th>
           <th>Especie</th>
           <th class="smaller-header">Encontrado por</th>
