@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'reports', component: NrListComponent },
   { path: 'new-report', component: NrCrudComponent },
   { path: 'edit-report/:id', component: NrCrudComponent },
-  // { path: '**', component: PageNotFoundComponent },
+  // { path: '**', redirectTo: 'home', pathMatch: '' },
 ];
 
 @NgModule({
