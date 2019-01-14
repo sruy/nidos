@@ -1,42 +1,56 @@
 <div class="ui-g-12" style="padding-left: 0">
   <div class="ui-g-12" [ngStyle]="{'padding': mode === 'compact' && 0 }">
-    <h3>{{ listTitle }}</h3>
-    <div class="ui-g-12" *ngIf="mode !== 'compact'">
-      <div class="ui-g-2">
+    <div class="ui-g-12" *ngIf="mode === 'compact'" style="padding: 0">
+      <div class="ui-g-10 table-title">
+        <h3>{{ listTitle }}</h3>
+      </div>
+      <div class="ui-g-2 table-actions">
+        <i class="pi pi-plus new" style="font-size: 1rem" routerLink="/new-report"></i>
+        <i *ngIf="mode === 'compact'" class="pi pi-list list" routerLink="/reports"></i>
+      </div>
+    </div>
+    <div class="ui-g-12" *ngIf="mode !== 'compact'" style="padding-left: 0">
+      <div class="ui-g-2" style="padding-left: 0;">
         <span>Migración:</span>
       </div>
-      <div class="ui-g-10">
+      <div class="ui-g-9">
         <p-autoComplete [(ngModel)]="migration" [suggestions]="registeredMigrations" (completeMethod)="filterMigration($event)"
           [forceSelection]="true" field="visibleName" [autofocus]="true" (onSelect)="filterReportsByMigration($event)"></p-autoComplete>
         &nbsp;
         <button pButton type="reset" class="ui-button-raised ui-button-info" label="Limpiar" (click)="resetReportList()"></button>
       </div>
+      <div class="ui-g-1 table-actions">
+        <i class="pi pi-plus new" style="font-size: 1rem" routerLink="/new-report"></i>
+        <i *ngIf="mode === 'compact'" class="pi pi-list list" routerLink="/reports"></i>
+      </div>
     </div>
-    <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
-      [totalRecords]="mode !== 'compact' && 5 || list?.length" (onLazyLoad)="paginateReports($event)" class="table-overriden">
-      <ng-template pTemplate="header">
-        <tr>
-          <th [hidden]="!!migration" class="smaller-header">Migración</th>
-          <th>Punto</th>
-          <th>Especie</th>
-          <th class="smaller-header">Encontrado por</th>
-          <th [hidden]="mode === 'compact'">Estado</th>
-          <th [hidden]="mode === 'compact'">Enviado</th>
-          <th class="options-header"></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-report>
-        <tr>
-          <td [hidden]="!!migration">{{ report?.migration?.visibleName }}</td>
-          <td>{{ report?.spawnPoint?.name }}</td>
-          <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ report?.species?.name }}</td>
-          <td [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{
-            report.spottedBy }}</td>
-          <td [hidden]="mode === 'compact'">{{ report.status }}</td>
-          <td [hidden]="mode === 'compact'">{{ report.broadcastStatus }}</td>
-          <td><i class="pi pi-pencil" style="font-size: 2rem" (click)="editReport(report)"></i></td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <div class="ui-g-12" style="padding: 0;">
+      <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
+        [totalRecords]="mode !== 'compact' && 5 || list?.length" (onLazyLoad)="paginateReports($event)" class="table-overriden">
+        <ng-template pTemplate="header">
+          <tr>
+            <th [hidden]="!!migration" class="smaller-header">Migración</th>
+            <th>Punto</th>
+            <th>Especie</th>
+            <th class="smaller-header">Encontrado por</th>
+            <th [hidden]="mode === 'compact'">Estado</th>
+            <th [hidden]="mode === 'compact'">Enviado</th>
+            <th class="options-header"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-report>
+          <tr>
+            <td [hidden]="!!migration">{{ report?.migration?.visibleName }}</td>
+            <td>{{ report?.spawnPoint?.name }}</td>
+            <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ report?.species?.name }}</td>
+            <td [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{
+              report.spottedBy }}</td>
+            <td [hidden]="mode === 'compact'">{{ report.status }}</td>
+            <td [hidden]="mode === 'compact'">{{ report.broadcastStatus }}</td>
+            <td><i class="pi pi-pencil" style="font-size: 2rem" (click)="editReport(report)"></i></td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
 </div>
