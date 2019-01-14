@@ -2,7 +2,7 @@
   <div class="ui-g-12" style="padding: .5em 0">
     <h3>{{ listTitle }}</h3>
     <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
-      [totalRecords]="mode !== 'compact' && 5 || list.length" (onLazyLoad)="paginatePoints($event)">
+      [totalRecords]="mode !== 'compact' && 5 || list.length" (onLazyLoad)="paginatePoints($event)" class="table-overriden">
       <ng-template pTemplate="header">
         <tr>
           <th>Nombre</th>

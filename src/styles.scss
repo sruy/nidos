@@ -1,7 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    background-color: #e0e7f7;
+    background-color: #e0e7f7; // color de fondo general
     font-family: "Open Sans", "Helvetica Neue", sans-serif;
     margin: 0;
-    font-size: 0.8rem;
+    font-size: 0.8rem; // tamaño de texto por defecto
+}
+.table-overriden {
+    .ui-table .ui-table-thead { // estilos de encabezados de tabla
+        & > tr > th {
+            border: 1px solid #c8c8c8;
+            background-color: #f4f4f4;
+        }
+    }
+    .ui-table .ui-table-tbody { // estilos de filas de tabla
+        & > tr:nth-child(even) { // filas pares de tabla
+            background-color: #f9f9f9;
+        }
+        & > tr { // filas impares de tabla
+            background-color: white; 
+        }
+    }
 }
