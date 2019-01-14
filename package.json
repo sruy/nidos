@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "github-pages": "ng build --prod --output-path docs --base-href \"https://enanox.github.io/nest-tailors-den\""
+    "github-pages": "ng build --prod --output-path docs --base-href \"https://enanox.github.io/nest-tailors-den/\""
   },
   "private": true,
   "dependencies": {
