@@ -1,13 +1,14 @@
 {
   "name": "nest-tailors-den",
-  "version": "0.1.0-alpha",
+  "version": "0.1.1-alpha",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "github-pages": "ng build --prod --output-path docs --base-href \"https://enanox.github.io/nest-tailors-den\""
   },
   "private": true,
   "dependencies": {
