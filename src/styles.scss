@@ -10,6 +10,14 @@ body {
         & > tr > th {
             border: 1px solid #c8c8c8;
             background-color: #f4f4f4;
+
+            &.options-header {
+                width: 50px;
+            }
+            &.compact-header {
+                text-overflow: ellipsis;
+                overflow-x: hidden;
+            }
         }
     }
     .ui-table .ui-table-tbody { // estilos de filas de tabla
@@ -19,5 +27,21 @@ body {
         & > tr { // filas impares de tabla
             background-color: white; 
         }
+    }
+}
+.table-title {
+    padding: 0 !important;
+}
+.table-actions {
+    padding: 15px .5rem 0 0 !important;
+    text-align: right;
+
+    & > .new { // ícono de nuevo item
+        font-size: 1.2rem;
+        color: black;
+    }
+    & > .list { // ícono para navegar a la lista
+        font-size: 1.2rem;
+        color: black;
     }
 }

@@ -9,11 +9,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DropdownModule } from 'primeng/dropdown';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [],
   exports: [
     CommonModule,
+    RouterModule,
     TableModule,
     InputTextModule,
     PanelModule,

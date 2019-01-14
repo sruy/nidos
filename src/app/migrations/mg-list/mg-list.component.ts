@@ -38,5 +38,4 @@ export class MgListComponent implements OnInit {
       this.router.navigate(['/edit-migration', migration.id]);
     }
   }
-
 }
