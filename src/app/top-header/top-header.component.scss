@@ -11,8 +11,6 @@
     left: 0;
     height: 45px; 
     width: 100%;
-    color: #7b9bde;
-    font-weight: bold;
     /*
 blue 2 #2f7482
 Blue 1 #2e7179
@@ -26,4 +24,12 @@ Red 2 #f9b4b4
 Blue 3 #0a2761
 Blue 4 #7b9bde
     */
+}
+.app-title {
+    padding-top: 6px; // esto es para centrar el titulo, desde arriba
+    font-size: 0.8rem; // tamaño del texto
+    left: 55px;
+    position: absolute;
+    font-weight: bold; // negrita
+    color: #7b9bde; // color del titulo
 }
