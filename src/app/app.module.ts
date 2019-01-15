@@ -20,7 +20,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: false }), SpawnPointsModule, MigrationsModule, NestReportsModule],
+  imports: [RouterModule.forRoot(routes, { useHash: false }), SpawnPointsModule, MigrationsModule, NestReportsModule, NotificationsModule],
   exports: [RouterModule],
   declarations: [DesktopComponent]
 })
@@ -41,6 +41,7 @@ import { MgCrudComponent } from './migrations/mg-crud/mg-crud.component';
 import { NrCrudComponent } from './nest-reports/nr-crud/nr-crud.component';
 import { NrListComponent } from './nest-reports/nr-list/nr-list.component';
 import { NestReportsModule } from './nest-reports/nest-reports.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @NgModule({
   declarations: [
@@ -53,8 +54,7 @@ import { NestReportsModule } from './nest-reports/nest-reports.module';
     MenubarModule,
     HttpClientModule,
     NoopAnimationsModule,
-    ServicesModule,
-    NestReportsModule
+    ServicesModule
   ],
   providers: [{
     provide: MessageService, useClass: MessageService

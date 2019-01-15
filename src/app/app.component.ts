@@ -56,6 +56,21 @@ export class AppComponent implements OnInit {
               routerLink: 'migrations'
             }
           ]
+        },
+        {
+          label: 'Notificación',
+          items: [
+            {
+              label: 'Nueva',
+              icon: 'pi pi-plus',
+              routerLink: 'new-notification'
+            },
+            {
+              label: 'Lista',
+              icon: 'pi pi-list',
+              routerLink: 'notifications'
+            }
+          ]
         }]
       },
       {
