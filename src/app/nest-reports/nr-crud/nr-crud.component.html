@@ -3,14 +3,15 @@
     <div class="ui-g-12">
       <div class="ui-g-4">(*) Ciudad</div>
       <div class="ui-g-8">
-        <input id="city" type="text" pInputText class="form-control" formControlName="city" />
+        <input id="city" type="text" pInputText class="form-control" formControlName="city" placeholder="Escriba la ciudad"/>
       </div>
     </div>
     <div class="ui-g-12">
       <div class="ui-g-4">(*) Migración de nidos</div>
       <div class="ui-g-8">
         <p-autoComplete formControlName="migration" [suggestions]="registeredMigrations" [forceSelection]="true"
-          (completeMethod)="searchMigration($event)" dataKey="id" (onSelect)="selectMigration($event)" field="visibleName">
+          (completeMethod)="searchMigration($event)" dataKey="id" (onSelect)="selectMigration($event)" field="visibleName"
+          placeholder="Indique #">
           <ng-template let-migration pTemplate="item">
             {{ migration.visibleName }} - {{ migration.startDate }}
           </ng-template>
@@ -21,14 +22,14 @@
       <div class="ui-g-4">(*) Punto</div>
       <div class="ui-g-8">
         <p-autoComplete formControlName="spawnPoint" [suggestions]="registeredSpawnPoints" [forceSelection]="true"
-          (completeMethod)="searchSpawnPoints($event)" field="name"></p-autoComplete>
+          (completeMethod)="searchSpawnPoints($event)" field="name" placeholder="Escriba nombre (ej.: Plaza)"></p-autoComplete>
       </div>
     </div>
     <div class="ui-g-12">
       <div class="ui-g-4">(*) Especie</div>
       <div class="ui-g-8">
         <p-autoComplete formControlName="species" [suggestions]="nestingSpecies" [forceSelection]="true"
-          (completeMethod)="searchSpecies($event)" field="name"></p-autoComplete>
+          (completeMethod)="searchSpecies($event)" field="name" placeholder="Escriba especie"></p-autoComplete>
       </div>
     </div>
     <div class="ui-g-12">
