@@ -1,0 +1,11 @@
+<p-panel [header]="panelHeader" class="panel-override">
+  <div class="notification-date">
+    <span>{{ notification?.date }}</span>
+  </div>
+  <div class="notification-title">
+    <span>{{ notification?.title }}</span>
+  </div>
+  <div class="notification-message">
+    <span [innerHTML]="notification?.richMessage"></span>
+  </div>
+</p-panel>

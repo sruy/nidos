@@ -1,0 +1,32 @@
+<div class="ui-g-12">
+    <form [formGroup]="form" (ngSubmit)="save($event)">
+      <div class="ui-g-12">
+        <div class="ui-g-4">(*) Fecha</div>
+        <div class="ui-g-8">
+          <input id="date" type="text" pInputText class="form-control" formControlName="date" [value]="date" />
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">(*) Título</div>
+        <div class="ui-g-8">
+          <input id="title" type="text" pInputText class="form-control" formControlName="title" [value]="title" />
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">(*) Mensaje</div>
+        <div class="ui-g-8">
+          <input id="message" type="text" pInputText class="form-control" formControlName="message" [value]="message" />
+        </div>
+      </div>
+    </form>
+    <div class="ui-g-12">
+      <div class="ui-g-4" style="text-align: right">
+        <button pButton type="button" class="ui-button-secondary" label="Volver" (click)="backToList()"></button>
+      </div>
+      <div class="ui-g-8" style="text-align: left">
+        <button pButton type="button" class="ui-button-raised ui-button-danger" label="Borrar" (click)="clearForm()" style="margin-right: 1em"></button>
+        <button pButton type="submit" class="ui-button-raised ui-button-info" label="Guardar" (click)="save($event)"></button>
+      </div>
+    </div>
+  </div>
+  <p-toast></p-toast>
