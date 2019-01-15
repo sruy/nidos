@@ -1,6 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./_include.scss";
+
+// Estilos generales
 body {
-    background-color: #e0e7f7; // color de fondo general
+    background: $slowpoke; /* Old browsers */
+    background: -moz-linear-gradient(top, $slowpoke 0%, $slowbro 50%, $slowking 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, $slowpoke 0%, $slowbro 50%, $slowking 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, $slowpoke 0%, $slowbro 50%, $slowking 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8c938', endColorstr='#e8c938',GradientType=0 ); /* IE6-9 */ // color de fondo general
     font-family: "Open Sans", "Helvetica Neue", sans-serif;
     margin: 0;
     font-size: 0.8rem; // tamaño de texto por defecto
@@ -9,7 +16,10 @@ body {
     .ui-table .ui-table-thead { // estilos de encabezados de tabla
         & > tr > th {
             border: 1px solid #c8c8c8;
-            background-color: #f4f4f4;
+            background: -moz-linear-gradient(top, $lotad 0%, $lombre 15%, $ludicolo 19%, $ludicolo 20%, $ludicolo 50%, $ludicolo 80%, $ludicolo 81%, $lombre 85%, $lotad 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, $lotad 0%, $lombre 15%, $ludicolo 19%, $ludicolo 20%, $ludicolo 50%, $ludicolo 80%, $ludicolo 81%, $lombre 85%, $lotad 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, $lotad 0%, $lombre 15%, $ludicolo 19%, $ludicolo 20%, $ludicolo 50%, $ludicolo 80%, $ludicolo 81%, $lombre 85%, $lotad 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0081b0e2', endColorstr='#0081b0e2',GradientType=0 ); /* IE6-9 */;
 
             &.options-header {
                 width: 50px;
@@ -22,7 +32,7 @@ body {
     }
     .ui-table .ui-table-tbody { // estilos de filas de tabla
         & > tr:nth-child(even) { // filas pares de tabla
-            background-color: #f9f9f9;
+            background-color: $eevee;
         }
         & > tr { // filas impares de tabla
             background-color: white; 
