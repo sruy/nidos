@@ -16,12 +16,9 @@ body {
 .table-overriden {
     .ui-table .ui-table-thead { // estilos de encabezados de tabla
         & > tr > th {
-            border: 1px solid #c8c8c8;
-            background: -moz-linear-gradient(top, $lotad 0%, $lombre 15%, $ludicolo 19%, $ludicolo 20%, $ludicolo 50%, $ludicolo 80%, $ludicolo 81%, $lombre 85%, $lotad 100%); /* FF3.6-15 */
-            background: -webkit-linear-gradient(top, $lotad 0%, $lombre 15%, $ludicolo 19%, $ludicolo 20%, $ludicolo 50%, $ludicolo 80%, $ludicolo 81%, $lombre 85%, $lotad 100%); /* Chrome10-25,Safari5.1-6 */
-            background: linear-gradient(to bottom, $lotad 0%, $lombre 15%, $ludicolo 19%, $ludicolo 20%, $ludicolo 50%, $ludicolo 80%, $ludicolo 81%, $lombre 85%, $lotad 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0081b0e2', endColorstr='#0081b0e2',GradientType=0 ); /* IE6-9 */;
-
+            border: 1px solid $aipom;
+            background-color: $ludicolo;
+            
             &.options-header {
                 width: 50px;
             }
@@ -37,6 +34,9 @@ body {
         }
         & > tr { // filas impares de tabla
             background-color: white; 
+        }
+        & td {
+            border: 1px solid $aipom;
         }
     }
 }
