@@ -15,7 +15,7 @@
       <div class="ui-g-12">
         <div class="ui-g-4">(*) Mensaje</div>
         <div class="ui-g-8">
-          <input id="message" type="text" pInputText class="form-control" formControlName="message" [value]="message" />
+          <textarea id="message" pInputTextarea class="form-control" formControlName="message" [rows]="5" [cols]="30" [autoResize]="true" [(ngModel)]="message"></textarea>
         </div>
       </div>
     </form>

@@ -65,11 +65,11 @@ export class AppComponent implements OnInit {
               icon: 'pi pi-plus',
               routerLink: 'new-notification'
             },
-            {
+            /*{
               label: 'Lista',
               icon: 'pi pi-list',
               routerLink: 'notifications'
-            }
+            }*/
           ]
         }]
       },

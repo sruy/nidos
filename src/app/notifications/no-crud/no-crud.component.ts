@@ -12,9 +12,9 @@ import { NotificationsService } from '../notifications.service';
 })
 export class NoCrudComponent implements OnInit {
   form: FormGroup;
-  date: Date;
-  title: string;
-  message: string;
+  date: Date = new Date();
+  title: string = '';
+  message: string = '';
   paramNotification: Notification;
 
   constructor(private fb: FormBuilder, private noService: NotificationsService,
@@ -34,7 +34,7 @@ export class NoCrudComponent implements OnInit {
         this.paramNotification = notification;
 
         this.form.setValue({
-          date: notification.date,
+          date: notification.date.toISOString(),
           title: notification.title,
           message: notification.richMessage
         });

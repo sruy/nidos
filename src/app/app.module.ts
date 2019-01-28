@@ -16,6 +16,8 @@ const routes: Routes = [
   { path: 'reports', component: NrListComponent },
   { path: 'new-report', component: NrCrudComponent },
   { path: 'edit-report/:id', component: NrCrudComponent },
+  { path: 'new-notification', component: NoCrudComponent },
+  { path: 'edit-notification/:id', component: NoCrudComponent },
   // { path: '**', redirectTo: 'home', pathMatch: '' },
 ];
 
@@ -42,6 +44,7 @@ import { NrCrudComponent } from './nest-reports/nr-crud/nr-crud.component';
 import { NrListComponent } from './nest-reports/nr-list/nr-list.component';
 import { NestReportsModule } from './nest-reports/nest-reports.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { NoCrudComponent } from './notifications/no-crud/no-crud.component';
 
 @NgModule({
   declarations: [

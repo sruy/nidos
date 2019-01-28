@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -25,7 +26,8 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     ToastModule,
     AutoCompleteModule,
-    DropdownModule
+    DropdownModule,
+    InputTextareaModule
   ]
 })
 export class UILibsModule { }

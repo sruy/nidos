@@ -13,9 +13,21 @@ export class NoInfoComponent implements OnInit {
 
   constructor(private noService: NotificationsService) { }
 
+  parseNotificationMessage(message: string): string {
+    let newParsed = message;
+
+    if (message.lastIndexOf('\n') !== -1) {
+      newParsed = message.replace('\\n','<br /><br />');
+    }
+
+    return newParsed;
+  }
+
   ngOnInit() {
     this.noService.getNotificationList().then((list) => {
       this.notification = list[list.length - 1];
+
+      this.notification.richMessage = this.parseNotificationMessage(this.notification.richMessage);
     });
   }
 
