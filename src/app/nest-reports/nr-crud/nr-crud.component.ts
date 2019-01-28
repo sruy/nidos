@@ -35,6 +35,12 @@ export class NrCrudComponent implements OnInit {
     { label: 'Rechazado', value: 'rejected' }];
   editingReport = false;
   paramReport: NestReport;
+  cities = [
+    { label: 'Montevideo', value: 'Montevideo' },
+    { label: 'Maldonado', value: 'Maldonado' },
+    { label: 'Canelones', value: 'Canelones' },
+    { label: 'San Carlos', value: 'San Carlos' },
+  ];
 
   constructor(private fb: FormBuilder, private mgService: MigrationsService,
     private spService: SpawnPointsService, private nsService: NestingSpeciesService,

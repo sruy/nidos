@@ -3,19 +3,20 @@
       <div class="ui-g-12">
         <div class="ui-g-4">(*) Fecha</div>
         <div class="ui-g-8">
-          <input id="date" type="text" pInputText class="form-control" formControlName="date" [value]="date" />
+          <p-calendar id="date" formControlName="date" [showIcon]="true" [showButtonBar]="true"></p-calendar>
+          <!-- <input id="date" type="text" pInputText class="form-control" formControlName="date" [value]="date" /> -->
         </div>
       </div>
       <div class="ui-g-12">
         <div class="ui-g-4">(*) Título</div>
         <div class="ui-g-8">
-          <input id="title" type="text" pInputText class="form-control" formControlName="title" [value]="title" />
+          <input id="title" type="text" pInputText class="form-control" formControlName="title"/>
         </div>
       </div>
       <div class="ui-g-12">
         <div class="ui-g-4">(*) Mensaje</div>
         <div class="ui-g-8">
-          <textarea id="message" pInputTextarea class="form-control" formControlName="message" [rows]="5" [cols]="30" [autoResize]="true" [(ngModel)]="message"></textarea>
+          <textarea id="message" pInputTextarea class="form-control" formControlName="message" [rows]="5" [cols]="30" [autoResize]="true"></textarea>
         </div>
       </div>
     </form>

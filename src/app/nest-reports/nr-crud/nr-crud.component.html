@@ -3,7 +3,7 @@
     <div class="ui-g-12">
       <div class="ui-g-4">(*) Ciudad</div>
       <div class="ui-g-8">
-        <input id="city" type="text" pInputText class="form-control" formControlName="city" placeholder="Escriba la ciudad"/>
+        <p-dropdown [options]="cities" id="city" formControlName="city" placeholder="Seleccione ciudad"></p-dropdown>
       </div>
     </div>
     <div class="ui-g-12">
@@ -13,7 +13,7 @@
           (completeMethod)="searchMigration($event)" dataKey="id" (onSelect)="selectMigration($event)" field="visibleName"
           placeholder="Indique #">
           <ng-template let-migration pTemplate="item">
-            {{ migration.visibleName }} - {{ migration.startDate }}
+            {{ migration.visibleName }} - {{ migration.startDate | date }}
           </ng-template>
         </p-autoComplete>
       </div>

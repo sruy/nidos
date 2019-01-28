@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CalendarModule } from 'primeng/calendar';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -27,7 +28,8 @@ import { RouterModule } from '@angular/router';
     ToastModule,
     AutoCompleteModule,
     DropdownModule,
-    InputTextareaModule
+    InputTextareaModule,
+    CalendarModule
   ]
 })
 export class UILibsModule { }
