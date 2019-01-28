@@ -14,12 +14,12 @@ import { Subscriber } from 'rxjs';
 })
 export class SpCrudComponent implements OnInit {
   form: FormGroup;
-  name: string;
-  attributes: string;
+  name: string = '';
+  attributes: string = '';
   lat: number;
   long: number;
-  link: URL;
-  nestId: string;
+  link: URL = null;
+  nestId: string = '';
   paramPoint: SpawnPoint;
 
   constructor(private fb: FormBuilder, private spService: SpawnPointsService, private messageService: MessageService,
