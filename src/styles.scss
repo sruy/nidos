@@ -11,6 +11,7 @@ body {
     font-family: "Open Sans", "Helvetica Neue", sans-serif;
     margin: 0;
     font-size: 0.8rem; // tamaño de texto por defecto
+    height: 100vh;
 }
 .table-overriden {
     .ui-table .ui-table-thead { // estilos de encabezados de tabla
