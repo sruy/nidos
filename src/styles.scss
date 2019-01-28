@@ -56,3 +56,19 @@ body {
         color: black;
     }
 }
+.panel-override {
+    & > .ui-panel { 
+        & > .ui-panel-titlebar {
+            background-color: $ludicolo;
+            border: 0.5px solid $aipom;
+            
+            & > .ui-panel-title {
+                font-weight: bold;
+            }
+        }
+        & .ui-panel-content {
+            border: 0.5px solid $aipom;
+            border-top: none;
+        }
+    }
+}
