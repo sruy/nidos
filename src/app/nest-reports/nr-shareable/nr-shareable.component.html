@@ -1,0 +1,54 @@
+<div class="ui-g-12" class="shareable-page">
+  <div class="ui-g-12 lead-in">
+    <h2>Migración de nidos {{ migration?.visibleName }}</h2>
+    <span class="subtitle">La migración de nidos <span class="migration-name">{{ migration?.visibleName }}</span>
+      ocurrió el {{ migration?.startDate | date
+      }}.</span>
+    <span class="section-2">Los reportes han sido recolectados por nuestros<span class="mod-text"> NestTailors </span>en
+      numerosos canales que incluyen:</span>
+    <ul class="sources">
+      <li>SRUruguay - canales de reportes de nidos</li>
+      <li>Proveedores de 3eros (Nest Atlas, etc)</li>
+      <li>Avisos por redes sociales y aplicaciones de mensajería</li>
+    </ul>
+  </div>
+  <div class="ui-g-12 report-list">
+    <div class="report-list-title">
+      <div class="heading">
+          <h3>Nidos confirmados</h3>
+      </div>
+      <div class="icon">
+          <span class="reveal pi" (click)="showAttribution = !showAttribution" [ngClass]="{ 'pi-eye': !showAttribution, 'pi-lock': showAttribution }"></span>
+      </div>
+    </div>
+    <div class="ui-g-12 confirmed-nests" *ngIf="nestReports?.length >= 3">
+      <div *ngFor="let report of nestReports; index as i">
+        <div class="ui-g-4 report-cell">
+          <div class="report-text">
+            <span class="species">{{ report?.species.name }}</span>
+            <span class="point">{{ report?.spawnPoint.name }}</span>
+            <span class="attribution" [hidden]="!showAttribution">{{ report?.spottedBy }}</span>
+          </div>
+          <div class="image-container">
+            <img [src]="getReportPathImage(report)" class="report-image" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-12 not-enough-reports" *ngIf="nestReports?.length < 3">
+      <h4>Aún no contamos con suficientes reportes...</h4>
+    </div>
+  </div>
+  <div class="ui-g-12 lead-out">
+    <div class="title">
+      <h3>¿Has encontrado un nuevo nido?</h3>
+    </div>
+    <div style="position: relative;">
+    <button class="join-button" (click)="goToSRUY()">
+      Únete a nuestra comunidad
+    </button>
+    <img src="/assets/images/Discord-Logo-White.png" class="discord-logo"/>
+  </div>
+  </div>
+
+</div>

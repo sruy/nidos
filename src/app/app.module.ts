@@ -18,6 +18,8 @@ const routes: Routes = [
   { path: 'edit-report/:id', component: NrCrudComponent },
   { path: 'new-notification', component: NoCrudComponent },
   { path: 'edit-notification/:id', component: NoCrudComponent },
+  { path: 'infographic', component: NrShareableComponent },
+  { path: 'infographic/:id', component: NrShareableComponent }
   // { path: '**', redirectTo: 'home', pathMatch: '' },
 ];
 
@@ -45,6 +47,7 @@ import { NrListComponent } from './nest-reports/nr-list/nr-list.component';
 import { NestReportsModule } from './nest-reports/nest-reports.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { NoCrudComponent } from './notifications/no-crud/no-crud.component';
+import { NrShareableComponent } from './nest-reports/nr-shareable/nr-shareable.component';
 
 @NgModule({
   declarations: [

@@ -24,6 +24,10 @@ export class AppComponent implements OnInit {
           {
             label: 'Lista Por Migración',
             routerLink: 'reports'
+          },
+          {
+            label: 'En curso',
+            routerLink: 'infographic'
           }
         ]
       },

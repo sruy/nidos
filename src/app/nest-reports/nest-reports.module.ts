@@ -4,9 +4,10 @@ import { NrCrudComponent } from './nr-crud/nr-crud.component';
 import { UILibsModule } from '../uilibs/uilibs.module';
 import { ServicesModule } from '../services/services.module';
 import { MigrationsService } from '../migrations/migrations.service';
+import { NrShareableComponent } from './nr-shareable/nr-shareable.component';
 
 @NgModule({
-  declarations: [NrListComponent, NrCrudComponent],
+  declarations: [NrListComponent, NrCrudComponent, NrShareableComponent],
   imports: [
     UILibsModule,
     ServicesModule

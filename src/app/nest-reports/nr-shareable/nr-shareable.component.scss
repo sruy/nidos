@@ -1,0 +1,147 @@
+@import "../../../include.scss";
+
+.image-container {
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    position: absolute;
+    top: 50px;
+    right: -10px;
+}
+.report-image {
+    position: absolute;
+    width: 100px;
+    top: -5px;
+    left: 0px
+}
+.section-2 {
+    display: block;
+    font-size: 0.7rem;
+}
+.sources {
+    font-size: 0.7rem;
+}
+.migration-name {
+    font-weight: bold;
+}
+.mod-text {
+    font-weight: bold;
+    color: green;
+}
+.lead-in {
+    padding-bottom: 0;
+    padding-top: 0;
+
+    h2 {
+        margin-top: 6px;
+    }
+}
+.confirmed-nests {
+    padding-left: 0;
+}
+.not-enough-reports {
+    padding-left: 0;
+    text-align: center;
+}
+.report-list {
+    padding-top: 0;
+
+    h3 {
+        margin-bottom: 0;
+    }
+}
+.report-cell {
+    height: 140px;
+    position: relative;
+    margin-bottom: 4px;
+    padding-left: 0;
+    padding-top: 0;
+}
+.report-text {
+    width: 100%;
+    height: 140px;
+    background-color: $aipom;
+    border-radius: 3px;
+    border: 1px solid $eevee;
+    padding: 0.15rem 0.5rem;
+}
+.species {
+    display: block;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+.point {
+    color: white;
+    font-weight: 600;
+    font-size: 0.7rem;
+    display: block;
+}
+.attribution {
+    color: white;
+    font-size: 0.7rem;
+}
+.lead-out {
+    text-align: center;
+
+}
+.join-button {
+    background-color: #7289da;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 280px;
+    height: 36px;
+    text-align: center;
+    border-radius: 6px;
+    position: relative;
+    padding-top: 4px;
+    padding-left: 12px;
+}
+.discord-logo {
+    width: 32px;
+    position: absolute;
+    top: 3px;
+    left: 38px;
+}
+@media (min-width: 320px) and (max-width: 480px) {  
+    .report-cell {
+        height: 140px;
+        padding-right: 0;
+        margin-bottom: 0;
+    }
+    .report-text {
+        height: 140px;
+    }
+    .image-container {
+        width: 70px;
+        height: 70px;
+        top: initial;
+        bottom: -20px;
+    }
+    .report-image {
+        width: 60px;
+    }
+}
+.report-list-title {
+    .heading {
+        float:left;
+
+        h3 {
+            margin: 0;
+            padding-top: 5px;
+        }
+    }
+    .icon {
+        float: left;
+        margin-left: 6px;
+        font-size: 1.5rem;
+        color: green;
+    }
+}
+
+@media (min-width: 780px) {
+    .report-list {
+        position: relative;
+    }
+}
