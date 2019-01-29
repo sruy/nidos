@@ -72,3 +72,8 @@ body {
         }
     }
 }
+@media (min-width: 320px) and (max-width: 480px) {
+    .ui-menubar {
+        display: none;
+    }
+}
