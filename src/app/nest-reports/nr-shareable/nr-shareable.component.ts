@@ -13,6 +13,8 @@ export class NrShareableComponent implements OnInit {
   migration: Migration;
   nestReports: NestReport[];
   showAttribution: boolean;
+  alphaOrder: boolean;
+  dateOrder: boolean;
 
   constructor(private migrationsService: MigrationsService,
     private nestReportsService: NestReportsService) { }
@@ -20,9 +22,33 @@ export class NrShareableComponent implements OnInit {
   async getNestReportInfo() {
     let migrations = await this.migrationsService.getMigrationsList();
     let reports = await this.nestReportsService.getNestReportsList();
-    
+
     this.migration = migrations && migrations.filter(migration => new Date(migration.endDate) >= new Date())[0] || migrations[migrations.length - 1];
-    this.nestReports = reports && reports.filter((report: NestReport) => this.migration && report.migration.id === this.migration.id);    
+    this.nestReports = reports && reports.filter((report: NestReport) => this.migration && report.migration.id === this.migration.id);
+  }
+
+  orderBy(order: string, direction: boolean) {
+    if (order === 'abc') {
+      this.nestReports.sort((a, b) => {
+        if (a.species.name < b.species.name) {
+          return direction && -1 || 1;
+        } else if (a.species.name > b.species.name) {
+          return direction && 1 || -1;
+        } else {
+          return 0;
+        }
+      });
+    } else if(order === 'date') {
+      this.nestReports.sort((a, b) => {
+        if (a.id < b.id) {
+          return direction && -1 || 1;
+        } else if (a.id > b.id) {
+          return direction && 1 || -1;
+        } else {
+          return 0;
+        }
+      });
+    }
   }
 
   ngOnInit() {
@@ -32,11 +58,11 @@ export class NrShareableComponent implements OnInit {
   getReportPathImage(report: NestReport) {
     const baseUrl = '/assets/images/decrypted_test/';
     let composedPath = baseUrl;
-    
+
     if (!report) {
       return '';
     }
-    
+
     if (report.species.id < 10) {
       composedPath += 'pokemon_icon_00' + report.species.id + '_00.png';
     } else if (report.species.id < 100) {
@@ -49,7 +75,7 @@ export class NrShareableComponent implements OnInit {
   }
 
   goToSRUY() {
-    window.open('http://bit.do/sruy','_blank');
+    window.open('http://bit.do/sruy', '_blank');
     return false;
   }
 

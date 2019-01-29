@@ -14,11 +14,13 @@
   </div>
   <div class="ui-g-12 report-list">
     <div class="report-list-title">
-      <div class="heading">
+      <div class="ui-g-9 heading">
           <h3>Nidos confirmados</h3>
       </div>
-      <div class="icon">
-          <span class="reveal pi" (click)="showAttribution = !showAttribution" [ngClass]="{ 'pi-eye': !showAttribution, 'pi-lock': showAttribution }"></span>
+      <div class="ui-g-3 icon">
+          <i class="reveal pi" (click)="showAttribution = !showAttribution" [ngClass]="{ 'pi-eye': !showAttribution, 'pi-eye-slash': showAttribution }"></i>
+          <i class="not-actionable">A</i><i class="order pi" [ngClass]="{ 'pi-arrow-down': alphaOrder, 'pi-arrow-up': !alphaOrder }" (click)="alphaOrder = !alphaOrder; orderBy('abc', alphaOrder)"></i>
+          <i class="pi pi-calendar not-actionable"></i><i class="order pi" [ngClass]="{ 'pi-arrow-down': dateOrder, 'pi-arrow-up': !dateOrder }" (click)="dateOrder = !dateOrder; orderBy('date', dateOrder)"></i>
       </div>
     </div>
     <div class="ui-g-12 confirmed-nests" *ngIf="nestReports?.length >= 3">

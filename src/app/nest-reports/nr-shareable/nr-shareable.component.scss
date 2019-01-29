@@ -104,6 +104,33 @@
     top: 3px;
     left: 38px;
 }
+.order {
+    font-size: 1rem;    
+}
+.report-list-title {
+    .heading {        
+        h3 {
+            margin: 0;
+            padding-top: 5px;
+        }
+    }
+    .icon {
+        padding: 0;
+        text-align: right;
+        font-size: 1.5rem;
+        color: green;
+        
+        > i.pi-eye, > i.pi-eye-slash {
+            margin-top: 10px;
+        }
+    }
+    .not-actionable {
+        color: black;
+        padding: 0;
+        text-align: right;
+        font-size: 1.5rem;
+    }
+}
 @media (min-width: 320px) and (max-width: 480px) {  
     .report-cell {
         height: 140px;
@@ -123,23 +150,6 @@
         width: 60px;
     }
 }
-.report-list-title {
-    .heading {
-        float:left;
-
-        h3 {
-            margin: 0;
-            padding-top: 5px;
-        }
-    }
-    .icon {
-        float: left;
-        margin-left: 6px;
-        font-size: 1.5rem;
-        color: green;
-    }
-}
-
 @media (min-width: 780px) {
     .report-list {
         position: relative;
