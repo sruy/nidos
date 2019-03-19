@@ -2,20 +2,41 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { StoreService } from '../services/store.service';
 import { NestingSpecies } from './models/nesting-species';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NestingSpeciesService {
   // ToDo: by now, read all species only from the JSON file
-  constructor(private http: HttpClient, private store: StoreService) { }
+  constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) { }
+
+  getNestingSpeciesDummy() {
+    return this.apollo.subscribe({
+      query: gql`
+    query { 
+      getNestingSpecies {
+        id
+        name
+        nests
+      }
+    }`
+    })
+    //.valueChanges
+    .toPromise()
+    .then(result => result)
+    .then(data => {
+      return data && (<any>data).data && <NestingSpecies[]>(<any>(<any>data).data.getNestingSpecies);
+    });
+  }
 
   getAllSpecies() {
     return this.http.get('/assets/nestingspecies.json')
       .toPromise()
-      .then(result => <NestingSpecies[]> result)
+      .then(result => result)
       .then(data => {
-        return data;
+        return data && (<any>data).data && <NestingSpecies[]>(<any>(<any>data).data.getNestingSpecies);
       });
   }
 

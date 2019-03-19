@@ -24,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: false }), SpawnPointsModule, MigrationsModule, NestReportsModule, NotificationsModule],
+  imports: [RouterModule.forRoot(routes, { useHash: false }), SpawnPointsModule, MigrationsModule, NestReportsModule, NotificationsModule, GraphQLModule, HttpClientModule],
   exports: [RouterModule],
   declarations: [DesktopComponent]
 })
@@ -48,6 +48,7 @@ import { NestReportsModule } from './nest-reports/nest-reports.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { NoCrudComponent } from './notifications/no-crud/no-crud.component';
 import { NrShareableComponent } from './nest-reports/nr-shareable/nr-shareable.component';
+import { GraphQLModule } from './graphql.module';
 
 @NgModule({
   declarations: [

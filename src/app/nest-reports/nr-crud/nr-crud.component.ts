@@ -60,6 +60,10 @@ export class NrCrudComponent implements OnInit {
       this.nestingSpecies = speciesList;
     });
 
+    this.nsService.getNestingSpeciesDummy().then((data) => {
+      console.log('data from database', data);
+    });
+
     this.form = this.fb.group({
       city: [this.city, Validators.required],
       migration: [this.migration && this.migration.id, Validators.required],
