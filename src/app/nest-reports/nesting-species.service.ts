@@ -25,6 +25,12 @@ export class NestingSpeciesService {
     })
     //.valueChanges
     .toPromise()
+    .catch(err => {
+      if (err.status === 0) {
+        throw('SRUY: Failed to retrieve platform endpoint data'); // create debug error called SruyException
+        console.error(err);
+      }
+    })
     .then(result => result)
     .then(data => {
       return data && (<any>data).data && <NestingSpecies[]>(<any>(<any>data).data.getNestingSpecies);
