@@ -4,6 +4,7 @@ import { StoreService } from '../services/store.service';
 import { NestingSpecies } from './models/nesting-species';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +12,19 @@ import gql from 'graphql-tag';
 export class NestingSpeciesService {
   // ToDo: by now, read all species only from the JSON file
   staticAssets = this.http.get('/assets/nestingspecies.json');
-  backendData = this.apollo.subscribe({
-    query: gql`
-  query { 
-    getNestingSpecies {
-      id
-      name
-      nests
-    }
-  }`});
+  backendData: Observable<any>;
 
-  constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) { }
+  constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) { 
+    this.backendData = this.apollo.subscribe({
+      query: gql`
+    query { 
+      getNestingSpecies {
+        id
+        name
+        nests
+      }
+    }`});
+  }
 
   getAllSpecies() {
     return this.backendData

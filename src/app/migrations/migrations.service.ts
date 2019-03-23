@@ -3,30 +3,55 @@ import { HttpClient } from '@angular/common/http';
 import { StoreService } from '../services/store.service';
 import { Migration } from './model/migration';
 import { MessageService } from 'primeng/api';
+import { Apollo } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import gql from 'graphql-tag';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MigrationsService {
   static id = 100;
-  constructor(private http: HttpClient, private store: StoreService) { }
+  staticAssets = this.http.get('/assets/migrations.json');
+  backendList: Observable<any>;
+  backendSingle: Observable<any>;
+  backendCreate: string;
+  backendModify: Observable<any>;
+  
+  constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) { 
+    this.backendList = this.apollo.subscribe({
+      query: gql`
+query {
+  getAllMigrations {
+    id
+    visibleName
+    startDate
+    endDate
+    comments
+  }
+}`});
 
+    this.backendCreate = gql`
+mutation createMigration($data: MigrationInput) {
+  createMigration(data: $data) {
+    id
+    visibleName
+  }
+}`;
+  }
+  
   getMigrationsList() {
-    return this.http.get('/assets/migrations.json')
+    return this.backendList
       .toPromise()
-      .then(result => <Migration[]>result)
+      .catch(err => {
+        if (err.status === 0) {
+          throw('SRUY: Failed to retrieve platform endpoint data'); // create debug error called SruyException
+          console.error(err);
+        }
+      })
       .then(data => {
-        if (!this.store.read('migrations')) {
-          this.store.save('migrations', data);
-        }
-
-        if (data !== this.store.read('migrations')) {
-          const storeData = this.store.read('migrations');
-
-          return storeData;
-        }
-
-        return data;
+        console.log(data)
+        return data && (<any>data).data && <Migration[]>(<any>(<any>data).data.getAllMigrations);
       });
   }
 
@@ -45,7 +70,15 @@ export class MigrationsService {
   }
 
   newMigration(migration: Migration, messageService?: MessageService) {
-    return this.http.post('https://jsonplaceholder.typicode.com/todos/', migration.id)
+    const input: any = migration;
+    delete input.id;
+
+    return this.apollo.mutate({
+      mutation: this.backendCreate,
+      variables: {
+        data: input
+      }
+    })
       .toPromise()
       .catch(err => {
         console.log(err);
@@ -54,12 +87,13 @@ export class MigrationsService {
           messageService.add({ severity: 'error', summary: 'No se pudo completar la operación', detail: err.toString().substr(130) });
         }
       })
-      .then(() => {
-        if (MigrationsService.id) {
+      .then((resultData) => {
+        console.log(resultData);
+        /*if (MigrationsService.id) {
           migration.id = '' + (++MigrationsService.id);
-        }
+        }*/
 
-        this.store.save('migrations', migration);
+        //this.store.save('migrations', migration);
 
         if (!!messageService) {
           messageService.add({ severity: 'success', summary: 'Operación completada', detail: `Migración "${migration.visibleName}" agregada!` });
