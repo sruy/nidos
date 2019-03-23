@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  graphqlURL: 'http://graphql-sruy.7e14.starter-us-west-2.openshiftapps.com'
 };
 
 /*
