@@ -56,12 +56,8 @@ export class NrCrudComponent implements OnInit {
       this.registeredSpawnPoints = pointList;
     });
 
-    this.nsService.getAllSpecies().then((speciesList) => {
+    this.nsService.getFilteredSpecies().then((speciesList) => {
       this.nestingSpecies = speciesList;
-    });
-
-    this.nsService.getNestingSpeciesDummy().then((data) => {
-      console.log('data from database', data);
     });
 
     this.form = this.fb.group({
@@ -119,7 +115,7 @@ export class NrCrudComponent implements OnInit {
   }
 
   searchSpecies(event: any) {
-    this.nsService.getAllSpecies().then((list) => {
+    this.nsService.getFilteredSpecies().then((list) => {
       this.nestingSpecies = list.filter((species) => {
         return species.name.toLowerCase().lastIndexOf(event.query.toLowerCase()) !== -1;
       }) || [];
