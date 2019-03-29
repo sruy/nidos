@@ -13,14 +13,13 @@ import { flatten } from '@angular/router/src/utils/collection';
   providedIn: 'root'
 })
 export class MigrationsService {
-  static id = 100;
   staticAssets = this.http.get('/assets/migrations.json');
   backendList: Observable<any>;
   backendSingle: string;
   backendCreate: string;
   backendModify: string;
-  
-  constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) { 
+
+  constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) {
     this.backendList = this.apollo.watchQuery({
       query: gql`
 query {
@@ -60,16 +59,16 @@ mutation createMigration($data: MigrationInput) {
   }`;
 
   }
-  
+
   getMigrationsList() {
-    return this.backendList      
+    return this.backendList
       .pipe(map(result => {
         const flatten = <Migration[]>(<any>(<any>result).data).getAllMigrations;
-        
+
         return flatten;
       }))
       .pipe(catchError((err, inp) => {
-        throw('SRUY: Failed to retrieve platform endpoint data'); // create debug error called SruyException
+        throw ('SRUY: Failed to retrieve platform endpoint data'); // create debug error called SruyException
         console.error(err);
         return inp;
       }));
@@ -81,11 +80,11 @@ mutation createMigration($data: MigrationInput) {
       variables: {
         id: migrationId
       }
-    }).valueChanges     
+    }).valueChanges
       .pipe(map(result => {
         const flatten = (<any>(<any>result).data).getMigration;
-        
-        if (typeof(flatten.startDate) === 'string') {
+
+        if (typeof (flatten.startDate) === 'string') {
           flatten.startDate = moment(Number.parseInt(flatten.startDate));
           flatten.endDate = moment(Number.parseInt(flatten.endDate));
         }
@@ -104,19 +103,20 @@ mutation createMigration($data: MigrationInput) {
         data: input
       }
     })
-      .toPromise()
-      .catch(err => {
+      .pipe(catchError((err, inp) => {
         console.log(err);
 
         if (!!messageService) {
           messageService.add({ severity: 'error', summary: 'No se pudo completar la operación', detail: err.toString().substr(130) });
         }
-      })
-      .then((resultData) => {
+
+        return inp;
+      }))
+      .pipe(map((resultData) => {
         if (!!messageService) {
           messageService.add({ severity: 'success', summary: 'Operación completada', detail: `Migración "${migration.visibleName}" agregada!` });
         }
-      });
+      }));
   }
 
   editMigration(migrationId: string, values: any, messageService: MessageService) {
@@ -129,12 +129,10 @@ mutation createMigration($data: MigrationInput) {
         id: migrationId,
         data: input
       }
-    })
-      .toPromise()
-      .then(() => {       
-        if (!!messageService) {
-          messageService.add({ severity: 'success', summary: 'Edición completada', detail: `Migración "${values.visibleName}" editada!` });
-        }
-      });
+    }).pipe(map(result => {
+      if (!!messageService) {
+        messageService.add({ severity: 'success', summary: 'Edición completada', detail: `Migración "${values.visibleName}" editada!` });
+      }
+    }));
   }
 }

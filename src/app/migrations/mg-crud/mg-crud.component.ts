@@ -35,11 +35,6 @@ export class MgCrudComponent implements OnInit {
 
     if (migrationId) {
       this.mgService.getMigration(migrationId).subscribe((migration: Migration) => {        
-        /*if (typeof(migration.startDate) === 'string')  {
-          migration.startDate = moment(Number.parseInt(<any>migration.startDate));
-          migration.endDate = moment(Number.parseInt(<any>migration.endDate));
-        }*/
-
         this.paramMigration = migration;       
         this.form.addControl('id', new FormControl(migrationId));
         
@@ -60,20 +55,23 @@ export class MgCrudComponent implements OnInit {
     if (this.form.valid) {
       const { id, visibleName, startDate, endDate, comments } = this.form.value;
 
+      let saveSub;
       if (this.paramMigration) {
-        this.mgService.editMigration(this.paramMigration.id, this.form.value, this.messageService);
+        saveSub = this.mgService.editMigration(this.paramMigration.id, this.form.value, this.messageService);
       } else {
         // New migration
-        this.mgService.newMigration(new Migration(
+        saveSub = this.mgService.newMigration(new Migration(
           id, visibleName, startDate, endDate, comments
         ), this.messageService);
 
         this.clearMigrationForm();
       }
 
-      window.setTimeout(() => {
-        this.router.navigate(['migrations']);
-      }, 2500);
+      saveSub.subscribe(result => {
+        window.setTimeout(() => {
+          this.router.navigate(['migrations']);
+        }, 2500);
+      });      
     } else {
       this.messageService.add({ severity: 'warn', summary: '', detail: 'Chequea que los campos con (*) hayan sido rellenados.' });
     }
