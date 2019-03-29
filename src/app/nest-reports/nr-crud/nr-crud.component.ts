@@ -10,6 +10,7 @@ import { SpawnPointsService } from '../../spawn-points/spawnpoints.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NestReportsService } from '../nest-reports.service';
 import { MessageService } from 'primeng/api';
+import { CitiesService } from '../cities.service';
 
 @Component({
   selector: 'app-nr-crud',
@@ -36,16 +37,17 @@ export class NrCrudComponent implements OnInit {
   editingReport = false;
   paramReport: NestReport;
   cities = [
-    { label: 'Montevideo', value: 'Montevideo' },
+    /*{ label: 'Montevideo', value: 'Montevideo' },
     { label: 'Maldonado', value: 'Maldonado' },
     { label: 'Canelones', value: 'Canelones' },
-    { label: 'San Carlos', value: 'San Carlos' },
+    { label: 'San Carlos', value: 'San Carlos' },*/
   ];
 
   constructor(private fb: FormBuilder, private mgService: MigrationsService,
     private spService: SpawnPointsService, private nsService: NestingSpeciesService,
     private route: ActivatedRoute, private nrService: NestReportsService,
-    private messageService: MessageService, private router: Router) { }
+    private messageService: MessageService, private router: Router,
+    private citiesService: CitiesService) { }
 
   ngOnInit() {
     this.mgService.getMigrationsList().subscribe((migrationList) => {
@@ -58,6 +60,12 @@ export class NrCrudComponent implements OnInit {
 
     this.nsService.getFilteredSpecies().then((speciesList) => {
       this.nestingSpecies = speciesList;
+    });
+
+    this.citiesService.getAllCities().subscribe(cities => {
+      cities.forEach(city => {
+        this.cities.push({label: city.name, value: city.name});
+      });
     });
 
     this.form = this.fb.group({
