@@ -105,7 +105,7 @@ export class NrCrudComponent implements OnInit {
   searchMigration(event: any) {
     this.mgService.getMigrationsList().subscribe((list) => {
       this.registeredMigrations = list.filter((migration) => {
-        return migration.id.lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
+        return migration.id.toString().lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
       }) || [];
     });
   }
