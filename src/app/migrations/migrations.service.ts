@@ -104,8 +104,6 @@ mutation createMigration($data: MigrationInput) {
       }
     })
       .pipe(catchError((err, inp) => {
-        console.log(err);
-
         if (!!messageService) {
           messageService.add({ severity: 'error', summary: 'No se pudo completar la operación', detail: err.toString().substr(130) });
         }
