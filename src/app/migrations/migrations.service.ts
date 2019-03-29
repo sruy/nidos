@@ -6,7 +6,9 @@ import { MessageService } from 'primeng/api';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import gql from 'graphql-tag';
-
+import * as moment from 'moment';
+import { map, catchError } from 'rxjs/operators';
+import { flatten } from '@angular/router/src/utils/collection';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,12 +16,12 @@ export class MigrationsService {
   static id = 100;
   staticAssets = this.http.get('/assets/migrations.json');
   backendList: Observable<any>;
-  backendSingle: Observable<any>;
+  backendSingle: string;
   backendCreate: string;
-  backendModify: Observable<any>;
+  backendModify: string;
   
   constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) { 
-    this.backendList = this.apollo.subscribe({
+    this.backendList = this.apollo.watchQuery({
       query: gql`
 query {
   getAllMigrations {
@@ -29,7 +31,7 @@ query {
     endDate
     comments
   }
-}`});
+}`}).valueChanges;
 
     this.backendCreate = gql`
 mutation createMigration($data: MigrationInput) {
@@ -38,35 +40,58 @@ mutation createMigration($data: MigrationInput) {
     visibleName
   }
 }`;
+
+    this.backendSingle = gql`
+  query getMigration($id: Int) {
+    getMigration(id: $id) {
+      id
+      visibleName
+      startDate
+      endDate
+      comments
+    }
+  }`;
+
+    this.backendModify = gql`
+  mutation modifyMigration($id: Int, $data: MigrationInput) {
+    modifyMigration(id: $id, data: $data) {
+      id
+    }
+  }`;
+
   }
   
   getMigrationsList() {
-    return this.backendList
-      .toPromise()
-      .catch(err => {
-        if (err.status === 0) {
-          throw('SRUY: Failed to retrieve platform endpoint data'); // create debug error called SruyException
-          console.error(err);
-        }
-      })
-      .then(data => {
-        console.log(data)
-        return data && (<any>data).data && <Migration[]>(<any>(<any>data).data.getAllMigrations);
-      });
+    return this.backendList      
+      .pipe(map(result => {
+        const flatten = <Migration[]>(<any>(<any>result).data).getAllMigrations;
+        
+        return flatten;
+      }))
+      .pipe(catchError((err, inp) => {
+        throw('SRUY: Failed to retrieve platform endpoint data'); // create debug error called SruyException
+        console.error(err);
+        return inp;
+      }));
   }
 
-  getMigration(migrationId: string) {
-    return this.http.get('https://jsonplaceholder.typicode.com/todos/' + migrationId)
-      .toPromise()
-      .then(returnValue => {
-        const migration = this.store.read('migrations', { itemId: migrationId, propertyId: 'id' });
-
-        if (!!migration) {
-          return migration;
+  getMigration(migrationId: number) {
+    return this.apollo.watchQuery({
+      query: this.backendSingle,
+      variables: {
+        id: migrationId
+      }
+    }).valueChanges     
+      .pipe(map(result => {
+        const flatten = (<any>(<any>result).data).getMigration;
+        
+        if (typeof(flatten.startDate) === 'string') {
+          flatten.startDate = moment(Number.parseInt(flatten.startDate));
+          flatten.endDate = moment(Number.parseInt(flatten.endDate));
         }
 
-        return false;
-      });
+        return <Migration>flatten;
+      }));
   }
 
   newMigration(migration: Migration, messageService?: MessageService) {
@@ -88,13 +113,6 @@ mutation createMigration($data: MigrationInput) {
         }
       })
       .then((resultData) => {
-        console.log(resultData);
-        /*if (MigrationsService.id) {
-          migration.id = '' + (++MigrationsService.id);
-        }*/
-
-        //this.store.save('migrations', migration);
-
         if (!!messageService) {
           messageService.add({ severity: 'success', summary: 'Operación completada', detail: `Migración "${migration.visibleName}" agregada!` });
         }
@@ -102,29 +120,20 @@ mutation createMigration($data: MigrationInput) {
   }
 
   editMigration(migrationId: string, values: any, messageService: MessageService) {
-    return this.http.put('https://jsonplaceholder.typicode.com/todos/' + migrationId, values)
+    const input = values;
+    delete input.id;
+
+    return this.apollo.mutate({
+      mutation: this.backendModify,
+      variables: {
+        id: migrationId,
+        data: input
+      }
+    })
       .toPromise()
-      .then(() => {
-        const migrations = this.store.read('migrations');
-        let found = -1;
-
-        migrations.forEach((point: Migration, index: number) => {
-          if (point.id === migrationId) {
-            found = index;
-          }
-        });
-
-        if (found > -1) {
-          if (migrations[found]) {
-            values.pointId = migrationId;
-            migrations[found] = values;
-          }
-
-          this.store.save('migrations', migrations);
-
-          if (!!messageService) {
-            messageService.add({ severity: 'success', summary: 'Edición completada', detail: `Migración "${values.visibleName}" editada!` });
-          }
+      .then(() => {       
+        if (!!messageService) {
+          messageService.add({ severity: 'success', summary: 'Edición completada', detail: `Migración "${values.visibleName}" editada!` });
         }
       });
   }

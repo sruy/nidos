@@ -1,6 +1,6 @@
 <div class="ui-g-12">
   <form [formGroup]="form" (ngSubmit)="saveMigration($event)">
-    <div class="ui-g-12">
+    <div class="ui-g-12" *ngIf="paramMigration">
       <div class="ui-g-4">(*) Identificador</div>
       <div class="ui-g-8">
         <input id="id" type="text" pInputText class="form-control" formControlName="id" placeholder="Nº o ID de migración"/>

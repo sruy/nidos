@@ -3,6 +3,7 @@ import { Migration } from 'src/app/migrations/model/migration';
 import { NestReport } from '../models/nest-report';
 import { NestReportsService } from '../nest-reports.service';
 import { MigrationsService } from 'src/app/migrations/migrations.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-nr-shareable',
@@ -20,10 +21,12 @@ export class NrShareableComponent implements OnInit {
     private nestReportsService: NestReportsService) { }
 
   async getNestReportInfo() {
-    let migrations = await this.migrationsService.getMigrationsList();
+    this.migrationsService.getMigrationsList().subscribe(migrations => {
+      this.migration = migrations && migrations.filter(migration => moment(migration.endDate) >= moment())[0] || migrations[migrations.length - 1];
+    });
+
     let reports = await this.nestReportsService.getNestReportsList();
 
-    this.migration = migrations && migrations.filter(migration => new Date(migration.endDate) >= new Date())[0] || migrations[migrations.length - 1];
     this.nestReports = reports && reports.filter((report: NestReport) => this.migration && report.migration.id === this.migration.id);
   }
 

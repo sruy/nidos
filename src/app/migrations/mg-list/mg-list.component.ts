@@ -20,7 +20,7 @@ export class MgListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.migrationsService.getMigrationsList().then(points => {
+    this.migrationsService.getMigrationsList().subscribe(points => {
       this.list = points;
 
       if (this.list && this.list.length && this.list.length > 0) {

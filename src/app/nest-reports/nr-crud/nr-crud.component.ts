@@ -48,7 +48,7 @@ export class NrCrudComponent implements OnInit {
     private messageService: MessageService, private router: Router) { }
 
   ngOnInit() {
-    this.mgService.getMigrationsList().then((migrationList) => {
+    this.mgService.getMigrationsList().subscribe((migrationList) => {
       this.registeredMigrations = migrationList;
     });
 
@@ -103,7 +103,7 @@ export class NrCrudComponent implements OnInit {
   }
 
   searchMigration(event: any) {
-    this.mgService.getMigrationsList().then((list) => {
+    this.mgService.getMigrationsList().subscribe((list) => {
       this.registeredMigrations = list.filter((migration) => {
         return migration.id.lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
       }) || [];

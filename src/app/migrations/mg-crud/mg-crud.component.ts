@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Migration } from '../model/migration';
 import { MigrationsService } from '../migrations.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-mg-crud',
@@ -24,27 +25,34 @@ export class MgCrudComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      id: [this.id, Validators.required],
       visibleName: [this.visibleName, Validators.required],
       startDate: [this.startDate, Validators.required],
       endDate: [this.endDate],
       comments: [this.comments]
     });
 
-    const migrationId = this.route.snapshot.paramMap.get('id');
+    const migrationId = Number.parseInt(this.route.snapshot.paramMap.get('id'));
 
     if (migrationId) {
-      this.mgService.getMigration(migrationId).then((migration: Migration) => {
-        this.paramMigration = migration;
+      this.mgService.getMigration(migrationId).subscribe((migration: Migration) => {        
+        /*if (typeof(migration.startDate) === 'string')  {
+          migration.startDate = moment(Number.parseInt(<any>migration.startDate));
+          migration.endDate = moment(Number.parseInt(<any>migration.endDate));
+        }*/
 
+        this.paramMigration = migration;       
+        this.form.addControl('id', new FormControl(migrationId));
+        
         this.form.setValue({
           id: migration.id,
           visibleName: migration.visibleName,
-          startDate: migration.startDate,
-          endDate: migration.endDate || '',
+          startDate: migration.startDate.toDate() || '',
+          endDate: migration.endDate.toDate() || '',
           comments: migration.comments || ''
         });
       });
+    } else {
+      this.form.addControl('id', new FormControl(migrationId, [Validators.required]));
     }
   }
 
