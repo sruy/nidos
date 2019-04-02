@@ -14,21 +14,21 @@
         [totalRecords]="mode !== 'compact' && 5 || list.length" (onLazyLoad)="paginateMigrations($event)" class="table-overriden">
         <ng-template pTemplate="header">
           <tr>
-            <th class="smaller-header">Identificador</th>
+            <th [hidden]="mode === 'compact'" class="smaller-header">Identificador</th>
             <th>Nombre</th>
             <th>Fecha</th>
-            <th [hidden]="mode === 'compact'">Fecha fin rotación</th>
+            <th>Fecha fin rotación</th>
             <th [hidden]="mode === 'compact'">Comentarios</th>
             <th class="options-header"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-migration>
           <tr>
-            <td>{{ migration.id }}</td>
+            <td [hidden]="mode === 'compact'">{{ migration.id }}</td>
             <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ migration.visibleName }}</td>
             <td [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{
               migration.startDate | date: 'dd/MM/yyyy'}}</td>
-            <td [hidden]="mode === 'compact'">{{ migration.endDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ migration.endDate | date:'dd/MM/yyyy' }}</td>
             <td [hidden]="mode === 'compact'">{{ migration.comments }}</td>
             <td><i class="pi pi-pencil" style="font-size: 2rem" (click)="editMigration(migration)"></i></td>
           </tr>
