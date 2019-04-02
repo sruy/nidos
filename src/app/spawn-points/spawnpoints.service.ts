@@ -3,32 +3,53 @@ import { HttpClient } from '@angular/common/http';
 import { SpawnPoint } from './models/spawn-point';
 import { StoreService } from '../services/store.service';
 import { MessageService } from 'primeng/api';
+import { Observable } from 'rxjs';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpawnPointsService {
+  staticAssets = this.http.get('/assets/spawnpoints.json');
+  backendList: Observable<any>;
+  backendSingle: string;
+  backendCreate: string;
+  backendModify: string;  
+
   static cachedSpawnPoints: SpawnPoint[];
   static id: number = 100;
-  constructor(private http: HttpClient, private store: StoreService) { }
+  constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) { 
+    this.backendList = this.apollo.watchQuery({
+      query: gql`
+query {
+  allSpawnPoints {
+    city {
+      id
+      name
+    }
+    name
+    lat
+    long
+    link
+    thirdPartyService
+  }
+}`}).valueChanges;
+  }
 
   getSpawnPointList() {
-    return this.http.get('/assets/spawnpoints.json')
-      .toPromise()
-      .then(result => <SpawnPoint[]>result)
-      .then(data => {
-        if (!this.store.read('spawnPoints')) {
-          this.store.save('spawnPoints', data);
-        }
+    return this.backendList
+    .pipe(map(result => {
+      const flatten = <SpawnPoint[]>(<any>(<any>result).data).allSpawnPoints;
 
-        if (data !== this.store.read('spawnPoints')) {
-          const storeData = this.store.read('spawnPoints');
-
-          return storeData;
-        }
-
-        return data;
-      });
+      return flatten;
+    }))
+    .pipe(catchError((err, inp) => {
+      throw ('SRUY: Failed to retrieve platform endpoint data'); // create debug error called SruyException
+      console.error(err);
+      return inp;
+    }));
   }
 
   newSpawnPoint(point: SpawnPoint, messageService?: MessageService) {

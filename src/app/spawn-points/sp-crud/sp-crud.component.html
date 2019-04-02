@@ -1,6 +1,12 @@
 <div class="ui-g-12">
   <form [formGroup]="form" (ngSubmit)="savePoint($event)">
     <div class="ui-g-12">
+      <div class="ui-g-4">(*) Ciudad</div>
+      <div class="ui-g-8">
+        <p-dropdown [options]="cities" id="city" formControlName="city" placeholder="Seleccione ciudad"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12">
       <div class="ui-g-4">(*) Nombre</div>
       <div class="ui-g-8">
         <input id="name" type="text" pInputText class="form-control" formControlName="name" [value]="name" />
@@ -31,11 +37,23 @@
       </div>
     </div>
     <div class="ui-g-12">
+        <div class="ui-g-4">Servicio de nidos (TSR, PokeStgo)</div>
+        <div class="ui-g-8">
+          <input id="thirdPartyService" type="text" pInputText class="form-control" formControlName="link" [value]="link" />
+        </div>
+      </div>
+    <div class="ui-g-12">
       <div class="ui-g-4"># de Nido (Atlas Silph)</div>
       <div class="ui-g-8">
-        <input id="nestId" type="text" pInputText class="form-control" formControlName="nestId" [value]="nestId" />
+        <input id="thirdPartyNestId" type="text" pInputText class="form-control" formControlName="nestId" [value]="nestId" />
       </div>
     </div>
+    <div class="ui-g-12">
+        <div class="ui-g-4">Link en web de terceros</div>
+        <div class="ui-g-8">
+          <input id="thirdPartyLink" type="text" pInputText class="form-control" formControlName="link" [value]="link" />
+        </div>
+      </div>
   </form>
   <div class="ui-g-12">
     <div class="ui-g-4" style="text-align: right">

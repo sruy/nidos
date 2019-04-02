@@ -54,7 +54,7 @@ export class NrCrudComponent implements OnInit {
       this.registeredMigrations = migrationList;
     });
 
-    this.spService.getSpawnPointList().then((pointList) => {
+    this.spService.getSpawnPointList().subscribe((pointList) => {
       this.registeredSpawnPoints = pointList;
     });
 
@@ -135,7 +135,7 @@ export class NrCrudComponent implements OnInit {
   }
 
   searchSpawnPoints(event) {
-    this.spService.getSpawnPointList().then(list => {
+    this.spService.getSpawnPointList().subscribe(list => {
       this.registeredSpawnPoints = list.filter((point: SpawnPoint) => {
         return point.name.toLowerCase().lastIndexOf(event.query.toLowerCase()) !== -1;
       });

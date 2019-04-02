@@ -14,8 +14,9 @@
         [totalRecords]="mode !== 'compact' && 5 || list.length" (onLazyLoad)="paginatePoints($event)" class="table-overriden">
         <ng-template pTemplate="header">
           <tr>
+            <th>Ciudad</th>
             <th>Nombre</th>
-            <th class="compact-header">Referencias</th>
+            <th [hidden]="mode === 'compact'" class="compact-header">Referencias</th>
             <th>Link</th>
             <th [hidden]="mode === 'compact'">Latitud</th>
             <th [hidden]="mode === 'compact'">Longitud</th>
@@ -24,9 +25,10 @@
         </ng-template>
         <ng-template pTemplate="body" let-point>
           <tr>
+            <td class="smaller-cell">{{ point.city.name }}</td>
             <td class="smaller-cell">{{ point.name }}</td>
-            <td class="smaller-cell">{{ point.attributes }}</td>
-            <td class="smaller-cell link"><a href="{{ point.link }}" target="_new">Nest Atlas</a></td>
+            <td [hidden]="mode === 'compact'" class="smaller-cell">{{ point.attributes }}</td>
+            <td class="smaller-cell link" [innerHTML]="getLinkAnchor(point)"></td>
             <td [hidden]="mode === 'compact'">{{ point.lat }}</td>
             <td [hidden]="mode === 'compact'">{{ point.long }}</td>
             <td><i class="pi pi-pencil" style="font-size: 1.5rem" (click)="editPoint(point)"></i></td>

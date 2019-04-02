@@ -23,8 +23,13 @@ export class SpListComponent implements OnInit {
     return this.mode === 'compact' && 'Últimos puntos agregados' || 'Puntos';
   }
 
+  getLinkAnchor(point: SpawnPoint) {
+    let link = `<a href="${point.link}" target="_new">${point.thirdPartyService || 'TSR'}${!!point.thirdPartyNestId && `(#${point.thirdPartyNestId})` || ''}</a>`;
+    return link;
+  }
+
   ngOnInit() {
-    this.spawnPointsService.getSpawnPointList().then(points => {
+    this.spawnPointsService.getSpawnPointList().subscribe(points => {
       this.list = points;
 
       if (this.list && this.list.length && this.list.length > 0) {
