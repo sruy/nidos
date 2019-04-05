@@ -77,3 +77,38 @@ body {
         display: none;
     }
 }
+.splash-screen {
+    background-color: $aipom;
+    width: 100%;
+    position: static;
+    height: 100vh;
+}
+.splash-screen-middle {
+    position: absolute;
+    top: calc(50% - 160px);
+    left: calc(50% - 80px);
+}
+.splash-screen-logo {
+    width: 140px;
+    height: 140px;  
+    background-image: url('/assets/images/SRUY_Logo.png');
+    background-size: 140px 140px;
+    top: 0;
+    left: 10px;
+    position: relative;
+ }
+.splash-screen-title {
+    position: relative;
+    top: 10px;
+    left: 37px;
+    color: $ambipom;
+    font-size: 2rem;
+    font-weight: 900;
+}
+.splash-screen-text {
+    color: white;
+    position: relative;
+    top: 20px;
+    left: 50px;
+    font-size: 0.7rem;
+}
