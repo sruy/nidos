@@ -119,7 +119,7 @@ mutation removePoint($pointId: Int) {
       }))
       .pipe(map((resultData) => {
         if (!!messageService) {
-          messageService.add({ severity: 'success', summary: 'Operación completada', detail: `Spawn Point "${name}" agregado!` });
+          messageService.add({ severity: 'success', summary: 'Operación completada', detail: `Spawn Point "${point.name}" agregado!` });
         }
       }));
   }

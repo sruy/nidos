@@ -61,8 +61,8 @@ export class SpCrudComponent implements OnInit {
           name: point.name,
           attributes: point.attributes || '',
           link: point.link,
-          lat: point.lat || '',
-          long: point.long || '',
+          lat: Number.parseFloat(point.lat) || 0,
+          long: Number.parseFloat(point.long) || 0,
           thirdPartyNestId: point.thirdPartyNestId || '',
           thirdPartyService: point.thirdPartyService || '',
           thirdPartyLink: point.thirdPartyLink || ''
