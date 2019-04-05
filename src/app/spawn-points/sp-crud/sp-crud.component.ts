@@ -21,13 +21,12 @@ export class SpCrudComponent implements OnInit {
   lat: number;
   long: number;
   link: URL = null;
-  nestId: string = '';
   paramPoint: SpawnPoint;
   city: City;
-  cities: {label: string, value: string}[];
-  thirdPartyNestId: any;
-  thirdPartyService: any;
-  thirdPartyLink: any;
+  cities: {label: string, value: any}[] = [];
+  thirdPartyNestId: any = '';
+  thirdPartyService: any = '';
+  thirdPartyLink: any = '';
 
   constructor(private fb: FormBuilder, private spService: SpawnPointsService, private messageService: MessageService,
     private route: ActivatedRoute, private router: Router, private citiesService: CitiesService) { }
@@ -35,7 +34,7 @@ export class SpCrudComponent implements OnInit {
   ngOnInit() {
     this.citiesService.getAllCities().subscribe(cities => {
       cities.forEach(city => {
-        this.cities.push({label: city.name, value: city.name});
+        this.cities.push({label: city.name, value: city});
       });
     });
 
@@ -54,7 +53,7 @@ export class SpCrudComponent implements OnInit {
     let pointId = this.route.snapshot.paramMap.get('pointId');
 
     if (pointId) {
-      this.spService.getSpawnPoint(pointId).then(point => {
+      this.spService.getSpawnPoint(pointId).subscribe(point => {
         this.paramPoint = point;
 
         this.form.setValue({
@@ -76,20 +75,23 @@ export class SpCrudComponent implements OnInit {
     if (this.form.valid) {
       const { name, attributes, lat, long, link, thirdPartyLink, thirdPartyNestId, thirdPartyService, city } = this.form.value;
 
+      let saveSub;
       if (this.paramPoint) {
-        this.spService.editSpawnPoint(this.paramPoint.pointId, this.form.value, this.messageService);
-
-        window.setTimeout(() => {
-          this.router.navigate(['points']);
-        }, 2500)
+        saveSub = this.spService.editSpawnPoint(this.paramPoint.pointId, this.form.value, this.messageService);
       } else {
         // New Point
-        this.spService.newSpawnPoint(new SpawnPoint(
+        saveSub = this.spService.newSpawnPoint(new SpawnPoint(
           name, attributes, lat, long, link, thirdPartyNestId, thirdPartyService, thirdPartyLink, city
         ), this.messageService);
 
         this.clearPointForm();
       }
+
+      saveSub.subscribe(result => {
+        window.setTimeout(() => {
+          this.router.navigate(['points']);
+        }, 2500);
+      })
     } else {
       this.messageService.add({ severity: 'warn', summary: '', detail: 'Chequea que los campos con (*) hayan sido rellenados.' });
     }
