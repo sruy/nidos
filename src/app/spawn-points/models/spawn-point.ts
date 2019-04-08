@@ -6,16 +6,16 @@ export class SpawnPoint {
     long: number;
     link: URL;
     name: string;
-    attributes: string;
+    description: string;
     thirdPartyNestId: string;
     thirdPartyService: string;
     thirdPartyLink: string;
     city: City;
 
-    constructor(name: string, attributes: string, lat: number, long: number, link: URL, thirdPartyNestId: string,
+    constructor(name: string, description: string, lat: number, long: number, link: URL, thirdPartyNestId: string,
         thirdPartyService: string, thirdPartyLink: string, city: any) {
         this.name = name;
-        this.attributes = attributes;
+        this.description = description;
         this.lat = lat;
         this.long = long;
         this.link = link;

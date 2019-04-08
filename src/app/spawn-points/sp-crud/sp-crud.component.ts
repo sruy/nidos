@@ -17,7 +17,7 @@ import { City } from 'src/app/nest-reports/models/city';
 export class SpCrudComponent implements OnInit {
   form: FormGroup;
   name: string = '';
-  attributes: string = '';
+  description: string = '';
   lat: number;
   long: number;
   link: URL = null;
@@ -41,7 +41,7 @@ export class SpCrudComponent implements OnInit {
     this.form = this.fb.group({
       city: [this.city, Validators.required],
       name: [this.name, Validators.required],
-      attributes: [this.attributes],
+      description: [this.description],
       link: [this.link, Validators.required],
       lat: [this.lat],
       long: [this.long],
@@ -59,7 +59,7 @@ export class SpCrudComponent implements OnInit {
         this.form.setValue({
           city: point.city,
           name: point.name,
-          attributes: point.attributes || '',
+          description: point.description || '',
           link: point.link,
           lat: Number.parseFloat(point.lat) || 0,
           long: Number.parseFloat(point.long) || 0,
@@ -73,7 +73,7 @@ export class SpCrudComponent implements OnInit {
 
   savePoint(event) {
     if (this.form.valid) {
-      const { name, attributes, lat, long, link, thirdPartyLink, thirdPartyNestId, thirdPartyService, city } = this.form.value;
+      const { name, description, lat, long, link, thirdPartyLink, thirdPartyNestId, thirdPartyService, city } = this.form.value;
 
       let saveSub;
       if (this.paramPoint) {
@@ -81,7 +81,7 @@ export class SpCrudComponent implements OnInit {
       } else {
         // New Point
         saveSub = this.spService.newSpawnPoint(new SpawnPoint(
-          name, attributes, lat, long, link, thirdPartyNestId, thirdPartyService, thirdPartyLink, city
+          name, description, lat, long, link, thirdPartyNestId, thirdPartyService, thirdPartyLink, city
         ), this.messageService);
 
         this.clearPointForm();

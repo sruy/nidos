@@ -33,6 +33,7 @@ query {
       name
     }
     name
+    description
     lat
     long
     link
@@ -51,6 +52,7 @@ query singleSpawnPoint($pointId: Int) {
       name
     }
     name
+    description
     lat
     long
     link

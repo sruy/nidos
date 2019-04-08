@@ -30,7 +30,7 @@
             <td class="smaller-cell link" [innerHTML]="getLinkAnchor(point)"></td>
             <td [hidden]="mode === 'compact'">{{ point.lat }}</td>
             <td [hidden]="mode === 'compact'">{{ point.long }}</td>
-            <td [hidden]="mode === 'compact'" class="smaller-cell">{{ point.attributes }}</td>
+            <td [hidden]="mode === 'compact'" class="smaller-cell">{{ point.description }}</td>
             <td><i class="pi pi-pencil" style="font-size: 1.5rem" (click)="editPoint(point)"></i>
               <i class="pi pi-times" style="font-size: 1.5rem" (click)="deletePoint(point)"></i>
             </td>
