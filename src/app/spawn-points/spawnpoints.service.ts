@@ -26,7 +26,7 @@ export class SpawnPointsService {
     this.backendList = this.apollo.subscribe({
       query: gql`
 query {
-  allSpawnPoints {
+  allSpawnPoints(where: {statusId: [1,3,4,5]}) {
     pointId
     city {
       id
@@ -40,6 +40,10 @@ query {
     thirdPartyService
     thirdPartyNestId
     thirdPartyLink
+    status {
+      id
+      name
+    }
   }
 }`});
 
@@ -59,6 +63,10 @@ query singleSpawnPoint($pointId: Int) {
     thirdPartyService
     thirdPartyNestId
     thirdPartyLink
+    status {
+      id
+      name
+    }
   }
 }`;
 
@@ -67,6 +75,9 @@ mutation createPoint($data: SpawnPointInput) {
   createPoint(data: $data) {
     pointId
     name
+    status {
+      name
+    }
   }
 }`;
     this.backendModify = gql`
@@ -74,6 +85,9 @@ mutation modifyPoint($pointId: Int, $data: SpawnPointInput) {
   modifyPoint(pointId: $pointId, data: $data) {
     pointId
     name
+    status {
+      name
+    }
   }
 }`;
 
@@ -102,9 +116,12 @@ mutation removePoint($pointId: Int) {
   newSpawnPoint(point: SpawnPoint, messageService?: MessageService) {
     const input: any = point;
     const cityId = point.city.id;
+    const statusId = 1;
     delete input.pointId;
     delete input.city;
+    delete input.status;
     input.cityId = cityId;
+    input.statusId = statusId;
 
     return this.apollo.mutate({
       mutation: this.backendCreate,
@@ -173,7 +190,23 @@ mutation removePoint($pointId: Int) {
       }
     })
       .pipe(map(result => {
-        console.log(result);
+        if (!!messageService) {
+          messageService.add({ severity: 'success', summary: 'Punto eliminado', detail: `Spawn point "${name}" eliminado!` });
+        }
+      }));
+  }
+
+  disableSpawnPoint(pointId: number, name: string, messageService: MessageService) {
+    return this.apollo.mutate({
+      mutation: this.backendModify,
+      variables: {
+        pointId: pointId,
+        data: {
+          statusId: 2
+        }
+      }
+    })
+      .pipe(map(result => {
         if (!!messageService) {
           messageService.add({ severity: 'success', summary: 'Punto eliminado', detail: `Spawn point "${name}" eliminado!` });
         }

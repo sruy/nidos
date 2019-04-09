@@ -63,7 +63,7 @@ export class SpListComponent implements OnInit {
 
   deletePoint(point: SpawnPoint) {
     if (!!point && point.pointId) {
-      this.spawnPointsService.deleteSpawnPoint(point.pointId, point.name, this.messageService).subscribe(result => {
+      this.spawnPointsService.disableSpawnPoint(Number.parseInt(point.pointId), point.name, this.messageService).subscribe(result => {
         this.spawnPointsService.getSpawnPointList().subscribe(points => {
           this.list = points;
           this.paginatedList = points.slice(0, this.mode !== 'compact' && 10 || 5);
