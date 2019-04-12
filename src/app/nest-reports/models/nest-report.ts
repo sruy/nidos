@@ -1,21 +1,20 @@
 import { Migration } from '../../migrations/model/migration';
 import { NestingSpecies } from './nesting-species';
 import { SpawnPoint } from '../../spawn-points/models/spawn-point';
+import { Status } from 'src/app/models/status';
 
 export class NestReport {
-    id: string;
-    city: string;
+    reportId: number;
     migration: Migration;
     spawnPoint: SpawnPoint;
     species: NestingSpecies;
     spottedBy: string;
-    status: 'confirmed' | 'pending' | 'rejected';
+    status: Status;
     confirmedBy: string;
     broadcastStatus: string;
 
-    constructor(data: {id: string, city: string, migration: Migration, spawnPoint: SpawnPoint, species: NestingSpecies, spottedBy: string, status: 'confirmed' | 'pending' | 'rejected', confirmedBy: string, broadcastStatus?: string}) {
-        this.id = data.id;
-        this.city = data.city;
+    constructor(data: {reportId: number, migration: Migration, spawnPoint: SpawnPoint, species: NestingSpecies, spottedBy: string, status: Status, confirmedBy: string, broadcastStatus?: string}) {
+        this.reportId = data.reportId;
         this.migration = data.migration;
         this.spawnPoint = data.spawnPoint;
         this.species = data.species;

@@ -1,7 +1,6 @@
 [
     {
-        "id": 1,
-        "city": "Montevideo",
+        "reportId": 1,
         "migration": {
             "id": "70",
             "visibleName": "#70"
@@ -25,8 +24,7 @@
         "broadcastStatus": "Enviado"
     },
     {
-        "id": 2,
-        "city": "Montevideo",
+        "reportId": 2,
         "migration": {
             "id": "71",
             "visibleName": "#71"
@@ -50,8 +48,7 @@
         "broadcastStatus": "Enviado"
     },
     {
-        "id": 3,
-        "city": "Montevideo",
+        "reportId": 3,
         "migration": {
             "id": "72",
             "visibleName": "#72"
@@ -75,8 +72,7 @@
         "broadcastStatus": "Enviado"
     },
     {
-        "id": 4,
-        "city":"Montevideo",
+        "reportId": 4,
         "migration": {
             "id": "76",
             "visibleName": "#76"

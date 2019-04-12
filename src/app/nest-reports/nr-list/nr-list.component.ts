@@ -46,15 +46,15 @@ export class NrListComponent implements OnInit {
   }
 
   editReport(report: NestReport) {
-    if (!!report && report.migration && report.migration.id) {
-      this.router.navigate(['/edit-report', report.id]);
+    if (!!report && report.migration && report.migration.migrationId) {
+      this.router.navigate(['/edit-report', report.reportId]);
     }
   }
 
   filterMigration(event) {
     this.migrationsService.getMigrationsList().subscribe((list) => {
       this.registeredMigrations = list.filter((migration) => {
-        return migration.id.lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
+        return migration.migrationId.lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
       }) || [];
     });
   }
@@ -63,7 +63,7 @@ export class NrListComponent implements OnInit {
     this.migration = event;
     this.nestReportsService.getNestReportsList().then((list) => {
       this.paginatedList = list.filter((report: NestReport) => {
-        return report.migration.id === event.id;
+        return report.migration.migrationId === event.id;
       });
     });
   }

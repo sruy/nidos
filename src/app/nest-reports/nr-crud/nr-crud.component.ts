@@ -70,7 +70,7 @@ export class NrCrudComponent implements OnInit {
 
     this.form = this.fb.group({
       city: [this.city, Validators.required],
-      migration: [this.migration && this.migration.id, Validators.required],
+      migration: [this.migration && this.migration.migrationId, Validators.required],
       spawnPoint: [this.spawnPoint && this.spawnPoint.pointId, Validators.required],
       species: [this.species && this.species.id, Validators.required],
       spottedBy: [this.spottedBy, Validators.required],
@@ -88,7 +88,6 @@ export class NrCrudComponent implements OnInit {
         if (!!report) {
           this.editingReport = !this.editingReport;
           this.form.setValue({
-            city: report.city,
             migration: report.migration,
             spawnPoint: report.spawnPoint,
             species: report.species,
@@ -113,7 +112,7 @@ export class NrCrudComponent implements OnInit {
   searchMigration(event: any) {
     this.mgService.getMigrationsList().subscribe((list) => {
       this.registeredMigrations = list.filter((migration) => {
-        return migration.id.toString().lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
+        return migration.migrationId.toString().lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
       }) || [];
     });
   }
@@ -149,7 +148,7 @@ export class NrCrudComponent implements OnInit {
   saveReport(event) {
     if (this.form.valid) {
       if (this.paramReport && this.editingReport) {
-        this.nrService.editReport(this.paramReport.id, this.form.value, this.messageService);
+        this.nrService.editReport(this.paramReport.reportId, this.form.value, this.messageService);
       } else {
         this.nrService.newReport(new NestReport(<NestReport>this.form.value), this.messageService);
 

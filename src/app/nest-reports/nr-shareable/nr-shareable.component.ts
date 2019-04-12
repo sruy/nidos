@@ -27,7 +27,7 @@ export class NrShareableComponent implements OnInit {
 
     let reports = await this.nestReportsService.getNestReportsList();
 
-    this.nestReports = reports && reports.filter((report: NestReport) => this.migration && report.migration.id === this.migration.id);
+    this.nestReports = reports && reports.filter((report: NestReport) => this.migration && report.migration.migrationId === this.migration.migrationId);
   }
 
   orderBy(order: string, direction: boolean) {
@@ -43,9 +43,9 @@ export class NrShareableComponent implements OnInit {
       });
     } else if(order === 'date') {
       this.nestReports.sort((a, b) => {
-        if (a.id < b.id) {
+        if (a.reportId < b.reportId) {
           return direction && -1 || 1;
-        } else if (a.id > b.id) {
+        } else if (a.reportId > b.reportId) {
           return direction && 1 || -1;
         } else {
           return 0;

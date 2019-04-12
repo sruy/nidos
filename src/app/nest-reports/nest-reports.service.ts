@@ -36,7 +36,7 @@ export class NestReportsService {
       let report: NestReport;
 
       list.forEach((eachReport: NestReport) => {
-        if (+(eachReport.id) === reportId) {
+        if (+(eachReport.reportId) === reportId) {
           report = eachReport;
         }
       });
@@ -57,7 +57,7 @@ export class NestReportsService {
       })
       .then(() => {
         if (NestReportsService.id) {
-          report.id = '' + (++NestReportsService.id);
+          report.reportId = (++NestReportsService.id);
         }
 
         this.store.save('nestReports', report);
@@ -68,7 +68,7 @@ export class NestReportsService {
       });
   }
 
-  editReport(reportId: string, values: any, messageService: MessageService) {
+  editReport(reportId: number, values: any, messageService: MessageService) {
     return this.http.put('https://jsonplaceholder.typicode.com/todos/' + reportId, values)
       .toPromise()
       .then(() => {
@@ -76,7 +76,7 @@ export class NestReportsService {
         let found = -1;
 
         reports.forEach((report: NestReport, index: number) => {
-          if (report.id === reportId) {
+          if (report.reportId === reportId) {
             found = index;
           }
         });
