@@ -18,46 +18,68 @@ export class MigrationsService {
   backendSingle: string;
   backendCreate: string;
   backendModify: string;
+  backendRemove: string;
 
   constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) {
-    this.backendList = this.apollo.watchQuery({
+    this.backendList = this.apollo.subscribe({
       query: gql`
 query {
-  getAllMigrations {
-    id
+  getAllMigrations(where: {statusId: [1,3,4,5]}) {
+    migrationId
     visibleName
     startDate
     endDate
     comments
+    status {
+      id
+      name
+    }
   }
-}`}).valueChanges;
+}`});
 
     this.backendCreate = gql`
 mutation createMigration($data: MigrationInput) {
   createMigration(data: $data) {
-    id
+    migrationId
     visibleName
+    status {
+      name
+    }
   }
 }`;
 
     this.backendSingle = gql`
-  query getMigration($id: Int) {
-    getMigration(id: $id) {
-      id
+query getMigration($id: Int) {
+    getMigration(migrationId: $id) {
+      migrationId
       visibleName
       startDate
       endDate
       comments
+      status {
+        id
+        name
+      }
     }
   }`;
 
     this.backendModify = gql`
-  mutation modifyMigration($id: Int, $data: MigrationInput) {
+mutation modifyMigration($id: Int, $data: MigrationInput) {
     modifyMigration(id: $id, data: $data) {
-      id
+      migrationId
+      status {
+        name
+      }
     }
   }`;
 
+    this.backendRemove = gql`
+mutation removeMigration($id: Int) {
+  removeMigration(id: $id) {
+    migrationId
+    visibleName
+  }
+}`;
   }
 
   getMigrationsList() {
@@ -78,7 +100,7 @@ mutation createMigration($data: MigrationInput) {
     return this.apollo.watchQuery({
       query: this.backendSingle,
       variables: {
-        id: migrationId
+        migrationId: migrationId
       }
     }).valueChanges
       .pipe(map(result => {
@@ -95,7 +117,10 @@ mutation createMigration($data: MigrationInput) {
 
   newMigration(migration: Migration, messageService?: MessageService) {
     const input: any = migration;
-    delete input.id;
+    const statusId = 1;
+    delete input.migrationId;
+    delete input.status;
+    input.statusId = statusId;
 
     return this.apollo.mutate({
       mutation: this.backendCreate,
@@ -119,6 +144,7 @@ mutation createMigration($data: MigrationInput) {
 
   editMigration(migrationId: string, values: any, messageService: MessageService) {
     const input = values;
+    delete input.migrationId;
     delete input.id;
 
     return this.apollo.mutate({
@@ -132,5 +158,36 @@ mutation createMigration($data: MigrationInput) {
         messageService.add({ severity: 'success', summary: 'Edición completada', detail: `Migración "${values.visibleName}" editada!` });
       }
     }));
+  }
+
+  deleteMigration(id: string, name: string, messageService: MessageService) {
+    return this.apollo.mutate({
+      mutation: this.backendRemove,
+      variables: {
+        id: id
+      }
+    })
+      .pipe(map(result => {
+        if (!!messageService) {
+          messageService.add({ severity: 'success', summary: 'Migración eliminada', detail: `Migración "${name}" eliminada!` });
+        }
+      }));
+  }
+
+  disableMigration(id: number, name: string, messageService: MessageService) {
+    return this.apollo.mutate({
+      mutation: this.backendModify,
+      variables: {
+        id: id,
+        data: {
+          statusId: 2
+        }
+      }
+    })
+      .pipe(map(result => {
+        if (!!messageService) {
+          messageService.add({ severity: 'success', summary: 'Migración eliminada', detail: `Migración "${name}" eliminada!` });
+        }
+      }));
   }
 }

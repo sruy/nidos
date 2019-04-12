@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Migration } from '../model/migration';
 import { MigrationsService } from '../migrations.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-mg-list',
@@ -13,7 +14,8 @@ export class MgListComponent implements OnInit {
   list: Migration[] = [];
   paginatedList: Migration[] = [];
 
-  constructor(private migrationsService: MigrationsService, private router: Router) { }
+  constructor(private migrationsService: MigrationsService, private router: Router,
+    private messageService: MessageService) { }
 
   get listTitle() {
     return this.mode === 'compact' && 'Últimas migraciones agregadas' || 'Migraciones de nidos';
@@ -34,8 +36,19 @@ export class MgListComponent implements OnInit {
   }
 
   editMigration(migration: Migration) {
-    if (!!migration && migration.id) {
-      this.router.navigate(['/edit-migration', migration.id]);
+    if (!!migration && migration.migrationId) {
+      this.router.navigate(['/edit-migration', migration.migrationId]);
+    }
+  }
+
+  deleteMigration(migration: Migration) {
+    if (!!migration && migration.migrationId) {
+      this.migrationsService.disableMigration(Number.parseInt(migration.migrationId), migration.visibleName, this.messageService).subscribe(result => {
+        this.migrationsService.getMigrationsList().subscribe(points => {
+          this.list = points;
+          this.paginatedList = points.slice(0, this.mode !== 'compact' && 10 || 5);
+        })
+      });
     }
   }
 }

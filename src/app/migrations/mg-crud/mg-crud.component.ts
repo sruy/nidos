@@ -39,7 +39,7 @@ export class MgCrudComponent implements OnInit {
         this.form.addControl('id', new FormControl(migrationId));
         
         this.form.setValue({
-          id: migration.id,
+          id: migration.migrationId,
           visibleName: migration.visibleName,
           startDate: migration.startDate.toDate() || '',
           endDate: migration.endDate.toDate() || '',
@@ -57,7 +57,7 @@ export class MgCrudComponent implements OnInit {
 
       let saveSub;
       if (this.paramMigration) {
-        saveSub = this.mgService.editMigration(this.paramMigration.id, this.form.value, this.messageService);
+        saveSub = this.mgService.editMigration(this.paramMigration.migrationId, this.form.value, this.messageService);
       } else {
         // New migration
         saveSub = this.mgService.newMigration(new Migration(
