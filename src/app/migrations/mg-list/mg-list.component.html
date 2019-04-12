@@ -28,7 +28,7 @@
             <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ migration.visibleName }}</td>
             <td [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{
               migration.startDate | date: 'dd/MM/yyyy'}}</td>
-            <td>{{ migration.endDate | date:'dd/MM/yyyy' }}</td>
+            <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ migration.endDate | date:'dd/MM/yyyy' }}</td>
             <td [hidden]="mode === 'compact'">{{ migration.comments }}</td>
             <td><i class="pi pi-pencil" style="font-size: 2rem" (click)="editMigration(migration)"></i></td>
           </tr>

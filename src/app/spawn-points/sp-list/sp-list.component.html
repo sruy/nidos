@@ -20,7 +20,7 @@
             <th [hidden]="mode === 'compact'">Latitud</th>
             <th [hidden]="mode === 'compact'">Longitud</th>
             <th [hidden]="mode === 'compact'" class="compact-header">Referencias</th>
-            <th class="options-header" style="width: 75px"></th>
+            <th class="options-header" [ngStyle]="{ width: mode !== 'compact' && '75px' }"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-point>
@@ -31,8 +31,9 @@
             <td [hidden]="mode === 'compact'">{{ point.lat }}</td>
             <td [hidden]="mode === 'compact'">{{ point.long }}</td>
             <td [hidden]="mode === 'compact'" class="smaller-cell">{{ point.description }}</td>
-            <td><i class="pi pi-pencil" style="font-size: 1.5rem" (click)="editPoint(point)"></i>
-              <i class="pi pi-times" style="font-size: 1.5rem" (click)="deletePoint(point)"></i>
+            <td>
+              <span><i class="pi pi-pencil" style="font-size: 1.5rem" (click)="editPoint(point)"></i></span>
+              <span [hidden]="mode === 'compact'"><i class="pi pi-times" style="font-size: 1.5rem" (click)="deletePoint(point)"></i></span>
             </td>
           </tr>
         </ng-template>

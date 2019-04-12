@@ -1,11 +1,9 @@
+<app-top-header></app-top-header>
 <div class="ui-g" style="padding: 0;">
-  <div class="ui-g-12" style="padding: 0;">
-    <app-top-header></app-top-header>
-  </div>
-  <div class="ui-g-12" style="padding-bottom: 0">
+  <div class="ui-g-12 main-menu">
     <p-menubar [model]="menuItems"></p-menubar>
   </div>
-  <div class="ui-g-12" style="padding-top: 0">
+  <div class="ui-g-12 main-content">
     <router-outlet></router-outlet>
   </div>
 </div>

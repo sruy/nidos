@@ -33,16 +33,33 @@ export class SpListComponent implements OnInit {
   }
 
   ngOnInit() {
+    const sortAsc = (property) => (first, second) => {
+      if (first[property] > second[property]) {
+        return 1;
+      } else if (first[property] < second[property]) {
+        return -1;
+      } else {
+        return 0;
+      }
+    };
+
+    const sortDesc = (property) => (first, second) => {
+      if (first[property] < second[property]) {
+        return 1;
+      } else if (first[property] > second[property]) {
+        return -1;
+      } else {
+        return 0;
+      }
+    };
+
     this.spawnPointsService.getSpawnPointList().subscribe(points => {
-      this.list = points.sort((first, second) => {
-        if (first.name > second.name) {
-          return 1;
-        } else if (first.name < second.name) {
-          return -1
-        } else {
-          return 0;
-        }
-      });
+      if (this.mode === 'compact') {
+        this.list = points.sort(sortDesc('pointId'));
+      } else {
+        this.list = points.sort(sortAsc('name'));
+      } 
+
       this.totalRecords = points.length;
 
       if (this.list && this.list.length && this.list.length > 0) {

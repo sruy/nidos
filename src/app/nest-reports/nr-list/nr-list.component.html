@@ -32,7 +32,7 @@
             <th [hidden]="!!migration" class="smaller-header">Migración</th>
             <th>Punto</th>
             <th>Especie</th>
-            <th class="smaller-header">Encontrado por</th>
+            <th [hidden]="mode === 'compact'" class="smaller-header">Encontrado por</th>
             <th [hidden]="mode === 'compact'">Estado</th>
             <th [hidden]="mode === 'compact'">Enviado</th>
             <th class="options-header"></th>
@@ -41,9 +41,9 @@
         <ng-template pTemplate="body" let-report>
           <tr>
             <td [hidden]="!!migration">{{ report?.migration?.visibleName }}</td>
-            <td>{{ report?.spawnPoint?.name }}</td>
+            <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ report?.spawnPoint?.name }}</td>
             <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ report?.species?.name }}</td>
-            <td [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{
+            <td [hidden]="mode === 'compact'" [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{
               report.spottedBy }}</td>
             <td [hidden]="mode === 'compact'">{{ report.status }}</td>
             <td [hidden]="mode === 'compact'">{{ report.broadcastStatus }}</td>

@@ -12,6 +12,18 @@ body {
     margin: 0;
     font-size: 0.8rem; // tamaño de texto por defecto
     height: 100vh;
+    overflow-y: hidden;
+}
+.main-content {
+    position: absolute; 
+    top: 100px; 
+    padding-top: 0 !important; 
+    overflow-y: scroll; 
+    height: 100vh; 
+    padding-bottom: 100px !important;
+}
+.main-menu {
+    padding-bottom: 0;
 }
 .table-overriden {
     .ui-table .ui-table-thead { // estilos de encabezados de tabla
@@ -73,6 +85,13 @@ body {
     }
 }
 @media (min-width: 320px) and (max-width: 480px) {
+    .main-menu {
+        display: none;
+    }
+    .main-content {
+        top: 45px;
+        padding-bottom: 45px !important;
+    }
     .ui-menubar {
         display: none;
     }
