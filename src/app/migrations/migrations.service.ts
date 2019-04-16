@@ -21,8 +21,7 @@ export class MigrationsService {
   backendRemove: string;
 
   constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) {
-    this.backendList = this.apollo.subscribe({
-      query: gql`
+    this.backendList = gql`
 query {
   getAllMigrations(where: {statusId: [1,3,4,5]}) {
     migrationId
@@ -35,7 +34,7 @@ query {
       name
     }
   }
-}`});
+}`;
 
     this.backendCreate = gql`
 mutation createMigration($data: MigrationInput) {
@@ -83,7 +82,9 @@ mutation removeMigration($id: Int) {
   }
 
   getMigrationsList() {
-    return this.backendList
+    return this.apollo.subscribe({
+      query: this.backendList
+    })
       .pipe(map(result => {
         const flatten = <Migration[]>(<any>(<any>result).data).getAllMigrations;
 
