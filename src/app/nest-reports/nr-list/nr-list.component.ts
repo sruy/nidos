@@ -55,7 +55,7 @@ export class NrListComponent implements OnInit {
   filterMigration(event) {
     this.migrationsService.getMigrationsList().subscribe((list) => {
       this.registeredMigrations = list.filter((migration) => {
-        return migration.migrationId.lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
+        return ("" + migration.migrationId).lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
       }) || [];
     });
   }
@@ -64,7 +64,7 @@ export class NrListComponent implements OnInit {
     this.migration = event;
     this.nestReportsService.getNestReportsList().subscribe((list) => {
       this.paginatedList = list.filter((report: NestReport) => {
-        return report.migration.migrationId === event.id;
+        return report.migration.migrationId === event.migrationId;
       });
     });
   }
