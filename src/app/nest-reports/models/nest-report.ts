@@ -10,16 +10,16 @@ export class NestReport {
     species: NestingSpecies;
     spottedBy: string;
     status: Status;
-    confirmedBy: string;
+    confirmedBy: any;
     broadcastStatus: string;
 
-    constructor(data: {reportId: number, migration: Migration, spawnPoint: SpawnPoint, species: NestingSpecies, spottedBy: string, status: Status, confirmedBy: string, broadcastStatus?: string}) {
+    constructor(data: {reportId: number, migration: Migration, spawnPoint: SpawnPoint, species: NestingSpecies, spottedBy: string, status?: Status, confirmedBy: any, broadcastStatus?: string}) {
         this.reportId = data.reportId;
         this.migration = data.migration;
         this.spawnPoint = data.spawnPoint;
         this.species = data.species;
         this.spottedBy = data.spottedBy;
-        this.status = data.status;
+        this.status = data.status || new Status(1, 'Enabled');
         this.confirmedBy = data.confirmedBy;
         this.broadcastStatus = data.broadcastStatus;
     }

@@ -21,13 +21,7 @@ export class NrShareableComponent implements OnInit {
     private nestReportsService: NestReportsService) { }
 
   async getNestReportInfo() {
-    this.migrationsService.getMigrationsList().subscribe(migrations => {
-      this.migration = migrations && migrations.filter(migration => moment(migration.endDate) >= moment())[0] || migrations[migrations.length - 1];
-    });
-
-    let reports = await this.nestReportsService.getNestReportsList();
-
-    this.nestReports = reports && reports.filter((report: NestReport) => this.migration && report.migration.migrationId === this.migration.migrationId);
+    
   }
 
   orderBy(order: string, direction: boolean) {
@@ -55,7 +49,13 @@ export class NrShareableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getNestReportInfo();
+    this.migrationsService.getMigrationsList().subscribe(migrations => {
+      this.migration = migrations && migrations.filter(migration => moment(migration.endDate) >= moment())[0] || migrations[migrations.length - 1];
+    });
+
+    this.nestReportsService.getNestReportsList({filterDisabled: true}).subscribe(reports => {
+      this.nestReports = reports && reports.filter((report: NestReport) => this.migration && report.migration.migrationId === this.migration.migrationId);
+    });
   }
 
   getReportPathImage(report: NestReport) {

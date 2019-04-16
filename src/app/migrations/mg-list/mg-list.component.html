@@ -11,7 +11,7 @@
     </div>
     <div class="ui-g-12" style="padding: 0;">
       <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
-        [totalRecords]="mode !== 'compact' && 5 || list.length" (onLazyLoad)="paginateMigrations($event)" class="table-overriden">
+        [totalRecords]="totalRecords" (onLazyLoad)="paginateMigrations($event)" class="table-overriden">
         <ng-template pTemplate="header">
           <tr>
             <th [hidden]="mode === 'compact'" class="smaller-header">Identificador</th>

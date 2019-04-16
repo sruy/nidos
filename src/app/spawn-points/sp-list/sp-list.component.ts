@@ -7,6 +7,7 @@ import { SpawnPoint } from '../models/spawn-point';
 import { SpawnPointsService } from '../spawnpoints.service';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { sortDesc, sortAsc } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-sp-list',
@@ -33,26 +34,6 @@ export class SpListComponent implements OnInit {
   }
 
   ngOnInit() {
-    const sortAsc = (property) => (first, second) => {
-      if (first[property] > second[property]) {
-        return 1;
-      } else if (first[property] < second[property]) {
-        return -1;
-      } else {
-        return 0;
-      }
-    };
-
-    const sortDesc = (property) => (first, second) => {
-      if (first[property] < second[property]) {
-        return 1;
-      } else if (first[property] > second[property]) {
-        return -1;
-      } else {
-        return 0;
-      }
-    };
-
     this.spawnPointsService.getSpawnPointList().subscribe(points => {
       if (this.mode === 'compact') {
         this.list = points.sort(sortDesc('pointId'));

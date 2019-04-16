@@ -4,6 +4,7 @@ import { NestReportsService } from '../nest-reports.service';
 import { Router } from '@angular/router';
 import { Migration } from '../../migrations/model/migration';
 import { MigrationsService } from '../../migrations/migrations.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-nr-list',
@@ -18,7 +19,7 @@ export class NrListComponent implements OnInit {
   migration: Migration;
 
   constructor(private nestReportsService: NestReportsService, private router: Router,
-    private migrationsService: MigrationsService) { }
+    private migrationsService: MigrationsService, private messageService: MessageService) { }
 
   get listTitle() {
     return this.mode === 'compact' && 'Últimos reportes de nidos' || 
@@ -26,7 +27,7 @@ export class NrListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.nestReportsService.getNestReportsList().then(reports => {
+    this.nestReportsService.getNestReportsList().subscribe(reports => {
       this.list = reports;
 
       if (this.list && this.list.length && this.list.length > 0) {
@@ -61,7 +62,7 @@ export class NrListComponent implements OnInit {
 
   filterReportsByMigration(event) {
     this.migration = event;
-    this.nestReportsService.getNestReportsList().then((list) => {
+    this.nestReportsService.getNestReportsList().subscribe((list) => {
       this.paginatedList = list.filter((report: NestReport) => {
         return report.migration.migrationId === event.id;
       });
@@ -71,5 +72,16 @@ export class NrListComponent implements OnInit {
   resetReportList() {
     this.migration = null;
     this.paginatedList = this.list.slice(0, 10);
+  }
+
+  deleteReport(report: NestReport) {
+    if (!!report && report.reportId) {
+      this.nestReportsService.disableReport(report.reportId, report.species.name, this.messageService).subscribe(result => {
+        this.nestReportsService.getNestReportsList().subscribe(points => {
+          this.list = points;
+          this.resetReportList();
+        })
+      });
+    }
   }
 }

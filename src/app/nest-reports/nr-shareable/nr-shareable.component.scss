@@ -71,7 +71,7 @@
     font-weight: bold;
     font-size: 1rem;
 }
-.point {
+.point, .point > a, .point > a:active, .point > a:visited {
     color: white;
     font-weight: 600;
     font-size: 0.7rem;
@@ -119,6 +119,7 @@
         text-align: right;
         font-size: 1.5rem;
         color: green;
+        margin-top: -10px;
         
         > i.pi-eye, > i.pi-eye-slash {
             margin-top: 10px;
@@ -141,13 +142,17 @@
         height: 140px;
     }
     .image-container {
-        width: 70px;
-        height: 70px;
-        top: initial;
+        width: 100px;
+        height: 110px;
+        top: 60px;
+        left: 45px;
         bottom: -20px;
     }
     .report-image {
-        width: 60px;
+        width: 120px;
+        top: -25px;
+        left: -20px;
+        z-index: 2;
     }
 }
 @media (min-width: 780px) {

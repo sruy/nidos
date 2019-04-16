@@ -97,12 +97,12 @@ mutation removeMigration($id: Int) {
   }
 
   getMigration(migrationId: number) {
-    return this.apollo.watchQuery({
+    return this.apollo.subscribe({
       query: this.backendSingle,
       variables: {
         migrationId: migrationId
       }
-    }).valueChanges
+    })
       .pipe(map(result => {
         const flatten = (<any>(<any>result).data).getMigration;
 
