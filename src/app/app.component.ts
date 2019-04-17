@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { Gtag } from 'angular-gtag';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,8 @@ export class AppComponent implements OnInit {
 
   menuItems: MenuItem[];
 
+  constructor(gtag: Gtag) {}
+  
   ngOnInit() {
     this.menuItems = [
       {

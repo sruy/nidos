@@ -49,6 +49,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { NoCrudComponent } from './notifications/no-crud/no-crud.component';
 import { NrShareableComponent } from './nest-reports/nr-shareable/nr-shareable.component';
 import { GraphQLModule } from './graphql.module';
+import { GtagModule } from 'angular-gtag';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { GraphQLModule } from './graphql.module';
     MenubarModule,
     HttpClientModule,
     NoopAnimationsModule,
-    ServicesModule
+    ServicesModule,
+    GtagModule.forRoot({ trackingId: 'UA-138490555-1', trackPageviews: true})
   ],
   providers: [{
     provide: MessageService, useClass: MessageService
