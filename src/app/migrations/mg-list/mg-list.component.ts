@@ -48,7 +48,7 @@ export class MgListComponent implements OnInit, OnDestroy {
   }
 
   paginateMigrations(event) {
-    this.paginatedList = this.list.slice(event.first, (!!event.first && event.first * event.rows) || event.rows);
+    this.paginatedList = this.list.slice(event.first, (!!event.first && event.first + event.rows) || event.rows);
   }
 
   editMigration(migration: Migration) {

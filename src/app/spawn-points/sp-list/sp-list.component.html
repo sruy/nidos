@@ -10,8 +10,8 @@
       </div>
     </div>
     <div class="ui-g-12" style="padding: 0;">
-      <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
-        [totalRecords]="mode !== 'compact' && 5 || totalRecords" (onLazyLoad)="paginatePoints($event)" class="table-overriden" #list>
+      <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 10 || 5" [paginator]="mode !== 'compact'"
+        [totalRecords]="totalRecords" (onLazyLoad)="paginatePoints($event)" class="table-overriden" #list>
         <ng-template pTemplate="header">
           <tr>
             <th>Ciudad</th>

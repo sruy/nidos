@@ -17,6 +17,7 @@ export class NrListComponent implements OnInit {
   paginatedList: NestReport[];
   registeredMigrations: Migration[];
   migration: Migration;
+  totalRecords: number;
 
   constructor(private nestReportsService: NestReportsService, private router: Router,
     private migrationsService: MigrationsService, private messageService: MessageService) { }
@@ -30,6 +31,8 @@ export class NrListComponent implements OnInit {
     this.nestReportsService.getNestReportsList().subscribe(reports => {
       this.list = reports;
 
+      this.totalRecords = reports.length;
+      
       if (this.list && this.list.length && this.list.length > 0) {
         this.paginatedList = this.list.slice(0, this.mode !== 'compact' && 10 || 5);
       }
@@ -42,7 +45,7 @@ export class NrListComponent implements OnInit {
 
   paginateReports(event) {
     if (this.list) {
-      this.paginatedList = this.list.slice(event.first, (!!event.first && event.first * event.rows) || event.rows);
+      this.paginatedList = this.list.slice(event.first, (!!event.first && event.first + event.rows) || event.rows);
     }
   }
 

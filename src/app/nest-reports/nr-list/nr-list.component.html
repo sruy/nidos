@@ -25,8 +25,8 @@
       </div>
     </div>
     <div class="ui-g-12" style="padding: 0;">
-      <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 5 || 10" [paginator]="mode !== 'compact'"
-        [totalRecords]="mode !== 'compact' && 5 || list?.length" (onLazyLoad)="paginateReports($event)" class="table-overriden">
+      <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 10 || 5" [paginator]="mode !== 'compact'"
+        [totalRecords]="totalRecords" (onLazyLoad)="paginateReports($event)" class="table-overriden">
         <ng-template pTemplate="header">
           <tr>
             <th [hidden]="!!migration" class="smaller-header">Migración</th>
