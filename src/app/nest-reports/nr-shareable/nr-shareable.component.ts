@@ -50,7 +50,13 @@ export class NrShareableComponent implements OnInit {
 
   ngOnInit() {
     this.migrationsService.getMigrationsList().subscribe(migrations => {
-      this.migration = migrations && migrations.filter(migration => moment(migration.endDate) >= moment())[0] || migrations[migrations.length - 1];
+      this.migration = migrations && migrations.filter(migration => {
+        const todayMigrationHour = moment().hours(21).minutes(0);
+        const startDate = moment(Number.parseInt(<any>migration.startDate));
+        const endDate = moment(Number.parseInt(<any>migration.endDate));
+        
+        return startDate.hours(21).minutes(0) <= todayMigrationHour && endDate.hours(21).minutes(0) > moment();
+      })[0] || migrations[migrations.length - 1];
     });
 
     this.nestReportsService.getNestReportsList({filterDisabled: true}).subscribe(reports => {
