@@ -13,7 +13,6 @@ import { FetchType } from 'apollo-client';
   providedIn: 'root'
 })
 export class SpawnPointsService {
-  staticAssets = this.http.get('/assets/spawnpoints.json');
   backendList: Observable<any>;
   backendSingle: string;
   backendCreate: string;

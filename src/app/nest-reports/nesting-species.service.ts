@@ -10,8 +10,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class NestingSpeciesService {
-  // ToDo: by now, read all species only from the JSON file
-  staticAssets = this.http.get('/assets/nestingspecies.json');
   backendData: Observable<any>;
 
   constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) { 

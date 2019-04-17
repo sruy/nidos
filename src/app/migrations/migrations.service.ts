@@ -13,7 +13,6 @@ import { flatten } from '@angular/router/src/utils/collection';
   providedIn: 'root'
 })
 export class MigrationsService {
-  staticAssets = this.http.get('/assets/migrations.json');
   backendList: Observable<any>;
   backendSingle: string;
   backendCreate: string;
