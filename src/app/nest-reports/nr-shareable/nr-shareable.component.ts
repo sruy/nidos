@@ -4,6 +4,8 @@ import { NestReport } from '../models/nest-report';
 import { NestReportsService } from '../nest-reports.service';
 import { MigrationsService } from 'src/app/migrations/migrations.service';
 import * as moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
+import { sortAsc, sortDesc } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-nr-shareable',
@@ -18,11 +20,7 @@ export class NrShareableComponent implements OnInit {
   dateOrder: boolean;
 
   constructor(private migrationsService: MigrationsService,
-    private nestReportsService: NestReportsService) { }
-
-  async getNestReportInfo() {
-    
-  }
+    private nestReportsService: NestReportsService, private route: ActivatedRoute) { }
 
   orderBy(order: string, direction: boolean) {
     if (order === 'abc') {
@@ -35,33 +33,40 @@ export class NrShareableComponent implements OnInit {
           return 0;
         }
       });
-    } else if(order === 'date') {
-      this.nestReports.sort((a, b) => {
-        if (a.reportId < b.reportId) {
-          return direction && -1 || 1;
-        } else if (a.reportId > b.reportId) {
-          return direction && 1 || -1;
-        } else {
-          return 0;
-        }
-      });
+    } else if (order === 'date') {
+      this.nestReports.sort(direction ? sortAsc('reportId') : sortDesc('reportId'));
     }
   }
 
   ngOnInit() {
-    this.migrationsService.getMigrationsList().subscribe(migrations => {
-      this.migration = migrations && migrations.filter(migration => {
-        const todayMigrationHour = moment().hours(21).minutes(0);
-        const startDate = moment(Number.parseInt(<any>migration.startDate));
-        const endDate = moment(Number.parseInt(<any>migration.endDate));
-        
-        return startDate.hours(21).minutes(0) <= todayMigrationHour && endDate.hours(21).minutes(0) > moment();
-      })[0] || migrations[migrations.length - 1];
-    });
+    const migrations = this.route.snapshot.data['migrations'];
+    const nestReports = this.route.snapshot.data['nestReports'];
 
-    this.nestReportsService.getNestReportsList({filterDisabled: true}).subscribe(reports => {
-      this.nestReports = reports && reports.filter((report: NestReport) => this.migration && report.migration.migrationId === this.migration.migrationId);
-    });
+    if (migrations) {
+      this.migration = this.retrieveActiveMigration(migrations);
+    } else {
+      this.migrationsService.getMigrationsList().subscribe(migrations => {
+        this.migration = this.retrieveActiveMigration(migrations);
+      });
+    }
+
+    if (nestReports) {
+      this.nestReports = nestReports;
+    } else {
+      this.nestReportsService.getNestReportsList({ filterDisabled: true }).subscribe(reports => {
+        this.nestReports = reports && reports.filter((report: NestReport) => this.migration && report.migration.migrationId === this.migration.migrationId);
+      });
+    }
+  }
+
+  retrieveActiveMigration(migrations: Migration[]): Migration {
+    return migrations && migrations.filter(migration => {
+      const todayMigrationHour = moment().hours(21).minutes(0);
+      const startDate = moment(Number.parseInt(<any>migration.startDate));
+      const endDate = moment(Number.parseInt(<any>migration.endDate));
+
+      return startDate.hours(21).minutes(0) <= todayMigrationHour && endDate.hours(21).minutes(0) > moment();
+    })[0] || migrations[migrations.length - 1];
   }
 
   getReportPathImage(report: NestReport) {
@@ -87,5 +92,4 @@ export class NrShareableComponent implements OnInit {
     window.open('http://bit.do/sruy', '_blank');
     return false;
   }
-
 }
