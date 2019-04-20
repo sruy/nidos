@@ -35,7 +35,7 @@
             <th [hidden]="mode === 'compact'" class="smaller-header">Encontrado por</th>
             <th [hidden]="mode === 'compact'">Estado</th>
             <th [hidden]="mode === 'compact'">Enviado</th>
-            <th class="options-header" [ngStyle]="{ width: mode !== 'compact' && '75px' }"></th>
+            <th class="options-header" [ngStyle]="{ width: mode !== 'compact' && '60px' }"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
@@ -47,9 +47,11 @@
               report.spottedBy }}</td>
             <td [hidden]="mode === 'compact'">{{ report.status.name }}</td>
             <td [hidden]="mode === 'compact'">{{ report.broadcastStatus }}</td>
-            <td>
+            <td style="padding-left: 0.2rem; padding-right: 0.2rem">
               <span><i class="pi pi-pencil" style="font-size: 1.5rem" (click)="editReport(report)"></i></span>
-              <span [hidden]="mode === 'compact'"><i class="pi pi-times" style="font-size: 1.5rem" (click)="deleteReport(report)"></i></span>
+              <span [hidden]="mode === 'compact'" *ngIf="!isConfirmed(report)"><i class="pi pi-check" style="font-size: 1.5rem; color: #2f9c0a" (click)="confirmReport(report)"></i></span>
+              <span [hidden]="mode === 'compact'" *ngIf="!isRejected(report)"><i class="pi pi-ban" style="font-size: 1.5rem; color: #c92c2c" (click)="rejectReport(report)"></i></span>
+              <span [hidden]="mode === 'compact'" *ngIf="!isRejected(report)"><i class="pi pi-times" style="font-size: 1.5rem" (click)="deleteReport(report)"></i></span>
             </td>
           </tr>
         </ng-template>

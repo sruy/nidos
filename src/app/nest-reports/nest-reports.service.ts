@@ -267,4 +267,38 @@ mutation removeReport($id: Int) {
         }
       }));
   }
+
+  confirmReport(reportId: number, name: string, messageService: MessageService) {
+    return this.apollo.mutate({
+      mutation: this.backendModify,
+      variables: {
+        id: reportId,
+        data: {
+          statusId: 3
+        }
+      }
+    })
+      .pipe(map(result => {
+        if (!!messageService) {
+          messageService.add({ severity: 'success', summary: 'Reporte confirmado', detail: `Reporte "${name}" confirmado!` });
+        }
+      }));
+  }
+
+  rejectReport(reportId: number, name: string, messageService: MessageService) {
+    return this.apollo.mutate({
+      mutation: this.backendModify,
+      variables: {
+        id: reportId,
+        data: {
+          statusId: 5
+        }
+      }
+    })
+      .pipe(map(result => {
+        if (!!messageService) {
+          messageService.add({ severity: 'success', summary: 'Reporte rechazado', detail: `Reporte "${name}" rechazado!` });
+        }
+      }));
+  }
 }

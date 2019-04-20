@@ -83,8 +83,34 @@ export class NrListComponent implements OnInit {
         this.nestReportsService.getNestReportsList().subscribe(points => {
           this.list = points;
           this.resetReportList();
-        })
+        });
       });
     }
+  }
+
+  isConfirmed(report: NestReport) {
+    return report.status.id === 1 || report.status.id === 3;
+  }
+
+  isRejected(report: NestReport) {
+    return report.status.id === 2 || report.status.id === 5;
+  }
+
+  confirmReport(report: NestReport) {
+    this.nestReportsService.confirmReport(report.reportId, report.species.name, this.messageService).subscribe(result => {
+      this.nestReportsService.getNestReportsList().subscribe(points => {
+        this.list = points;
+        this.resetReportList();
+      });
+    });
+  }
+
+  rejectReport(report: NestReport) {
+    this.nestReportsService.rejectReport(report.reportId, report.species.name, this.messageService).subscribe(result => {
+      this.nestReportsService.getNestReportsList().subscribe(points => {
+        this.list = points;
+        this.resetReportList();
+      });
+    });
   }
 }
