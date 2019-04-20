@@ -15,7 +15,6 @@ import { MigrationsService } from '../migrations/migrations.service';
   ],
   exports: [NrListComponent],
   providers: [
-    //{ provide: NestingSpeciesService, useClass: NestingSpeciesService},
     { provide: NestReportsService, useClass: NestReportsService}
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

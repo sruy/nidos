@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NestReport } from '../models/nest-report';
 import { NestReportsService } from '../nest-reports.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Migration } from '../../migrations/model/migration';
 import { MigrationsService } from '../../migrations/migrations.service';
 import { MessageService } from 'primeng/api';
@@ -20,27 +20,43 @@ export class NrListComponent implements OnInit {
   totalRecords: number;
 
   constructor(private nestReportsService: NestReportsService, private router: Router,
-    private migrationsService: MigrationsService, private messageService: MessageService) { }
+    private migrationsService: MigrationsService, private messageService: MessageService,
+    private route: ActivatedRoute) { }
 
   get listTitle() {
-    return this.mode === 'compact' && 'Últimos reportes de nidos' || 
+    return this.mode === 'compact' && 'Últimos reportes de nidos' ||
       ('Reportes de nidos' + (this.migration && ` ${this.migration.visibleName}` || ''));
   }
 
   ngOnInit() {
-    this.nestReportsService.getNestReportsList().subscribe(reports => {
-      this.list = reports;
+    const reports = this.route.snapshot.data['nestReports'];
+    const migrationList = this.route.snapshot.data['migrations'];
 
-      this.totalRecords = reports.length;
-      
-      if (this.list && this.list.length && this.list.length > 0) {
-        this.paginatedList = this.list.slice(0, this.mode !== 'compact' && 10 || 5);
-      }
-    });
+    if (reports) {
+      this.initList(reports);
+    } else {
+      this.nestReportsService.getNestReportsList().subscribe(reports => {
+        this.initList(reports);
+      });
+    }
 
-    this.migrationsService.getMigrationsList().subscribe((migrationList) => {
+    if (migrationList) {
       this.registeredMigrations = migrationList;
-    });
+    } else {
+      this.migrationsService.getMigrationsList().subscribe((migrationList) => {
+        this.registeredMigrations = migrationList;
+      });
+    }
+  }
+
+  initList(reports: NestReport[]) {
+    this.list = reports;
+
+    this.totalRecords = reports.length;
+
+    if (this.list && this.list.length && this.list.length > 0) {
+      this.paginatedList = this.list.slice(0, this.mode !== 'compact' && 10 || 5);
+    }
   }
 
   paginateReports(event) {

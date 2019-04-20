@@ -26,6 +26,7 @@ import { GraphQLModule } from './graphql.module';
 import { GtagModule } from 'angular-gtag';
 import { AllMigrationsResolver } from './migrations/allMigrations-resolver';
 import { AllNestingSpeciesResolver } from './nest-reports/allNestingSpecies-resolver';
+import { AllNestReportsResolver } from './nest-reports/allNestReports-resolver';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -38,7 +39,10 @@ const routes: Routes = [
   } },
   { path: 'new-migration', component: MgCrudComponent },
   { path: 'edit-migration/:id', component: MgCrudComponent },
-  { path: 'reports', component: NrListComponent },
+  { path: 'reports', component: NrListComponent, resolve: {
+    nestReports: AllNestReportsResolver,
+    migrations: AllMigrationsResolver
+  } },
   { path: 'new-report', component: NrCrudComponent, resolve: {
     migrations: AllMigrationsResolver,
     nestingSpecies: AllNestingSpeciesResolver
