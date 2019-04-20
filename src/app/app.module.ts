@@ -50,7 +50,10 @@ const routes: Routes = [
   { path: 'edit-report/:id', component: NrCrudComponent },
   { path: 'new-notification', component: NoCrudComponent },
   { path: 'edit-notification/:id', component: NoCrudComponent },
-  { path: 'infographic', component: NrShareableComponent },
+  { path: 'infographic', component: NrShareableComponent, resolve: {
+    migration: AllMigrationsResolver,
+    nestReports: AllNestReportsResolver
+  } },
   { path: 'infographic/:id', component: NrShareableComponent }
   // { path: '**', redirectTo: 'home', pathMatch: '' },
 ];
