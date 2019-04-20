@@ -22,7 +22,7 @@
     <div class="ui-g-12">
       <div class="ui-g-4">(*) Especie</div>
       <div class="ui-g-8">
-        <p-autoComplete formControlName="species" [suggestions]="nestingSpecies" [forceSelection]="true"
+        <p-autoComplete formControlName="species" [suggestions]="registeredNestingSpecies" [forceSelection]="true"
           (completeMethod)="searchSpecies($event)" field="name" placeholder="Escriba especie"></p-autoComplete>
       </div>
     </div>
@@ -35,7 +35,7 @@
     <div class="ui-g-12">
       <div class="ui-g-4">Estado del reporte</div>
       <div class="ui-g-8">
-        <p-dropdown [options]="statusOptions" formControlName="status"></p-dropdown>
+        <p-dropdown [options]="statusOptions" formControlName="status" ></p-dropdown>
       </div>
     </div>
     <div class="ui-g-12">

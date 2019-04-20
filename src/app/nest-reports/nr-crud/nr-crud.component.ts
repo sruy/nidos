@@ -10,8 +10,8 @@ import { SpawnPointsService } from '../../spawn-points/spawnpoints.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NestReportsService } from '../nest-reports.service';
 import { MessageService } from 'primeng/api';
-import { CitiesService } from '../cities.service';
 import { sortAsc } from 'src/app/utils/utils';
+import { Status } from 'src/app/models/status';
 
 @Component({
   selector: 'app-nr-crud',
@@ -24,27 +24,23 @@ export class NrCrudComponent implements OnInit {
   spawnPoint: SpawnPoint;
   species: NestingSpecies;
   spottedBy: string;
-  status: string = 'confirmed';
+  status: Status = { id: 1, name: 'Enabled' };
   confirmedBy: string;
   broadcastStatus: string;
+  migrations: Migration[];
   registeredMigrations: Migration[];
+  spawnPoints: SpawnPoint[];
   registeredSpawnPoints: SpawnPoint[];
   nestingSpecies: NestingSpecies[];
+  registeredNestingSpecies: NestingSpecies[];
   statusOptions = [];
   editingReport = false;
   paramReport: NestReport;
-  cities = [
-    /*{ label: 'Montevideo', value: 'Montevideo' },
-    { label: 'Maldonado', value: 'Maldonado' },
-    { label: 'Canelones', value: 'Canelones' },
-    { label: 'San Carlos', value: 'San Carlos' },*/
-  ];
 
   constructor(private fb: FormBuilder, private mgService: MigrationsService,
     private spService: SpawnPointsService, private nsService: NestingSpeciesService,
     private route: ActivatedRoute, private nrService: NestReportsService,
-    private messageService: MessageService, private router: Router,
-    private citiesService: CitiesService) { }
+    private messageService: MessageService, private router: Router) { }
 
   ngOnInit() {
     // ToDo: refactor in a service
@@ -61,15 +57,18 @@ export class NrCrudComponent implements OnInit {
     }];
 
     this.mgService.getMigrationsList().subscribe((migrationList) => {
+      this.migrations = migrationList;
       this.registeredMigrations = migrationList;
     });
 
     this.spService.getSpawnPointList().subscribe((pointList) => {
+      this.spawnPoints = pointList;
       this.registeredSpawnPoints = pointList.sort(sortAsc('name'));
     });
 
     this.nsService.getFilteredSpecies().then((speciesList) => {
       this.nestingSpecies = speciesList;
+      this.registeredNestingSpecies = speciesList;
     });
 
     this.form = this.fb.group({
@@ -125,11 +124,9 @@ export class NrCrudComponent implements OnInit {
   }
 
   searchSpecies(event: any) {
-    this.nsService.getFilteredSpecies().then((list) => {
-      this.nestingSpecies = list.filter((species) => {
-        return species.name.toLowerCase().lastIndexOf(event.query.toLowerCase()) !== -1;
-      }) || [];
-    });
+    this.registeredNestingSpecies = this.nestingSpecies.filter((species) => {
+      return species.name.toLowerCase().lastIndexOf(event.query.toLowerCase()) !== -1;
+    }) || this.nestingSpecies;
   }
 
   selectSpecies(event) {
@@ -151,6 +148,7 @@ export class NrCrudComponent implements OnInit {
   saveReport(event) {
     if (this.form.valid) {
       let saveSub;
+      
       if (this.paramReport && this.editingReport) {
         saveSub = this.nrService.editReport(this.paramReport.reportId, this.form.value, this.messageService);
       } else {
