@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { StoreService } from '../services/store.service';
 import { NestReport } from './models/nest-report';
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 import { MessageService } from 'primeng/api';
@@ -20,7 +19,7 @@ export class NestReportsService {
   backendRemove: string;
 
   static id = 10;
-  constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) {
+  constructor(private http: HttpClient, private apollo: Apollo) {
     this.backendList = /*this.apollo.subscribe({
       query: */gql`
 query allNestReports($statusId: [Int]) {

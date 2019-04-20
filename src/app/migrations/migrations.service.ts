@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { StoreService } from '../services/store.service';
 import { Migration } from './model/migration';
 import { MessageService } from 'primeng/api';
 import { Apollo } from 'apollo-angular';
@@ -19,7 +18,7 @@ export class MigrationsService {
   backendModify: string;
   backendRemove: string;
 
-  constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) {
+  constructor(private http: HttpClient, private apollo: Apollo) {
     this.backendList = gql`
 query {
   getAllMigrations(where: {statusId: [1,3,4,5]}) {

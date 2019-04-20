@@ -42,8 +42,7 @@ export class NrCrudComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, private mgService: MigrationsService,
     private spService: SpawnPointsService, private nsService: NestingSpeciesService,
     private route: ActivatedRoute, private nrService: NestReportsService,
-    private messageService: MessageService, private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private messageService: MessageService, private router: Router) { }
 
   ngOnInit() {
     // ToDo: refactor in a service
@@ -59,8 +58,8 @@ export class NrCrudComponent implements OnInit, OnDestroy {
       label: 'Rechazado', value: { id: 5, name: 'Rejected' }
     }];
 
-    if (this.activatedRoute.snapshot.data['migrations']) {
-      const migrationList = this.activatedRoute.snapshot.data['migrations'];
+    if (this.route.snapshot.data['migrations']) {
+      const migrationList = this.route.snapshot.data['migrations'];
 
       this.migrations = migrationList;
       this.registeredMigrations = migrationList;
@@ -78,10 +77,17 @@ export class NrCrudComponent implements OnInit, OnDestroy {
       this.registeredSpawnPoints = pointList.sort(sortAsc('name'));
     });
 
-    this.nsService.getFilteredSpecies().then((speciesList) => {
+    if (this.route.snapshot.data['nestingSpecies']) {
+      const speciesList = this.route.snapshot.data['nestingSpecies'];
+
       this.nestingSpecies = speciesList;
       this.registeredNestingSpecies = speciesList;
-    });
+    } else {
+      this.nsService.getFilteredSpecies().subscribe((speciesList) => {
+        this.nestingSpecies = speciesList;
+        this.registeredNestingSpecies = speciesList;
+      });
+    }
 
     this.form = this.fb.group({
       migration: [this.migration && this.migration.migrationId, Validators.required],

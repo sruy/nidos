@@ -4,36 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: DesktopComponent },
-  { path: 'points', component: SpListComponent },
-  { path: 'new-point', component: SpCrudComponent },
-  { path: 'edit-point/:pointId', component: SpCrudComponent },
-  { path: 'migrations', component: MgListComponent, resolve: {
-    migrations: AllMigrationsResolver
-  } },
-  { path: 'new-migration', component: MgCrudComponent },
-  { path: 'edit-migration/:id', component: MgCrudComponent },
-  { path: 'reports', component: NrListComponent },
-  { path: 'new-report', component: NrCrudComponent, resolve: {
-    migrations: AllMigrationsResolver
-  } },
-  { path: 'edit-report/:id', component: NrCrudComponent },
-  { path: 'new-notification', component: NoCrudComponent },
-  { path: 'edit-notification/:id', component: NoCrudComponent },
-  { path: 'infographic', component: NrShareableComponent },
-  { path: 'infographic/:id', component: NrShareableComponent }
-  // { path: '**', redirectTo: 'home', pathMatch: '' },
-];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: false }), SpawnPointsModule, MigrationsModule, NestReportsModule, NotificationsModule, GraphQLModule, HttpClientModule],
-  exports: [RouterModule],
-  declarations: [DesktopComponent]
-})
-export class AppRoutingModule { }
-
 import { AppComponent } from './app.component';
 import { TopHeaderComponent } from './top-header/top-header.component';
 import { DesktopComponent } from './desktop/desktop.component';
@@ -55,6 +25,38 @@ import { NrShareableComponent } from './nest-reports/nr-shareable/nr-shareable.c
 import { GraphQLModule } from './graphql.module';
 import { GtagModule } from 'angular-gtag';
 import { AllMigrationsResolver } from './migrations/allMigrations-resolver';
+import { AllNestingSpeciesResolver } from './nest-reports/allNestingSpecies-resolver';
+
+const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: DesktopComponent },
+  { path: 'points', component: SpListComponent },
+  { path: 'new-point', component: SpCrudComponent },
+  { path: 'edit-point/:pointId', component: SpCrudComponent },
+  { path: 'migrations', component: MgListComponent, resolve: {
+    migrations: AllMigrationsResolver
+  } },
+  { path: 'new-migration', component: MgCrudComponent },
+  { path: 'edit-migration/:id', component: MgCrudComponent },
+  { path: 'reports', component: NrListComponent },
+  { path: 'new-report', component: NrCrudComponent, resolve: {
+    migrations: AllMigrationsResolver,
+    nestingSpecies: AllNestingSpeciesResolver
+  } },
+  { path: 'edit-report/:id', component: NrCrudComponent },
+  { path: 'new-notification', component: NoCrudComponent },
+  { path: 'edit-notification/:id', component: NoCrudComponent },
+  { path: 'infographic', component: NrShareableComponent },
+  { path: 'infographic/:id', component: NrShareableComponent }
+  // { path: '**', redirectTo: 'home', pathMatch: '' },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { useHash: false }), SpawnPointsModule, MigrationsModule, NestReportsModule, NotificationsModule, GraphQLModule, HttpClientModule],
+  exports: [RouterModule],
+  declarations: [DesktopComponent]
+})
+export class AppRoutingModule { }
 
 @NgModule({
   declarations: [

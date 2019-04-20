@@ -3,18 +3,20 @@ import { NrListComponent } from './nr-list/nr-list.component';
 import { NrCrudComponent } from './nr-crud/nr-crud.component';
 import { UILibsModule } from '../uilibs/uilibs.module';
 import { ServicesModule } from '../services/services.module';
-import { MigrationsService } from '../migrations/migrations.service';
 import { NrShareableComponent } from './nr-shareable/nr-shareable.component';
+import { NestingSpeciesService } from './nesting-species.service';
+import { NestReportsService } from './nest-reports.service';
+import { MigrationsService } from '../migrations/migrations.service';
 
 @NgModule({
   declarations: [NrListComponent, NrCrudComponent, NrShareableComponent],
   imports: [
     UILibsModule,
-    ServicesModule
   ],
   exports: [NrListComponent],
   providers: [
-    { provide: MigrationsService, useClass: MigrationsService}
+    //{ provide: NestingSpeciesService, useClass: NestingSpeciesService},
+    { provide: NestReportsService, useClass: NestReportsService}
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
