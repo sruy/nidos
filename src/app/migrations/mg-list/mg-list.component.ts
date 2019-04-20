@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Migration } from '../model/migration';
 import { MigrationsService } from '../migrations.service';
 import { MessageService } from 'primeng/api';
@@ -19,26 +19,36 @@ export class MgListComponent implements OnInit, OnDestroy {
   subsArray: Subscription[] = [];
 
   constructor(private migrationsService: MigrationsService, private router: Router,
-    private messageService: MessageService) { }
+    private messageService: MessageService, private activatedRoute: ActivatedRoute) { }
 
   get listTitle() {
     return this.mode === 'compact' && 'Últimas migraciones agregadas' || 'Migraciones de nidos';
   }
 
   ngOnInit() {
-    this.subsArray.push(this.migrationsService.getMigrationsList().subscribe(points => {
-      if (this.mode === 'compact') {
-        this.list = points.sort(sortDesc('migrationId'));
-      } else {
-        this.list = points.sort(sortAsc('startDate'));
-      }
+    if (this.activatedRoute.snapshot.data['migrations']) {
+      const points = this.activatedRoute.snapshot.data['migrations'];
 
-      this.totalRecords = points.length;
+      this.initList(points);
+    } else {
+      this.subsArray.push(this.migrationsService.getMigrationsList().subscribe(points => {
+        this.initList(points);
+      }));
+    }
+  }
 
-      if (this.list && this.list.length && this.list.length > 0) {
-        this.paginatedList = this.list.slice(0, this.mode !== 'compact' && 10 || 5);
-      }
-    }));
+  initList(list: Migration[]) {
+    if (this.mode === 'compact') {
+      this.list = list.sort(sortDesc('migrationId'));
+    } else {
+      this.list = list.sort(sortAsc('startDate'));
+    }
+
+    this.totalRecords = list.length;
+
+    if (this.list && this.list.length && this.list.length > 0) {
+      this.paginatedList = this.list.slice(0, this.mode !== 'compact' && 10 || 5);
+    }
   }
 
   ngOnDestroy() {

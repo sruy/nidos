@@ -10,11 +10,15 @@ const routes: Routes = [
   { path: 'points', component: SpListComponent },
   { path: 'new-point', component: SpCrudComponent },
   { path: 'edit-point/:pointId', component: SpCrudComponent },
-  { path: 'migrations', component: MgListComponent },
+  { path: 'migrations', component: MgListComponent, resolve: {
+    migrations: AllMigrationsResolver
+  } },
   { path: 'new-migration', component: MgCrudComponent },
   { path: 'edit-migration/:id', component: MgCrudComponent },
   { path: 'reports', component: NrListComponent },
-  { path: 'new-report', component: NrCrudComponent },
+  { path: 'new-report', component: NrCrudComponent, resolve: {
+    migrations: AllMigrationsResolver
+  } },
   { path: 'edit-report/:id', component: NrCrudComponent },
   { path: 'new-notification', component: NoCrudComponent },
   { path: 'edit-notification/:id', component: NoCrudComponent },
@@ -50,6 +54,7 @@ import { NoCrudComponent } from './notifications/no-crud/no-crud.component';
 import { NrShareableComponent } from './nest-reports/nr-shareable/nr-shareable.component';
 import { GraphQLModule } from './graphql.module';
 import { GtagModule } from 'angular-gtag';
+import { AllMigrationsResolver } from './migrations/allMigrations-resolver';
 
 @NgModule({
   declarations: [

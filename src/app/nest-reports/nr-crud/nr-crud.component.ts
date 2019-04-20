@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NestReport } from '../models/nest-report';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Migration } from '../../migrations/model/migration';
@@ -12,13 +12,14 @@ import { NestReportsService } from '../nest-reports.service';
 import { MessageService } from 'primeng/api';
 import { sortAsc } from 'src/app/utils/utils';
 import { Status } from 'src/app/models/status';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-nr-crud',
   templateUrl: './nr-crud.component.html',
   styleUrls: ['./nr-crud.component.scss']
 })
-export class NrCrudComponent implements OnInit {
+export class NrCrudComponent implements OnInit, OnDestroy {
   form: FormGroup;
   migration: Migration;
   spawnPoint: SpawnPoint;
@@ -36,11 +37,13 @@ export class NrCrudComponent implements OnInit {
   statusOptions = [];
   editingReport = false;
   paramReport: NestReport;
+  subscriptions: Subscription[] = [];
 
   constructor(private fb: FormBuilder, private mgService: MigrationsService,
     private spService: SpawnPointsService, private nsService: NestingSpeciesService,
     private route: ActivatedRoute, private nrService: NestReportsService,
-    private messageService: MessageService, private router: Router) { }
+    private messageService: MessageService, private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     // ToDo: refactor in a service
@@ -56,10 +59,19 @@ export class NrCrudComponent implements OnInit {
       label: 'Rechazado', value: { id: 5, name: 'Rejected' }
     }];
 
-    this.mgService.getMigrationsList().subscribe((migrationList) => {
+    if (this.activatedRoute.snapshot.data['migrations']) {
+      const migrationList = this.activatedRoute.snapshot.data['migrations'];
+
       this.migrations = migrationList;
       this.registeredMigrations = migrationList;
-    });
+    } else {
+      this.subscriptions.push(
+        this.mgService.getMigrationsList().subscribe((migrationList) => {
+          this.migrations = migrationList;
+          this.registeredMigrations = migrationList;
+        }));
+    }
+
 
     this.spService.getSpawnPointList().subscribe((pointList) => {
       this.spawnPoints = pointList;
@@ -101,6 +113,11 @@ export class NrCrudComponent implements OnInit {
         }
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.form.reset();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   clearForm() {
@@ -148,7 +165,7 @@ export class NrCrudComponent implements OnInit {
   saveReport(event) {
     if (this.form.valid) {
       let saveSub;
-      
+
       if (this.paramReport && this.editingReport) {
         saveSub = this.nrService.editReport(this.paramReport.reportId, this.form.value, this.messageService);
       } else {
