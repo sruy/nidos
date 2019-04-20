@@ -50,7 +50,6 @@ export class SpListComponent implements OnInit {
   }
 
   paginatePoints(event) {
-    console.log(event, this.totalRecords)
     this.paginatedList = this.list.slice(event.first, (!!event.first && event.first + event.rows) || event.rows);
   }
 

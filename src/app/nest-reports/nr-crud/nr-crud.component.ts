@@ -154,7 +154,7 @@ export class NrCrudComponent implements OnInit {
       if (this.paramReport && this.editingReport) {
         saveSub = this.nrService.editReport(this.paramReport.reportId, this.form.value, this.messageService);
       } else {
-        saveSub = this.nrService.newReport(new NestReport(<NestReport>this.form.value), this.messageService);
+        saveSub = this.nrService.newReport(new NestReport(this.form.value), this.messageService);
 
         this.clearForm();
       }

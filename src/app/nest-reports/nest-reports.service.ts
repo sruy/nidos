@@ -13,7 +13,6 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class NestReportsService {
-  staticAssets = this.http.get('/assets/nestreports.json');
   backendList: Observable<any>;
   backendSingle: string;
   backendCreate: string;
@@ -165,12 +164,12 @@ mutation removeReport($id: Int) {
   }
 
   newReport(report: NestReport, messageService?: MessageService) {
-    const input: any = report;
+    const input: any = Object.assign({}, report);
     const speciesName = report.species.name;
     const speciesId = report.species.id;
     const spawnPointId = report.spawnPoint.pointId;
     const migrationId = report.migration.migrationId;
-    const statusId = 1;
+    const statusId = report.status.id;
     const confirmedByUserId = 1; // ToDo: hardcoded
     delete input.species;
     delete input.spawnPoint;
@@ -184,7 +183,7 @@ mutation removeReport($id: Int) {
     input.migrationId = migrationId;
     input.statusId = statusId;
     input.confirmedByUserId = confirmedByUserId;
-
+    
     return this.apollo.mutate({
       mutation: this.backendCreate,
       variables: {
