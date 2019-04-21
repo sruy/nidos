@@ -6,6 +6,8 @@ import { MigrationsService } from 'src/app/migrations/migrations.service';
 import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { sortAsc, sortDesc } from 'src/app/utils/utils';
+import { Observable, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nr-shareable',
@@ -41,22 +43,25 @@ export class NrShareableComponent implements OnInit {
   ngOnInit() {
     const migrations = this.route.snapshot.data['migrations'];
     const nestReports = this.route.snapshot.data['nestReports'];
-
+    
     if (migrations) {
       this.migration = this.retrieveActiveMigration(migrations);
+      
+      if (nestReports) {
+        this.nestReports = this.filterByActiveMigration(nestReports);
+      }
     } else {
-      this.migrationsService.getMigrationsList().subscribe(migrations => {
-        this.migration = this.retrieveActiveMigration(migrations);
+      forkJoin(this.migrationsService.getMigrationsList(), this.nestReportsService.getNestReportsList({ filterDisabled: true })).pipe(map(([migrations, nestReports]) => {
+        return { migrations, nestReports };
+      })).subscribe(result => {
+        this.migration = this.retrieveActiveMigration(result.migrations);
+        this.nestReports = this.filterByActiveMigration(result.nestReports);
       });
     }
+  }
 
-    if (nestReports) {
-      this.nestReports = nestReports;
-    } else {
-      this.nestReportsService.getNestReportsList({ filterDisabled: true }).subscribe(reports => {
-        this.nestReports = reports && reports.filter((report: NestReport) => this.migration && report.migration.migrationId === this.migration.migrationId);
-      });
-    }
+  filterByActiveMigration(reports: NestReport[]) {
+    return reports && reports.filter((report: NestReport) => this.migration && report.migration.migrationId === this.migration.migrationId);
   }
 
   retrieveActiveMigration(migrations: Migration[]): Migration {

@@ -58,9 +58,11 @@ export class NrCrudComponent implements OnInit, OnDestroy {
       label: 'Rechazado', value: { id: 5, name: 'Rejected' }
     }];
 
-    if (this.route.snapshot.data['migrations']) {
-      const migrationList = this.route.snapshot.data['migrations'];
+    const migrationList = this.route.snapshot.data['migrations'];
+    const speciesList = this.route.snapshot.data['nestingSpecies'];
+    const pointList = this.route.snapshot.data['spawnPoints'];
 
+    if (migrationList) {
       this.migrations = migrationList;
       this.registeredMigrations = migrationList;
     } else {
@@ -71,15 +73,17 @@ export class NrCrudComponent implements OnInit, OnDestroy {
         }));
     }
 
-
-    this.spService.getSpawnPointList().subscribe((pointList) => {
+    if (pointList) {
       this.spawnPoints = pointList;
       this.registeredSpawnPoints = pointList.sort(sortAsc('name'));
-    });
+    } else {
+      this.spService.getSpawnPointList().subscribe((pointList) => {
+        this.spawnPoints = pointList;
+        this.registeredSpawnPoints = pointList.sort(sortAsc('name'));
+      });
+    }
 
-    if (this.route.snapshot.data['nestingSpecies']) {
-      const speciesList = this.route.snapshot.data['nestingSpecies'];
-
+    if (speciesList) {
       this.nestingSpecies = speciesList;
       this.registeredNestingSpecies = speciesList;
     } else {

@@ -16,6 +16,7 @@ export class NrListComponent implements OnInit {
   list: NestReport[];
   paginatedList: NestReport[];
   registeredMigrations: Migration[];
+  migrations: Migration[];
   migration: Migration;
   totalRecords: number;
 
@@ -41,9 +42,11 @@ export class NrListComponent implements OnInit {
     }
 
     if (migrationList) {
+      this.migrations = migrationList;
       this.registeredMigrations = migrationList;
     } else {
       this.migrationsService.getMigrationsList().subscribe((migrationList) => {
+        this.migrations = migrationList;
         this.registeredMigrations = migrationList;
       });
     }
@@ -72,25 +75,23 @@ export class NrListComponent implements OnInit {
   }
 
   filterMigration(event) {
-    this.migrationsService.getMigrationsList().subscribe((list) => {
-      this.registeredMigrations = list.filter((migration) => {
-        return ("" + migration.migrationId).lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
-      }) || [];
-    });
+    this.registeredMigrations = this.migrations.filter((migration) => {
+      return ("" + migration.migrationId).lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
+    }) || this.migrations;
   }
 
   filterReportsByMigration(event) {
     this.migration = event;
-    this.nestReportsService.getNestReportsList().subscribe((list) => {
-      this.paginatedList = list.filter((report: NestReport) => {
-        return report.migration.migrationId === event.migrationId;
-      });
+    this.paginatedList = this.list.filter((report: NestReport) => {
+      return report.migration.migrationId === event.migrationId;
     });
+    this.totalRecords = this.paginatedList.length;
   }
 
   resetReportList() {
     this.migration = null;
     this.paginatedList = this.list.slice(0, 10);
+    this.totalRecords = this.list.length;
   }
 
   deleteReport(report: NestReport) {

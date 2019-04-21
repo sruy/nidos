@@ -28,35 +28,53 @@ import { AllMigrationsResolver } from './migrations/allMigrations-resolver';
 import { AllNestingSpeciesResolver } from './nest-reports/allNestingSpecies-resolver';
 import { AllNestReportsResolver } from './nest-reports/allNestReports-resolver';
 import { AllSpawnPointsResolver } from './spawn-points/allSpawnPoints-resolver';
+import { EnabledNestReportsResolver } from './nest-reports/enabledNestReports-resolver';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: DesktopComponent },
-  { path: 'points', component: SpListComponent, resolve: {
-    points: AllSpawnPointsResolver
-  } },
+  {
+    path: 'points', component: SpListComponent, resolve: {
+      points: AllSpawnPointsResolver
+    }
+  },
   { path: 'new-point', component: SpCrudComponent },
   { path: 'edit-point/:pointId', component: SpCrudComponent },
-  { path: 'migrations', component: MgListComponent, resolve: {
-    migrations: AllMigrationsResolver
-  } },
+  {
+    path: 'migrations', component: MgListComponent, resolve: {
+      migrations: AllMigrationsResolver
+    }
+  },
   { path: 'new-migration', component: MgCrudComponent },
   { path: 'edit-migration/:id', component: MgCrudComponent },
-  { path: 'reports', component: NrListComponent, resolve: {
-    nestReports: AllNestReportsResolver,
-    migrations: AllMigrationsResolver
-  } },
-  { path: 'new-report', component: NrCrudComponent, resolve: {
-    migrations: AllMigrationsResolver,
-    nestingSpecies: AllNestingSpeciesResolver
-  } },
-  { path: 'edit-report/:id', component: NrCrudComponent },
+  {
+    path: 'reports', component: NrListComponent, resolve: {
+      nestReports: AllNestReportsResolver,
+      migrations: AllMigrationsResolver
+    }
+  },
+  {
+    path: 'new-report', component: NrCrudComponent, resolve: {
+      migrations: AllMigrationsResolver,
+      nestingSpecies: AllNestingSpeciesResolver,
+      spawnPoints: AllSpawnPointsResolver
+    }
+  },
+  {
+    path: 'edit-report/:id', component: NrCrudComponent, resolve: {
+      migrations: AllMigrationsResolver,
+      nestingSpecies: AllNestingSpeciesResolver,
+      spawnPoints: AllSpawnPointsResolver
+    }
+  },
   { path: 'new-notification', component: NoCrudComponent },
   { path: 'edit-notification/:id', component: NoCrudComponent },
-  { path: 'infographic', component: NrShareableComponent, resolve: {
-    migration: AllMigrationsResolver,
-    nestReports: AllNestReportsResolver
-  } },
+  {
+    path: 'infographic', component: NrShareableComponent, resolve: {
+      migrations: AllMigrationsResolver,
+      nestReports: EnabledNestReportsResolver
+    }
+  },
   { path: 'infographic/:id', component: NrShareableComponent }
   // { path: '**', redirectTo: 'home', pathMatch: '' },
 ];
@@ -80,7 +98,7 @@ export class AppRoutingModule { }
     HttpClientModule,
     NoopAnimationsModule,
     ServicesModule,
-    GtagModule.forRoot({ trackingId: 'UA-138490555-1', trackPageviews: true})
+    GtagModule.forRoot({ trackingId: 'UA-138490555-1', trackPageviews: true })
   ],
   providers: [{
     provide: MessageService, useClass: MessageService
