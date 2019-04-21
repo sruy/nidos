@@ -1,0 +1,31 @@
+<div class="ui-g-12" style="padding: 0">
+  <div class="ui-g-2">
+
+  </div>
+  <div class="ui-g-8 center-login">
+    <form [formGroup]="form" (ngSubmit)="login($event)">
+      <div class="ui-g-12" style="padding: 0;">
+        <div class="ui-g-12" style="padding: 0; text-align: center;"><img src="/assets/images/SRUY_Logo.png" class="logo-login"/></div>
+        <div class="ui-g-12" style="padding-left: 0; padding-right: 0;">
+          <div class="ui-g-4" style="text-align: right">(*) Usuario</div>
+          <div class="ui-g-8">
+            <input id="userName" type="text" pInputText class="form-control" formControlName="userName" style="width: 100%"/>
+          </div>
+        </div>
+        <div class="ui-g-12" style="padding-left: 0; padding-right: 0;">
+            <div class="ui-g-4" style="text-align: right">(*) Contraseña</div>
+            <div class="ui-g-8">
+              <input id="password" type="password" pInputText class="form-control" formControlName="password" style="width: 100%"/>
+            </div>
+          </div>
+      </div>
+      <div class="ui-g-12" style="text-align: center">
+          <button pButton type="button" class="ui-button-raised ui-button-danger" label="Borrar" (click)="clearForm()" style="margin-right: 1em"></button>
+          <button pButton type="submit" class="ui-button-raised ui-button-info" label="Ingresar" (click)="login($event)"></button>
+        </div>
+    </form>
+  </div>
+  <div class="ui-g-2">
+
+  </div>
+</div>

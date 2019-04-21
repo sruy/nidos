@@ -12,4 +12,6 @@ export class TopHeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  signOut() { }
+
 }

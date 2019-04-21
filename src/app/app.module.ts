@@ -29,9 +29,13 @@ import { AllNestingSpeciesResolver } from './nest-reports/allNestingSpecies-reso
 import { AllNestReportsResolver } from './nest-reports/allNestReports-resolver';
 import { AllSpawnPointsResolver } from './spawn-points/allSpawnPoints-resolver';
 import { EnabledNestReportsResolver } from './nest-reports/enabledNestReports-resolver';
+import { UsSignUpComponent } from './users/us-sign-up/us-sign-up.component';
+import { UsLoginComponent } from './users/us-login/us-login.component';
+import { UsPublicComponent } from './users/us-public/us-public.component';
+import { UsersModule } from './users/users.module';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'public', pathMatch: 'full' },
   { path: 'home', component: DesktopComponent },
   {
     path: 'points', component: SpListComponent, resolve: {
@@ -75,12 +79,24 @@ const routes: Routes = [
       nestReports: EnabledNestReportsResolver
     }
   },
-  { path: 'infographic/:id', component: NrShareableComponent }
+  { path: 'infographic/:id', component: NrShareableComponent },
+  { path: 'signUp', component: UsSignUpComponent },
+  { path: 'login', component: UsLoginComponent },
+  { path: 'public', component: UsPublicComponent }
   // { path: '**', redirectTo: 'home', pathMatch: '' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: false }), SpawnPointsModule, MigrationsModule, NestReportsModule, NotificationsModule, GraphQLModule, HttpClientModule],
+  imports: [
+    RouterModule.forRoot(routes, { useHash: false }), 
+    SpawnPointsModule, 
+    MigrationsModule, 
+    NestReportsModule, 
+    NotificationsModule, 
+    GraphQLModule, 
+    HttpClientModule,
+    UsersModule
+  ],
   exports: [RouterModule],
   declarations: [DesktopComponent]
 })
