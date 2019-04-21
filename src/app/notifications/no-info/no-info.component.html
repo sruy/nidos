@@ -1,6 +1,6 @@
 <p-panel [header]="panelHeader" class="panel-override" *ngIf="notification">
   <div class="notification-date">
-    <span>{{ notification?.date | date }}</span> por <span class="notification-author">{{ notification?.user?.userName }}</span>
+    <span>{{ notification?.date | date:'dd/MM/yyyy hh:mm:ss' }}</span> por <span class="notification-author">{{ notification?.user?.userName }}</span>
   </div>
   <div class="notification-title">
     <span>{{ notification?.title }}</span>
