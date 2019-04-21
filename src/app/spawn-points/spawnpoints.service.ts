@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SpawnPoint } from './models/spawn-point';
-import { StoreService } from '../services/store.service';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
@@ -21,7 +20,7 @@ export class SpawnPointsService {
 
   static cachedSpawnPoints: SpawnPoint[];
   static id: number = 100;
-  constructor(private http: HttpClient, private store: StoreService, private apollo: Apollo) {
+  constructor(private http: HttpClient, private apollo: Apollo) {
     this.backendList = this.apollo.subscribe({
       query: gql`
 query {

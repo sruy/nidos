@@ -7,6 +7,8 @@ import { MigrationsModule } from '../migrations/migrations.module';
 import { NestReportsModule } from '../nest-reports/nest-reports.module';
 import { AllNestingSpeciesResolver } from '../nest-reports/allNestingSpecies-resolver';
 import { AllNestReportsResolver } from '../nest-reports/allNestReports-resolver';
+import { AllSpawnPointsResolver } from '../spawn-points/allSpawnPoints-resolver';
+import { SpawnPointsModule } from '../spawn-points/spawn-points.module';
 
 @NgModule({
   declarations: [],
@@ -14,12 +16,14 @@ import { AllNestReportsResolver } from '../nest-reports/allNestReports-resolver'
     CommonModule,
     MigrationsModule,
     NestReportsModule,
+    SpawnPointsModule,
     RouterModule
   ],
   providers: [
     AllMigrationsResolver,
     AllNestingSpeciesResolver,
-    AllNestReportsResolver
+    AllNestReportsResolver,
+    AllSpawnPointsResolver
   ]
 })
 export class ServicesModule { }

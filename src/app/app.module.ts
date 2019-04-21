@@ -27,11 +27,14 @@ import { GtagModule } from 'angular-gtag';
 import { AllMigrationsResolver } from './migrations/allMigrations-resolver';
 import { AllNestingSpeciesResolver } from './nest-reports/allNestingSpecies-resolver';
 import { AllNestReportsResolver } from './nest-reports/allNestReports-resolver';
+import { AllSpawnPointsResolver } from './spawn-points/allSpawnPoints-resolver';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: DesktopComponent },
-  { path: 'points', component: SpListComponent },
+  { path: 'points', component: SpListComponent, resolve: {
+    points: AllSpawnPointsResolver
+  } },
   { path: 'new-point', component: SpCrudComponent },
   { path: 'edit-point/:pointId', component: SpCrudComponent },
   { path: 'migrations', component: MgListComponent, resolve: {

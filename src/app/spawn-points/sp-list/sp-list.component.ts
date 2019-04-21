@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { SpawnPoint } from '../models/spawn-point';
 import { SpawnPointsService } from '../spawnpoints.service';
@@ -21,7 +21,8 @@ export class SpListComponent implements OnInit {
   totalRecords: number;
   @ViewChild('list') table: Table;
 
-  constructor(private spawnPointsService: SpawnPointsService, private router: Router, private messageService: MessageService) {
+  constructor(private spawnPointsService: SpawnPointsService, private router: Router,
+    private messageService: MessageService, private route: ActivatedRoute) {
   }
 
   get listTitle() {
@@ -34,19 +35,29 @@ export class SpListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spawnPointsService.getSpawnPointList().subscribe(points => {
-      if (this.mode === 'compact') {
-        this.list = points.sort(sortDesc('pointId'));
-      } else {
-        this.list = points.sort(sortAsc('name'));
-      } 
+    const points = this.route.snapshot.data['points'];
 
-      this.totalRecords = points.length;
+    if (points) {
+      this.initList(points);
+    } else {
+      this.spawnPointsService.getSpawnPointList().subscribe(points => {
+        this.initList(points);
+      });
+    }
+  }
 
-      if (this.list && this.list.length && this.list.length > 0) {
-        this.paginatedList = this.list.slice(0, this.mode !== 'compact' && 10 || 5);
-      }
-    });
+  initList(points: SpawnPoint[]) {
+    if (this.mode === 'compact') {
+      this.list = points.sort(sortDesc('pointId'));
+    } else {
+      this.list = points.sort(sortAsc('name'));
+    }
+
+    this.totalRecords = points.length;
+
+    if (this.list && this.list.length && this.list.length > 0) {
+      this.paginatedList = this.list.slice(0, this.mode !== 'compact' && 10 || 5);
+    }
   }
 
   paginatePoints(event) {
