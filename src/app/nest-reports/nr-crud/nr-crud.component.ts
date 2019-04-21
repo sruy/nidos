@@ -139,11 +139,9 @@ export class NrCrudComponent implements OnInit, OnDestroy {
   }
 
   searchMigration(event: any) {
-    this.mgService.getMigrationsList().subscribe((list) => {
-      this.registeredMigrations = list.filter((migration) => {
-        return migration.migrationId.toString().lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
-      }) || [];
-    });
+    this.registeredMigrations = this.migrations.filter((migration) => {
+      return migration.migrationId.toString().lastIndexOf(event.query) !== -1 || migration.visibleName.lastIndexOf(event.query) !== -1;
+    }) || this.migrations;
   }
 
   selectMigration(event) {
@@ -161,10 +159,8 @@ export class NrCrudComponent implements OnInit, OnDestroy {
   }
 
   searchSpawnPoints(event) {
-    this.spService.getSpawnPointList().subscribe(list => {
-      this.registeredSpawnPoints = list.sort(sortAsc('name')).filter((point: SpawnPoint) => {
-        return point.name.toLowerCase().lastIndexOf(event.query.toLowerCase()) !== -1;
-      });
+    this.registeredSpawnPoints = this.spawnPoints.sort(sortAsc('name')).filter((point: SpawnPoint) => {
+      return point.name.toLowerCase().lastIndexOf(event.query.toLowerCase()) !== -1;
     });
   }
 
