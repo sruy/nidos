@@ -35,7 +35,7 @@ import { UsPublicComponent } from './users/us-public/us-public.component';
 import { UsersModule } from './users/users.module';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'public', pathMatch: 'full' },
+  { path: '', component: UsPublicComponent, pathMatch: 'full' },
   { path: 'home', component: DesktopComponent },
   {
     path: 'points', component: SpListComponent, resolve: {
@@ -81,8 +81,7 @@ const routes: Routes = [
   },
   { path: 'infographic/:id', component: NrShareableComponent },
   { path: 'signUp', component: UsSignUpComponent },
-  { path: 'login', component: UsLoginComponent },
-  { path: 'public', component: UsPublicComponent }
+  { path: 'login', component: UsLoginComponent }
   // { path: '**', redirectTo: 'home', pathMatch: '' },
 ];
 

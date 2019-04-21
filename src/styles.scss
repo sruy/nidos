@@ -21,6 +21,11 @@ body {
     overflow-y: scroll; 
     height: 100vh; 
     padding-bottom: 100px !important;
+    
+    &.public {
+        top: 45px;
+        padding-bottom: 45px !important;
+    }
 }
 .main-menu {
     padding-bottom: 0;

@@ -1,0 +1,17 @@
+@import "../../../include.scss";
+
+.infographic {
+    width: 100%;
+    background-color: $ludicolo;
+    color: #333333;
+    font-weight: bold;
+    font-size: 1rem;
+    padding-top: 6px;
+    text-align: center;
+    display: inline-block;
+    margin-top: 10px; 
+    border: 0.5px solid $aipom;
+    border-radius: 3px;
+    height: 35px;
+    cursor: pointer;
+}

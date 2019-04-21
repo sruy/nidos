@@ -9,7 +9,7 @@ import { Gtag } from 'angular-gtag';
 })
 export class AppComponent implements OnInit {
   title = 'nest-tailors-den';
-
+  logged: boolean;
   menuItems: MenuItem[];
 
   constructor(gtag: Gtag) {}

@@ -13,7 +13,7 @@ import { MigrationsService } from '../migrations/migrations.service';
   imports: [
     UILibsModule,
   ],
-  exports: [NrListComponent],
+  exports: [NrListComponent, NrShareableComponent],
   providers: [
     { provide: NestReportsService, useClass: NestReportsService}
   ],
