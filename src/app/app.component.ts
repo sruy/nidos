@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Gtag } from 'angular-gtag';
+import { UsersService } from './users/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +14,14 @@ export class AppComponent implements OnInit {
   logged: boolean;
   menuItems: MenuItem[];
 
-  constructor(gtag: Gtag) {}
+  constructor(gtag: Gtag, private usersService: UsersService, private router: Router) {}
   
   ngOnInit() {
+    this.usersService.getAuthenticatedUser().subscribe((result) => {
+      UsersService.authUser = result;
+      this.router.navigate(['/home']);
+    });
+
     this.menuItems = [
       {
         label: 'Reportes',

@@ -12,7 +12,7 @@ export class TopHeaderComponent implements OnInit {
   constructor(private router: Router, private usersService: UsersService) { }
 
   get fullUserName() {
-    return this.usersService.isLogged() && `${UsersService.authUser.userName }` || ''//`${UsersService.authUser.firstName} ${UsersService.authUser.lastName}` || '';
+    return this.usersService.isLogged() && `${UsersService.authUser && UsersService.authUser.userName }` || ''//`${UsersService.authUser.firstName} ${UsersService.authUser.lastName}` || '';
   }
 
   get logged() {

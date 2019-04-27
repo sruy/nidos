@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { User } from './models/user';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { SRUY_AUTH_TOKEN, SRUY_USER_ID } from '../models/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -53,18 +54,20 @@ query loginUser($userName: String!, $password: String!) {
 
   this.backendSingle = gql`
 query getUser {
-  id
-  discordId
-  userName
-  firstName
-  lastName
-  email
-  role {
+  getUser {
     id
     discordId
-    name
+    userName
+    firstName
+    lastName
+    email
+    role {
+      id
+      discordId
+      name
+    }
+    jwt
   }
-  jwt
 }`;
   }
 
@@ -108,6 +111,8 @@ query getUser {
       const flatten = <User>(<any>(<any>result).data).loginUser;
 
       UsersService.authUser = flatten;
+      sessionStorage.setItem(SRUY_USER_ID, flatten.userName);
+      sessionStorage.setItem(SRUY_AUTH_TOKEN, flatten.jwt);
 
       return flatten;
     }))
@@ -139,7 +144,9 @@ query getUser {
   }
 
   isLogged() {
-    return !!UsersService.authUser && !!UsersService.authUser.jwt;
+    const id = sessionStorage.getItem(SRUY_USER_ID);
+
+    return id || !!UsersService.authUser && !!UsersService.authUser.jwt;
   }
 
   hasAuthorizedRole() {
@@ -148,6 +155,8 @@ query getUser {
 
   logOut() {
     UsersService.authUser = null;
+    sessionStorage.removeItem(SRUY_AUTH_TOKEN);
+    sessionStorage.removeItem(SRUY_USER_ID);
     this.router.navigate(['/']);
     return of(true);
   }
