@@ -33,46 +33,53 @@ import { UsSignUpComponent } from './users/us-sign-up/us-sign-up.component';
 import { UsLoginComponent } from './users/us-login/us-login.component';
 import { UsPublicComponent } from './users/us-public/us-public.component';
 import { UsersModule } from './users/users.module';
+import { AuthenticatedGuard } from './authenticated.guard';
+import { UsNotAuthorizedComponent } from './users/us-not-authorized/us-not-authorized.component';
 
 const routes: Routes = [
   { path: '', component: UsPublicComponent, pathMatch: 'full' },
-  { path: 'home', component: DesktopComponent },
+  { path: 'home', component: DesktopComponent, canActivate: [AuthenticatedGuard] },
   {
     path: 'points', component: SpListComponent, resolve: {
       points: AllSpawnPointsResolver
-    }
+    }, 
+    canActivate: [AuthenticatedGuard]
   },
-  { path: 'new-point', component: SpCrudComponent },
-  { path: 'edit-point/:pointId', component: SpCrudComponent },
+  { path: 'new-point', component: SpCrudComponent, canActivate: [AuthenticatedGuard] },
+  { path: 'edit-point/:pointId', component: SpCrudComponent, canActivate: [AuthenticatedGuard] },
   {
     path: 'migrations', component: MgListComponent, resolve: {
       migrations: AllMigrationsResolver
-    }
+    }, 
+    canActivate: [AuthenticatedGuard]
   },
-  { path: 'new-migration', component: MgCrudComponent },
+  { path: 'new-migration', component: MgCrudComponent, canActivate: [AuthenticatedGuard] },
   { path: 'edit-migration/:id', component: MgCrudComponent },
   {
     path: 'reports', component: NrListComponent, resolve: {
       nestReports: AllNestReportsResolver,
       migrations: AllMigrationsResolver
-    }
+    }, 
+    canActivate: [AuthenticatedGuard]
   },
   {
     path: 'new-report', component: NrCrudComponent, resolve: {
       migrations: AllMigrationsResolver,
       nestingSpecies: AllNestingSpeciesResolver,
       spawnPoints: AllSpawnPointsResolver
-    }
+    }, 
+    canActivate: [AuthenticatedGuard]
   },
   {
     path: 'edit-report/:id', component: NrCrudComponent, resolve: {
       migrations: AllMigrationsResolver,
       nestingSpecies: AllNestingSpeciesResolver,
       spawnPoints: AllSpawnPointsResolver
-    }
+    },
+    canActivate: [AuthenticatedGuard]
   },
-  { path: 'new-notification', component: NoCrudComponent },
-  { path: 'edit-notification/:id', component: NoCrudComponent },
+  { path: 'new-notification', component: NoCrudComponent, canActivate: [AuthenticatedGuard] },
+  { path: 'edit-notification/:id', component: NoCrudComponent, canActivate: [AuthenticatedGuard] },
   {
     path: 'infographic', component: NrShareableComponent, resolve: {
       migrations: AllMigrationsResolver,
@@ -81,18 +88,19 @@ const routes: Routes = [
   },
   { path: 'infographic/:id', component: NrShareableComponent },
   { path: 'signUp', component: UsSignUpComponent },
-  { path: 'login', component: UsLoginComponent }
+  { path: 'login', component: UsLoginComponent },
+  { path: 'notAuthorized', component: UsNotAuthorizedComponent}
   // { path: '**', redirectTo: 'home', pathMatch: '' },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { useHash: false }), 
-    SpawnPointsModule, 
-    MigrationsModule, 
-    NestReportsModule, 
-    NotificationsModule, 
-    GraphQLModule, 
+    RouterModule.forRoot(routes, { useHash: false }),
+    SpawnPointsModule,
+    MigrationsModule,
+    NestReportsModule,
+    NotificationsModule,
+    GraphQLModule,
     HttpClientModule,
     UsersModule
   ],
