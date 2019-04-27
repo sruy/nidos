@@ -169,7 +169,7 @@ mutation removeReport($id: Int) {
     const spawnPointId = report.spawnPoint.pointId;
     const migrationId = report.migration.migrationId;
     const statusId = report.status.id;
-    const confirmedByUserId = 1; // ToDo: hardcoded
+    const confirmedByUserId = report.confirmedBy.id || 1; // ToDo: hardcoded
     delete input.species;
     delete input.spawnPoint;
     delete input.migration;

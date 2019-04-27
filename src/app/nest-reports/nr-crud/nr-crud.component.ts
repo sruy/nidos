@@ -13,6 +13,8 @@ import { MessageService } from 'primeng/api';
 import { sortAsc } from 'src/app/utils/utils';
 import { Status } from 'src/app/models/status';
 import { Subscription } from 'rxjs';
+import { UsersService } from 'src/app/users/users.service';
+import { User } from 'src/app/users/models/user';
 
 @Component({
   selector: 'app-nr-crud',
@@ -26,7 +28,7 @@ export class NrCrudComponent implements OnInit, OnDestroy {
   species: NestingSpecies;
   spottedBy: string;
   status: Status = { id: 1, name: 'Enabled' };
-  confirmedBy: string;
+  confirmedBy: User;
   broadcastStatus: string;
   migrations: Migration[];
   registeredMigrations: Migration[];
@@ -92,6 +94,8 @@ export class NrCrudComponent implements OnInit, OnDestroy {
         this.registeredNestingSpecies = speciesList;
       });
     }
+
+    this.confirmedBy = UsersService.authUser;
 
     this.form = this.fb.group({
       migration: [this.migration && this.migration.migrationId, Validators.required],
