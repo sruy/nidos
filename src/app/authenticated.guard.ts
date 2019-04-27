@@ -9,7 +9,7 @@ export class AuthenticatedGuard implements CanActivate {
     constructor(private usersService: UsersService, private router: Router) {}
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (!this.usersService.isLogged()) {
+        if (!this.usersService.isLogged() || !this.usersService.hasAuthorizedRole()) {
             if (next.routeConfig.path === 'home') {
                 this.router.navigate(['/']);
                 return false;

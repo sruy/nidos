@@ -1,3 +1,63 @@
-<p>
-  us-sign-up works!
-</p>
+<div class="ui-g-12">
+  <form [formGroup]="form" (ngSubmit)="signUp($event)">
+    <div class="ui-g-12">
+      <div class="disclaimer">
+        Aviso: en el futuro el registro e ingreso de usuario se harán a través de la cuenta de Discord.
+        <a href="https://bit.do/sruy">Únete a nuestra comunidad</a>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">(*) Nombre de usuario</div>
+      <div class="ui-g-8">
+        <input id="userName" type="text" pInputText class="form-control" formControlName="userName"
+          [value]="userName" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">(*) Contraseña</div>
+      <div class="ui-g-8">
+        <input id="password" type="password" pInputText class="form-control" formControlName="password"
+          [value]="password" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">(*) Confirmar contraseña</div>
+      <div class="ui-g-8">
+        <input id="confirmPassword" type="password" pInputText class="form-control" formControlName="confirmPassword"
+          [value]="confirmPassword" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">(*) eMail</div>
+      <div class="ui-g-8">
+        <input id="email" type="email" pInputText class="form-control" formControlName="email"
+          [value]="email" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Nombre</div>
+      <div class="ui-g-8">
+        <input id="firstName" type="text" pInputText class="form-control" formControlName="firstName"
+          [value]="firstName" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Apellido</div>
+      <div class="ui-g-8">
+        <input id="lastName" type="text" pInputText class="form-control" formControlName="lastName"
+          [value]="lastName" />
+      </div>
+    </div>
+  </form>
+  <div class="ui-g-12">
+    <div class="ui-g-4" style="text-align: right">
+      <button pButton type="button" class="ui-button-secondary" label="Volver" (click)="backToLogin()"></button>
+    </div>
+    <div class="ui-g-8" style="text-align: left">
+      <button pButton type="button" class="ui-button-raised ui-button-danger" label="Borrar" (click)="clearForm()"
+        style="margin-right: 1em"></button>
+      <button pButton type="submit" class="ui-button-raised ui-button-info" (click)="signUp($event)" label="Registrarse"></button>
+    </div>
+  </div>
+</div>
+<p-toast></p-toast>

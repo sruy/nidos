@@ -28,16 +28,15 @@ export class UsLoginComponent implements OnInit {
     this.form.reset();
   }
 
+  goToSignUp() {
+    this.clearForm();
+    this.router.navigate(['/signUp']);
+  }
+
   login(event) {
     if (this.form.valid) {
       this.usersService.login(this.form.value, this.messageService).subscribe((result) => {
-        if (result && (<any>result).err) {
-          const err = (<any>result).err;
-          
-          if (err && (err.errorId === 1  || err.errorId === 2)) {
-            this.messageService.add({ severity: 'error', summary: 'No se pudo completar la operación', detail: 'Autenticación fallida' })
-          }
-        } else {
+        if (result && !(<any>result).err) {
           this.router.navigate(['/home']);
         }
       })

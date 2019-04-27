@@ -22,6 +22,7 @@ mutation createUser($data: UserInput) {
   createUser(data: $data) {
     id
     discordId
+    userName
     firstName
     lastName
     jwt
@@ -38,6 +39,7 @@ query loginUser($userName: String!, $password: String!) {
   loginUser(userName: $userName, password: $password) {
     id
     discordId
+    userName
     firstName
     lastName
     jwt
@@ -53,6 +55,7 @@ query loginUser($userName: String!, $password: String!) {
 query getUser {
   id
   discordId
+  userName
   firstName
   lastName
   email
@@ -67,6 +70,7 @@ query getUser {
 
   registerUser(userInput: any, messageService: MessageService) {
     const input = userInput;
+    delete input.confirmPassword;
 
     return this.apollo.mutate({
       mutation: this.backendCreate,
@@ -110,6 +114,10 @@ query getUser {
     .pipe(catchError((error, inp) => {
       const err = error.graphQLErrors && error.graphQLErrors[0] && JSON.parse(error.graphQLErrors[0].message);
       console.error('SRUY: Failed to login user'); // create debug error called SruyException
+      
+      if (err && (err.errorId === 1  || err.errorId === 2)) {
+        this.messageService.add({ severity: 'error', summary: 'No se pudo completar la operación', detail: 'Autenticación fallida' })
+      }
       return of({ inp, err });
     }));
   }
@@ -132,6 +140,10 @@ query getUser {
 
   isLogged() {
     return !!UsersService.authUser && !!UsersService.authUser.jwt;
+  }
+
+  hasAuthorizedRole() {
+    return !!UsersService.authUser && !!UsersService.authUser.role && [1,2].lastIndexOf(UsersService.authUser.role.id) !== -1;
   }
 
   logOut() {
