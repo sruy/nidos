@@ -3,3 +3,11 @@
     font-weight: 700;
     font-size: 1rem;
 }
+.confirmed-by-block {
+    padding-top: 0;
+}
+@media (min-width: 320px) and (max-width: 480px) {
+    .confirmed-by-block {
+        padding-top: .25em;
+    }
+}

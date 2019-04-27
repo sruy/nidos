@@ -95,8 +95,6 @@ export class NrCrudComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.confirmedBy = UsersService.authUser;
-
     this.form = this.fb.group({
       migration: [this.migration && this.migration.migrationId, Validators.required],
       spawnPoint: [this.spawnPoint && this.spawnPoint.pointId, Validators.required],
@@ -112,7 +110,8 @@ export class NrCrudComponent implements OnInit, OnDestroy {
     if (id) {
       this.nrService.getNestReport(id).subscribe((report: NestReport) => {
         this.paramReport = report;
-
+        this.confirmedBy = report.confirmedBy;
+        
         if (!!report) {
           this.editingReport = !this.editingReport;
           this.form.setValue({
@@ -126,6 +125,8 @@ export class NrCrudComponent implements OnInit, OnDestroy {
           });
         }
       });
+    } else {
+      this.confirmedBy = UsersService.authUser;
     }
   }
 
