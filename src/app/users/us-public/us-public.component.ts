@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./us-public.component.scss']
 })
 export class UsPublicComponent implements OnInit {
-  showInfographic: boolean = false;
+  showInfographic: boolean = true;
 
   constructor(private router: Router) { }
 

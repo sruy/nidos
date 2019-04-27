@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-us-sign-up',
   templateUrl: './us-sign-up.component.html',
-  styleUrls: ['./us-sign-up.component.css']
+  styleUrls: ['./us-sign-up.component.scss']
 })
 export class UsSignUpComponent implements OnInit {
   form: FormGroup;
@@ -45,6 +45,11 @@ export class UsSignUpComponent implements OnInit {
 
   backToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  goToSRUY() {
+    window.open('http://bit.do/sruy', '_blank');
+    return false;
   }
 
   signUp(event) {

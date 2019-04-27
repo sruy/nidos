@@ -3,7 +3,11 @@
     <div class="ui-g-12">
       <div class="disclaimer">
         Aviso: en el futuro el registro e ingreso de usuario se harán a través de la cuenta de Discord.
-        <a href="https://bit.do/sruy">Únete a nuestra comunidad</a>
+        <div class="button">
+          <button class="join-button" (click)="goToSRUY()">
+            Únete a nuestra comunidad
+          </button>
+        </div>
       </div>
     </div>
     <div class="ui-g-12">
@@ -30,8 +34,7 @@
     <div class="ui-g-12">
       <div class="ui-g-4">(*) eMail</div>
       <div class="ui-g-8">
-        <input id="email" type="email" pInputText class="form-control" formControlName="email"
-          [value]="email" />
+        <input id="email" type="email" pInputText class="form-control" formControlName="email" [value]="email" />
       </div>
     </div>
     <div class="ui-g-12">
@@ -56,7 +59,8 @@
     <div class="ui-g-8" style="text-align: left">
       <button pButton type="button" class="ui-button-raised ui-button-danger" label="Borrar" (click)="clearForm()"
         style="margin-right: 1em"></button>
-      <button pButton type="submit" class="ui-button-raised ui-button-info" (click)="signUp($event)" label="Registrarse"></button>
+      <button pButton type="submit" class="ui-button-raised ui-button-info" (click)="signUp($event)"
+        label="Registrarse"></button>
     </div>
   </div>
 </div>
