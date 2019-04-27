@@ -42,7 +42,7 @@
       <div class="ui-g-4">Confirmado por</div>
       <div class="ui-g-8 confirmed-by-block">
         <span class="confirmed-by-user">{{ confirmedBy?.userName }}</span>
-        <!-- <input id="confirmedBy" type="text" pInputText class="form-control" formControlName="confirmedBy" /> -->
+        <input id="confirmedBy" type="hidden" pInputText class="form-control" formControlName="confirmedBy"/>
       </div>
     </div>
     <div class="ui-g-12" *ngIf="!!editingReport">
@@ -59,7 +59,7 @@
     <div class="ui-g-8" style="text-align: left">
       <button pButton type="button" class="ui-button-raised ui-button-danger" label="Borrar" (click)="clearForm()"
         style="margin-right: 1em"></button>
-      <button pButton type="submit" class="ui-button-raised ui-button-info" label="Guardar" (click)="saveReport($event)"></button>
+      <button pButton type="button" class="ui-button-raised ui-button-info" label="Guardar" (click)="saveReport($event)"></button>
     </div>
   </div>
 </div>

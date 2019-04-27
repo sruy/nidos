@@ -120,13 +120,14 @@ export class NrCrudComponent implements OnInit, OnDestroy {
             species: report.species,
             spottedBy: report.spottedBy || '',
             status: report.status || { id: 3, name: 'Confirmed' },
-            confirmedBy: report.confirmedBy.userName || '',
+            confirmedBy: report.confirmedBy || null,
             broadcastStatus: report.broadcastStatus || ''
           });
         }
       });
     } else {
       this.confirmedBy = UsersService.authUser;
+      this.form.get('confirmedBy').patchValue(this.confirmedBy);
     }
   }
 
