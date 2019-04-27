@@ -5,12 +5,13 @@
             <img src="/assets/images/SRUY_Logo.png" class="logo_top"/>
         </a>
     </div>
-    <div class="ui-g-8" class="app-title" (click)="goToPublic()">
+    <div class="ui-g-8" class="app-title" routerLink="/home">
         Nest Tailors' Den
     </div>
-    <div class="ui-g-1" style="float: right; padding: 0; text-align: right">
-      <a routerLink="/login"><span class="pi pi-sign-in" style="font-size: 2rem"></span></a>
-      <a [hidden]="true" (click)="signOut()"><span class="pi pi-sign-out" style="font-size: 2rem"></span></a>
+    <div [ngClass]="{ 'ui-g-2': logged, 'ui-g-1': !logged }" style="float: right; padding: 0; text-align: right">
+      <span class="user-logged-name">{{ fullUserName }}</span>
+      <a [hidden]="logged" routerLink="/login" class="sign-in"><span class="pi pi-sign-in" style="font-size: 2rem"></span></a>
+      <a [hidden]="!logged" (click)="signOut()" class="sign-out"><span class="pi pi-sign-out" style="font-size: 2rem"></span></a>
         <!-- OAuth Login-->
     </div>
   </div>
