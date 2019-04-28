@@ -17,9 +17,9 @@
             <th>Ciudad</th>
             <th>Nombre</th>
             <th>Link</th>
-            <th [hidden]="mode === 'compact'">Latitud</th>
-            <th [hidden]="mode === 'compact'">Longitud</th>
-            <th [hidden]="mode === 'compact'" class="compact-header">Referencias</th>
+            <th [hidden]="mode === 'compact'" class="header360">Latitud</th>
+            <th [hidden]="mode === 'compact'" class="header360">Longitud</th>
+            <th [hidden]="mode === 'compact'" class="compact-header header360">Referencias</th>
             <th class="options-header" [ngStyle]="{ width: mode !== 'compact' && '75px' }"></th>
           </tr>
         </ng-template>
@@ -28,9 +28,9 @@
             <td class="smaller-cell">{{ point.city.name }}</td>
             <td class="smaller-cell">{{ point.name }}</td>
             <td class="smaller-cell link" [innerHTML]="getLinkAnchor(point)"></td>
-            <td [hidden]="mode === 'compact'">{{ point.lat }}</td>
-            <td [hidden]="mode === 'compact'">{{ point.long }}</td>
-            <td [hidden]="mode === 'compact'" class="smaller-cell">{{ point.description }}</td>
+            <td [hidden]="mode === 'compact'" class="column360">{{ point.lat }}</td>
+            <td [hidden]="mode === 'compact'" class="column360">{{ point.long }}</td>
+            <td [hidden]="mode === 'compact'" class="smaller-cell column360">{{ point.description }}</td>
             <td>
               <span><i class="pi pi-pencil" style="font-size: 1.5rem" (click)="editPoint(point)"></i></span>
               <span [hidden]="mode === 'compact'"><i class="pi pi-times" style="font-size: 1.5rem" (click)="deletePoint(point)"></i></span>

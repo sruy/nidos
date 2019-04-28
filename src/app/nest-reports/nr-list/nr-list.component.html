@@ -32,21 +32,21 @@
             <th [hidden]="!!migration" class="smaller-header">Migración</th>
             <th>Punto</th>
             <th>Especie</th>
-            <th [hidden]="mode === 'compact'" class="smaller-header">Encontrado por</th>
-            <th [hidden]="mode === 'compact'">Estado</th>
-            <th [hidden]="mode === 'compact'">Enviado</th>
+            <th [hidden]="mode === 'compact'" [ngClass]="{'header360': !migration}" class="smaller-header">Encontrado por</th>
+            <th [hidden]="mode === 'compact'" class="header360">Estado</th>
+            <th [hidden]="mode === 'compact'" class="header360">Enviado</th>
             <th class="options-header" [ngStyle]="{ width: mode !== 'compact' && '60px' }"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
           <tr>
-            <td [hidden]="!!migration">{{ report?.migration?.visibleName }}</td>
+            <td [hidden]="!!migration" [ngClass]="{'smaller-cell': mode === 'compact' }">{{ report?.migration?.visibleName }}</td>
             <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ report?.spawnPoint?.name }}</td>
             <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ report?.species?.name }}</td>
-            <td [hidden]="mode === 'compact'" [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{
+            <td [hidden]="mode === 'compact'" [ngClass]="{'smaller-cell': mode === 'compact', 'column360': !migration }" style="overflow: hidden; text-overflow: ellipsis">{{
               report.spottedBy }}</td>
-            <td [hidden]="mode === 'compact'">{{ report.status.name }}</td>
-            <td [hidden]="mode === 'compact'">{{ report.broadcastStatus }}</td>
+            <td [hidden]="mode === 'compact'" class="column360">{{ report.status.name }}</td>
+            <td [hidden]="mode === 'compact'" class="column360">{{ report.broadcastStatus }}</td>
             <td style="padding-left: 0.2rem; padding-right: 0.2rem">
               <span><i class="pi pi-pencil" style="font-size: 1.5rem" (click)="editReport(report)"></i></span>
               <span [hidden]="mode === 'compact'" *ngIf="!isConfirmed(report)"><i class="pi pi-check" style="font-size: 1.5rem; color: #2f9c0a" (click)="confirmReport(report)"></i></span>

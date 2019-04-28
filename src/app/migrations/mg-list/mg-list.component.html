@@ -14,22 +14,22 @@
         [totalRecords]="totalRecords" (onLazyLoad)="paginateMigrations($event)" class="table-overriden">
         <ng-template pTemplate="header">
           <tr>
-            <th [hidden]="mode === 'compact'" class="smaller-header">Identificador</th>
+            <th [hidden]="mode === 'compact'" class="smaller-header header360">Identificador</th>
             <th>Nombre</th>
             <th>Fecha</th>
             <th>Fecha fin rotación</th>
-            <th [hidden]="mode === 'compact'">Comentarios</th>
+            <th [hidden]="mode === 'compact'" class="header360">Comentarios</th>
             <th class="options-header" [ngStyle]="{ width: mode !== 'compact' && '75px' }"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-migration>
           <tr>
-            <td [hidden]="mode === 'compact'">{{ migration.migrationId }}</td>
+            <td [hidden]="mode === 'compact'" class="column360">{{ migration.migrationId }}</td>
             <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ migration.visibleName }}</td>
             <td [ngClass]="{'smaller-cell': mode === 'compact' }" style="overflow: hidden; text-overflow: ellipsis">{{
               migration.startDate | date: 'dd/MM/yyyy'}}</td>
             <td [ngClass]="{'smaller-cell': mode === 'compact' }">{{ migration.endDate | date:'dd/MM/yyyy' }}</td>
-            <td [hidden]="mode === 'compact'">{{ migration.comments }}</td>
+            <td [hidden]="mode === 'compact'" class="column360">{{ migration.comments }}</td>
             <td>
               <span><i class="pi pi-pencil" style="font-size: 1.5rem" (click)="editMigration(migration)"></i></span>
               <span [hidden]="mode === 'compact'"><i class="pi pi-times" style="font-size: 1.5rem" (click)="deleteMigration(migration)"></i></span>

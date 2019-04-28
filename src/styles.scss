@@ -100,6 +100,18 @@ body {
     .ui-menubar {
         display: none;
     }
+    .table-overriden {
+        .ui-table .ui-table-tbody td {
+            &.column360 {
+                display: none;
+            }
+        }
+        .ui-table .ui-table-thead > tr > th {
+            &.header360 {
+                display: none;
+            }
+        }
+    }
 }
 .splash-screen {
     background-color: $aipom;
