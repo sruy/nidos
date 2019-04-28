@@ -1,8 +1,8 @@
 @import "../../../include.scss";
 
 .image-container {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     overflow: hidden;
     position: absolute;
     top: 50px;
@@ -10,7 +10,7 @@
 }
 .report-image {
     position: absolute;
-    width: 100px;
+    width: 100%;
     top: -5px;
     left: 0px
 }
@@ -145,13 +145,13 @@
         width: 100px;
         height: 110px;
         top: 60px;
-        left: 45px;
+        left: 40px;
         bottom: -20px;
     }
     .report-image {
-        width: 120px;
-        top: -25px;
-        left: -20px;
+        width: 90%;
+        top: 0;
+        left: 0;
         z-index: 2;
     }
 }
