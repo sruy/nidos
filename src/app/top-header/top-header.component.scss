@@ -21,6 +21,14 @@
     position: absolute;
     font-weight: bold; // negrita
     color: $ambipom; // color del titulo
+    .title-em {
+        font-size: 1rem;
+    }
+    .title-small {
+        position: relative;
+        top: 0;
+        left: 4px;
+    }
 }
 .user-logged-name {
     top: -9px;
@@ -30,4 +38,11 @@
 }
 .sign-out {
     color: $roselia;
+}
+@media (min-width: 320px) and (max-width: 480px) {
+    .app-title {
+        .title-small {
+            top: -1px;
+        }
+    }
 }

@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'nest-tailors-den';
   logged: boolean;
   menuItems: MenuItem[];
 
