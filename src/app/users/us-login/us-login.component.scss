@@ -10,11 +10,25 @@
 .sign-up-button {
     margin-left: 1em;
 }
-
+.user-name {
+    width: 95%;
+}
+.password {
+    width: 95%;
+}
 @media (min-width: 320px) and (max-width: 480px) {
     .sign-up-button {
         margin-left: 0;
         margin-top: 0.5rem;
         width: 80%;
+    }
+    .center-login {
+        margin-top: 25px;
+    }
+    .user-name {
+        width: 100%;
+    }
+    .password {
+        width: 100%;
     }
 }
