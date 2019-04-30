@@ -22,11 +22,11 @@ export class MgCountdownComponent implements OnInit, OnDestroy {
   constructor(private migrationsService: MigrationsService) {
     do {
       const lastSaved = this.scheduledMigrationDates[this.scheduledMigrationDates.length - 1].clone();
-      
+
       this.scheduledMigrationDates.push(
         tz(lastSaved.toDate(), this.timeZone).add('14', 'days')
       );
-    } while(this.scheduledMigrationDates[this.scheduledMigrationDates.length - 1].isBefore('2022', 'year'));
+    } while (this.scheduledMigrationDates[this.scheduledMigrationDates.length - 1].isBefore('2022', 'year')); // hard cap
   }
 
   ngOnInit() {
@@ -35,7 +35,7 @@ export class MgCountdownComponent implements OnInit, OnDestroy {
         const todayMigrationHour = moment().hours(21).minutes(0);
         const startDate = moment(Number.parseInt(<any>migration.startDate));
         const endDate = moment(Number.parseInt(<any>migration.endDate));
-        
+
         migration.endDate = endDate;
         migration.startDate = startDate;
         return startDate.hours(21).minutes(0) <= todayMigrationHour && endDate.hours(21).minutes(0) > moment();
@@ -62,14 +62,11 @@ export class MgCountdownComponent implements OnInit, OnDestroy {
           } else if (duration.minutes()) {
             durationArray.push(`${duration.minutes()} minuto`);
           }
-          
+
           this.timeToScheduledMigration = durationArray.join(' ');
         }
       });
     });
-
-    
-
   }
 
   ngOnDestroy() {
