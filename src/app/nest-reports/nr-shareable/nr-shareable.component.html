@@ -2,8 +2,7 @@
   <div class="ui-g-12 lead-in">
     <h2>Migración de nidos {{ migration?.visibleName }}</h2>
     <span class="subtitle">La migración de nidos <span class="migration-name">{{ migration?.visibleName }}</span>
-      ocurrió el {{ migration?.startDate | date: 'dd/MM/yyyy'
-      }}.</span>
+      ocurrió el <span class="start-date">{{ migration?.startDate | date: 'dd/MM/yyyy'}}</span>.</span>
     <span class="section-2">Los reportes han sido recolectados por nuestros<span class="mod-text"> NestTailors </span>en
       numerosos canales que incluyen:</span>
     <ul class="sources">
@@ -14,12 +13,13 @@
   </div>
   <div class="ui-g-12 report-list">
     <div class="report-list-title">
-      <div class="ui-g-8 heading">
+      <div class="ui-g-6 heading">
           <h3>Nidos confirmados</h3>
       </div>
-      <div class="ui-g-4 icon">
+      <div class="ui-g-6 icon">
+          <i class="pi pi-user not-actionable"></i>
           <i class="reveal pi" (click)="showAttribution = !showAttribution" [ngClass]="{ 'pi-eye': !showAttribution, 'pi-eye-slash': showAttribution }"></i>
-          <i class="not-actionable">A</i><i class="order pi" [ngClass]="{ 'pi-arrow-down': alphaOrder, 'pi-arrow-up': !alphaOrder }" (click)="alphaOrder = !alphaOrder; orderBy('abc', alphaOrder)"></i>
+          <i class="not-actionable">A</i><i class="order pi" [ngClass]="{ 'pi-arrow-down': alphaOrder, 'pi-arrow-up': !alphaOrder }" (click)="alphaOrder = !alphaOrder; orderBy('abc', alphaOrder)" style="margin-right: 8px"></i>
           <i class="pi pi-calendar not-actionable"></i><i class="order pi" [ngClass]="{ 'pi-arrow-down': dateOrder, 'pi-arrow-up': !dateOrder }" (click)="dateOrder = !dateOrder; orderBy('date', dateOrder)"></i>
       </div>
     </div>

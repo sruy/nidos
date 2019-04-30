@@ -24,6 +24,9 @@
 .migration-name {
     font-weight: bold;
 }
+.start-date {
+    font-weight: bold;
+}
 .mod-text {
     font-weight: bold;
     color: green;
@@ -119,10 +122,11 @@
         text-align: right;
         font-size: 1.5rem;
         color: green;
-        margin-top: -10px;
         
-        > i.pi-eye, > i.pi-eye-slash {
-            margin-top: 10px;
+        .reveal {
+            position: relative;
+            top: 3px;
+            left: -5px;
         }
     }
     .not-actionable {
