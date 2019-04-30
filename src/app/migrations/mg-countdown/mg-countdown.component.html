@@ -1,0 +1,26 @@
+<div class="ui-g" *ngIf="mode === 'no-panel'">
+  <div class="ui-g-12" class="line-header">
+    La próxima migración de nidos ocurrirá en
+  </div>
+  <div class="ui-g-12" class="line-countdown">
+    <span class="icon"><i class="pi pi-calendar"></i></span>{{ timeToScheduledMigration }}<span
+      class="countdown"></span>
+  </div>
+  <div class="ui-g-12" class="line-extra-info">
+    <span>La migración </span><span class="visible-name">{{ currentMigration?.visibleName }}</span> finaliza el <span
+      class="end-date">{{ currentMigration?.endDate | date:'dd/MM/yyyy' }}</span>
+  </div>
+</div>
+<p-panel *ngIf="mode === 'panel'" [header]="panelHeader" class="panel-override">
+  <div class="ui-g-12" class="line-header">
+    La próxima migración de nidos ocurrirá en
+  </div>
+  <div class="ui-g-12" class="line-countdown">
+    <span class="icon"><i class="pi pi-calendar"></i></span>{{ timeToScheduledMigration }}<span
+      class="countdown"></span>
+  </div>
+  <div class="ui-g-12" class="line-extra-info">
+    <span>La migración </span><span class="visible-name">{{ currentMigration?.visibleName }}</span> finaliza el <span
+      class="end-date">{{ currentMigration?.endDate | date:'dd/MM/yyyy' }}</span>
+  </div>
+</p-panel>

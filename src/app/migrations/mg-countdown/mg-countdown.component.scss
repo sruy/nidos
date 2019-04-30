@@ -1,0 +1,34 @@
+.line-header {
+    text-align: center;
+    width: 100%;
+}
+.line-countdown {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    .icon {
+        position: relative;
+        top: 5px;
+    }
+}
+.line-extra-info {
+    font-size: 0.9rem;
+    text-align: center;
+    width: 100%
+}
+.visible-name {
+    font-weight: 700;
+}
+.end-date {
+    font-weight: 700;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {  
+    .line-countdown {
+        font-size: 1.45rem;
+    }
+}
