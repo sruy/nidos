@@ -32,3 +32,8 @@
         font-size: 1.45rem;
     }
 }
+@media (min-device-width : 320px) and (max-device-width : 568px) and (orientation : portrait) { 
+    .line-countdown {
+        font-size: 1.45rem;
+    }
+}

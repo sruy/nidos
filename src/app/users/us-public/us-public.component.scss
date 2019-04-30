@@ -1,15 +1,15 @@
 @import "../../../include.scss";
 
 .infographic {
+    margin-top: 1rem;
     width: 100%;
     background-color: $ludicolo;
     color: #333333;
     font-weight: bold;
-    font-size: 1rem;
-    padding-top: 6px;
+    font-size: 0.8rem;
+    padding-top: 8px;
     text-align: center;
     display: inline-block;
-    margin-top: 10px; 
     border: 0.5px solid $aipom;
     border-radius: 3px;
     height: 35px;
