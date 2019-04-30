@@ -39,6 +39,8 @@ export class AppComponent implements OnInit {
           this.shownTimer = ''+duration.asMilliseconds();
         }
       }, 1000);
+    } else {
+      this.releaseDate = null;
     }
 
     this.menuItems = [
