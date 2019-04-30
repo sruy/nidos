@@ -8,6 +8,7 @@ import { NotificationsModule } from '../notifications/notifications.module';
 import { NestReportsModule } from '../nest-reports/nest-reports.module';
 import { UsersService } from './users.service';
 import { UsNotAuthorizedComponent } from './us-not-authorized/us-not-authorized.component';
+import { MigrationsModule } from '../migrations/migrations.module';
 
 @NgModule({
   declarations: [UsLoginComponent, UsPublicComponent, UsSignUpComponent, UsNotAuthorizedComponent],
@@ -16,7 +17,8 @@ import { UsNotAuthorizedComponent } from './us-not-authorized/us-not-authorized.
     CommonModule,
     UILibsModule,
     NotificationsModule,
-    NestReportsModule
+    NestReportsModule,
+    MigrationsModule
   ],
   providers: [
     { provide: UsersService, useClass: UsersService }

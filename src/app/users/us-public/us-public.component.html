@@ -2,8 +2,11 @@
     <div class="ui-g-12" style="padding: 0">
       <div class="ui-g-12" style="padding-left: 0; padding-right: 0">
         <app-no-info></app-no-info>
-        <span class="infographic" (click)="toggleNestReports()">{{ !showInfographic && 'Ver' || 'Ocultar' }} infográfico de la migración actual</span>
-      </div>      
+      </div>
+      <div class="ui-g-12" style="padding-left: 0; padding-right: 0">
+        <app-mg-countdown [mode]="'panel'"></app-mg-countdown>
+        <span class="infographic" (click)="toggleNestReports()" style="margin-top: 1rem">{{ !showInfographic && 'Ver' || 'Ocultar' }} infográfico de la migración actual</span>
+      </div>
     </div>
     <app-nr-shareable [hidden]="!showInfographic"></app-nr-shareable>
   </div>
