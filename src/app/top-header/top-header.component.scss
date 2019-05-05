@@ -1,7 +1,6 @@
 @import "../../include.scss";
 
 .logo_top {
-    width: 35px;
     height: 35px;
     position: absolute;
     top: 5px;
@@ -17,7 +16,7 @@
 .app-title {
     padding-top: 6px; // esto es para centrar el titulo, desde arriba
     font-size: 0.8rem; // tamaño del texto
-    left: 55px;
+    left: 120px;
     position: absolute;
     font-weight: bold; // negrita
     color: $ambipom; // color del titulo
