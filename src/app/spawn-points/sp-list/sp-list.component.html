@@ -1,6 +1,6 @@
 <div class="ui-g-12" style="padding-left: 0">
   <div class="ui-g-12" style="padding: .5em 0">
-    <div class="ui-g-12" style="padding: 0">
+    <div class="ui-g-12" *ngIf="mode === 'compact'" style="padding: 0">
       <div class="ui-g-10 table-title">
         <h3>{{ listTitle }}</h3>
       </div>
@@ -9,12 +9,30 @@
         <i *ngIf="mode === 'compact'" class="pi pi-list list" routerLink="/points"></i>
       </div>
     </div>
+    <div class="ui-g-12" *ngIf="mode !== 'compact'" style="padding-left: 0">
+      <div class="ui-g-2 filter-field">
+        <span>Ciudad:</span>
+      </div>
+      <div class="ui-g-9">
+        <p-autoComplete [(ngModel)]="selectedCity" [suggestions]="registeredCities"
+          (completeMethod)="filterCity($event)" [forceSelection]="true" field="name" [autofocus]="true"
+          (onSelect)="filterPointsByCity($event)"></p-autoComplete>
+        &nbsp;
+        <button pButton type="reset" class="ui-button-raised ui-button-info" label="Limpiar"
+          (click)="resetPointList()"></button>
+      </div>
+      <div class="ui-g-1 table-actions">
+        <i class="pi pi-plus new" style="font-size: 1rem" routerLink="/new-point"></i>
+        <i *ngIf="mode === 'compact'" class="pi pi-list list" routerLink="/points"></i>
+      </div>
+    </div>
     <div class="ui-g-12" style="padding: 0;">
-      <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 10 || 5" [paginator]="mode !== 'compact'"
-        [totalRecords]="totalRecords" (onLazyLoad)="paginatePoints($event)" class="table-overriden" #list>
+      <p-table [value]="paginatedList" [lazy]="true" [rows]="mode !== 'compact' && 10 || 5"
+        [paginator]="mode !== 'compact'" [totalRecords]="totalRecords" (onLazyLoad)="paginatePoints($event)"
+        class="table-overriden" #list>
         <ng-template pTemplate="header">
           <tr>
-            <th>Ciudad</th>
+            <th [hidden]="!!selectedCity">Ciudad</th>
             <th>Nombre</th>
             <th>Link</th>
             <th [hidden]="mode === 'compact'" class="header360">Latitud</th>
@@ -25,7 +43,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-point>
           <tr>
-            <td class="smaller-cell">{{ point.city.name }}</td>
+            <td [hidden]="!!selectedCity" class="smaller-cell">{{ point.city.name }}</td>
             <td class="smaller-cell">{{ point.name }}</td>
             <td class="smaller-cell link" [innerHTML]="getLinkAnchor(point)"></td>
             <td [hidden]="mode === 'compact'" class="column360">{{ point.lat }}</td>
@@ -33,7 +51,8 @@
             <td [hidden]="mode === 'compact'" class="smaller-cell column360">{{ point.description }}</td>
             <td>
               <span><i class="pi pi-pencil" style="font-size: 1.5rem" (click)="editPoint(point)"></i></span>
-              <span [hidden]="mode === 'compact'"><i class="pi pi-times" style="font-size: 1.5rem" (click)="deletePoint(point)"></i></span>
+              <span [hidden]="mode === 'compact'"><i class="pi pi-times" style="font-size: 1.5rem"
+                  (click)="deletePoint(point)"></i></span>
             </td>
           </tr>
         </ng-template>

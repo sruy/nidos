@@ -8,6 +8,8 @@ import { SpawnPointsService } from '../spawnpoints.service';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { sortDesc, sortAsc } from 'src/app/utils/utils';
+import { City } from 'src/app/nest-reports/models/city';
+import { CitiesService } from 'src/app/nest-reports/cities.service';
 
 @Component({
   selector: 'app-sp-list',
@@ -20,9 +22,13 @@ export class SpListComponent implements OnInit {
   paginatedList: SpawnPoint[] = [];
   totalRecords: number;
   @ViewChild('list') table: Table;
+  selectedCity: City;
+  cities: City[];
+  registeredCities: City[];
 
   constructor(private spawnPointsService: SpawnPointsService, private router: Router,
-    private messageService: MessageService, private route: ActivatedRoute) {
+    private messageService: MessageService, private route: ActivatedRoute, 
+    private citiesService: CitiesService) {
   }
 
   get listTitle() {
@@ -36,12 +42,23 @@ export class SpListComponent implements OnInit {
 
   ngOnInit() {
     const points = this.route.snapshot.data['points'];
+    const cities = this.route.snapshot.data['cities'];
 
     if (points) {
       this.initList(points);
     } else {
       this.spawnPointsService.getSpawnPointList().subscribe(points => {
         this.initList(points);
+      });
+    }
+
+    if (cities) {
+      this.registeredCities = cities.sort(sortAsc('name'));
+      this.cities = cities;
+    } else {
+      this.citiesService.getAllCities().subscribe(cities => {
+        this.cities = cities;
+        this.registeredCities = cities.sort(sortAsc('name'));
       });
     }
   }
@@ -79,5 +96,23 @@ export class SpListComponent implements OnInit {
         })
       });
     }
+  }
+
+  filterCity(event) {
+    this.registeredCities = this.cities.filter((city) => {
+      return city.name.toLowerCase().lastIndexOf(event.query.toLowerCase()) !== -1;
+    }) || this.cities;
+  }
+
+  filterPointsByCity(event) {
+    this.selectedCity = event;
+    this.paginatedList = this.list.filter((point: SpawnPoint) => {
+      return point.city.id === event.id;
+    });
+    this.totalRecords = this.paginatedList.length;
+  }
+
+  resetPointList() {
+    this.paginatedList = this.list;
   }
 }
