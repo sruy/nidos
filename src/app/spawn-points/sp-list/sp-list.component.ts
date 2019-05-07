@@ -113,6 +113,7 @@ export class SpListComponent implements OnInit {
   }
 
   resetPointList() {
+    this.selectedCity = null;
     this.paginatedList = this.list;
   }
 }

@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Migration } from '../../migrations/model/migration';
 import { MigrationsService } from '../../migrations/migrations.service';
 import { MessageService } from 'primeng/api';
+import { sortDesc } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-nr-list',
@@ -53,7 +54,11 @@ export class NrListComponent implements OnInit {
   }
 
   initList(reports: NestReport[]) {
-    this.list = reports;
+    if (this.mode === 'compact') {
+      this.list = reports.sort(sortDesc('reportId'));
+    } else {
+      this.list = reports;
+    }
 
     this.totalRecords = reports.length;
 
