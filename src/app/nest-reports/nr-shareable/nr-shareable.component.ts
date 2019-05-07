@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { sortAsc, sortDesc } from 'src/app/utils/utils';
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { City } from '../models/city';
 
 @Component({
   selector: 'app-nr-shareable',
@@ -20,6 +21,9 @@ export class NrShareableComponent implements OnInit {
   showAttribution: boolean;
   alphaOrder: boolean;
   dateOrder: boolean;
+  availableCities: City[] = [];
+  nestReportsByCity: any = {};
+  filteredByCity: any = [];
 
   constructor(private migrationsService: MigrationsService,
     private nestReportsService: NestReportsService, private route: ActivatedRoute) { }
@@ -43,12 +47,13 @@ export class NrShareableComponent implements OnInit {
   ngOnInit() {
     const migrations = this.route.snapshot.data['migrations'];
     const nestReports = this.route.snapshot.data['nestReports'];
-    
+
     if (migrations) {
       this.migration = this.retrieveActiveMigration(migrations);
-      
+
       if (nestReports) {
         this.nestReports = this.filterByActiveMigration(nestReports);
+        this.groupReportsByCity(this.nestReports);
       }
     } else {
       forkJoin(this.migrationsService.getMigrationsList(), this.nestReportsService.getNestReportsList({ filterDisabled: true })).pipe(map(([migrations, nestReports]) => {
@@ -56,6 +61,7 @@ export class NrShareableComponent implements OnInit {
       })).subscribe(result => {
         this.migration = this.retrieveActiveMigration(result.migrations);
         this.nestReports = this.filterByActiveMigration(result.nestReports);
+        this.groupReportsByCity(this.nestReports);
       });
     }
   }
@@ -72,6 +78,20 @@ export class NrShareableComponent implements OnInit {
 
       return startDate.hours(21).minutes(0) <= todayMigrationHour && endDate.hours(21).minutes(0) > moment();
     })[0] || migrations[migrations.length - 1];
+  }
+
+  groupReportsByCity(reports: NestReport[]) {
+    reports.forEach(report => {
+      if (!this.nestReportsByCity[report.spawnPoint.city.name]) {
+        this.nestReportsByCity[report.spawnPoint.city.name] = [];
+      }
+
+      this.nestReportsByCity[report.spawnPoint.city.name].push(report);
+    });
+    for (let city of Object.keys(this.nestReportsByCity)) {
+      this.availableCities.push(this.nestReportsByCity[city][0].spawnPoint.city);
+      this.filteredByCity.push(this.nestReportsByCity[city]);
+    }
   }
 
   getReportPathImage(report: NestReport) {

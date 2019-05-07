@@ -14,27 +14,51 @@
   <div class="ui-g-12 report-list">
     <div class="report-list-title">
       <div class="ui-g-6 heading">
-          <h3>Nidos confirmados</h3>
+        <h3>Nidos confirmados</h3>
       </div>
       <div class="ui-g-6 icon">
-          <i class="pi pi-user not-actionable"></i>
-          <i class="reveal pi" (click)="showAttribution = !showAttribution" [ngClass]="{ 'pi-eye': !showAttribution, 'pi-eye-slash': showAttribution }"></i>
-          <i class="not-actionable">A</i><i class="order pi" [ngClass]="{ 'pi-arrow-down': alphaOrder, 'pi-arrow-up': !alphaOrder }" (click)="alphaOrder = !alphaOrder; orderBy('abc', alphaOrder)" style="margin-right: 8px"></i>
-          <i class="pi pi-calendar not-actionable"></i><i class="order pi" [ngClass]="{ 'pi-arrow-down': dateOrder, 'pi-arrow-up': !dateOrder }" (click)="dateOrder = !dateOrder; orderBy('date', dateOrder)"></i>
+        <i class="pi pi-user not-actionable"></i>
+        <i class="reveal pi" (click)="showAttribution = !showAttribution"
+          [ngClass]="{ 'pi-eye': !showAttribution, 'pi-eye-slash': showAttribution }"></i>
+        <i class="not-actionable">A</i><i class="order pi"
+          [ngClass]="{ 'pi-arrow-down': alphaOrder, 'pi-arrow-up': !alphaOrder }"
+          (click)="alphaOrder = !alphaOrder; orderBy('abc', alphaOrder)" style="margin-right: 8px"></i>
+        <i class="pi pi-calendar not-actionable"></i><i class="order pi"
+          [ngClass]="{ 'pi-arrow-down': dateOrder, 'pi-arrow-up': !dateOrder }"
+          (click)="dateOrder = !dateOrder; orderBy('date', dateOrder)"></i>
       </div>
     </div>
-    <div class="ui-g-12 confirmed-nests" *ngIf="nestReports?.length >= 3">
+    <div class="ui-g-12 confirmed-nests" *ngIf="availableCities?.length === 1 && nestReports?.length >= 3">
       <div *ngFor="let report of nestReports; index as i">
         <div class="ui-g-4 report-cell">
           <div class="report-text">
             <span class="species">{{ report?.species.name }}</span>
-            <span class="point"><a href="{{ report?.spawnPoint.link }}" target="_blank">{{ report?.spawnPoint.name }}</a></span>
+            <span class="point"><a href="{{ report?.spawnPoint.link }}"
+                target="_blank">{{ report?.spawnPoint.name }}</a></span>
             <span class="attribution" [hidden]="!showAttribution">{{ report?.spottedBy }}</span>
           </div>
           <div class="image-container">
             <img [src]="getReportPathImage(report)" class="report-image" />
           </div>
         </div>
+      </div>
+    </div>
+    <div class="ui-g-12 confirmed-nests" *ngIf="availableCities?.length > 1 && nestReports?.length >= 3">   
+      <div *ngFor="let byCity of filteredByCity; index as j; first as $isFirst" class="ui-g-12">
+        <h3 [ngClass]="{ 'first-city-name': $isFirst }">{{ availableCities[j].name }}</h3>
+        <ng-container *ngFor="let report of byCity; index as k">
+          <div class="ui-g-4 report-cell">
+            <div class="report-text">
+              <span class="species">{{ report?.species.name }}</span>
+              <span class="point"><a href="{{ report?.spawnPoint.link }}"
+                  target="_blank">{{ report?.spawnPoint.name }}</a></span>
+              <span class="attribution" [hidden]="!showAttribution">{{ report?.spottedBy }}</span>
+            </div>
+            <div class="image-container">
+              <img [src]="getReportPathImage(report)" class="report-image" />
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
     <div class="ui-g-12 not-enough-reports" *ngIf="nestReports?.length < 3">
@@ -46,11 +70,10 @@
       <h3>¿Has encontrado un nuevo nido?</h3>
     </div>
     <div style="position: relative;">
-    <button class="join-button" (click)="goToSRUY()">
-      Únete a nuestra comunidad
-    </button>
-    <img [hidden]="true" src="/assets/images/Discord-Logo-White.png" class="discord-logo"/>
+      <button class="join-button" (click)="goToSRUY()">
+        Únete a nuestra comunidad
+      </button>
+      <img [hidden]="true" src="/assets/images/Discord-Logo-White.png" class="discord-logo" />
+    </div>
   </div>
-  </div>
-
 </div>

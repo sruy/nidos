@@ -33,6 +33,10 @@ query allNestReports($statusId: [Int]) {
       pointId
       name
       link
+      city {
+        id
+        name
+      }
     }
     species {
       id
