@@ -78,7 +78,13 @@ export class SpListComponent implements OnInit {
   }
 
   paginatePoints(event) {
-    this.paginatedList = this.list.slice(event.first, (!!event.first && event.first + event.rows) || event.rows);
+    if (this.selectedCity) {
+      this.paginatedList = this.list.filter((point: SpawnPoint) => {
+        return point.city.id === this.selectedCity.id;
+      }).slice(event.first, (!!event.first && event.first + event.rows) || event.rows);
+    } else {
+      this.paginatedList = this.list.slice(event.first, (!!event.first && event.first + event.rows) || event.rows);
+    }
   }
 
   editPoint(point: SpawnPoint) {
@@ -108,12 +114,12 @@ export class SpListComponent implements OnInit {
     this.selectedCity = event;
     this.paginatedList = this.list.filter((point: SpawnPoint) => {
       return point.city.id === event.id;
-    });
-    this.totalRecords = this.paginatedList.length;
+    }).slice(0, this.mode !== 'compact' && 10 || 5);
+    this.totalRecords = this.list.length;
   }
 
   resetPointList() {
     this.selectedCity = null;
-    this.paginatedList = this.list;
+    this.paginatedList = this.list.slice(0, this.mode !== 'compact' && 10 || 5);
   }
 }
