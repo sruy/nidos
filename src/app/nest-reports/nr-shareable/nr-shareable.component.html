@@ -31,11 +31,13 @@
     <div class="ui-g-12 confirmed-nests" *ngIf="availableCities?.length === 1 && nestReports?.length >= 3">
       <div *ngFor="let report of nestReports; index as i">
         <div class="ui-g-4 report-cell">
-          <div class="report-text">
+          <div class="report-text" [ngClass]="{ 'not-confirmed': underForcedMigration }">
+            <div class="not-confirmed-indicator">{{ notConfirmedText }}</div>
             <span class="species">{{ report?.species.name }}</span>
             <span class="point"><a href="{{ report?.spawnPoint.link }}"
                 target="_blank">{{ report?.spawnPoint.name }}</a></span>
             <span class="attribution" [hidden]="!showAttribution">{{ report?.spottedBy }}</span>
+            <div class="not-confirmed-bg" *ngIf="underForcedMigration"></div>
           </div>
           <div class="image-container">
             <img [src]="getReportPathImage(report)" class="report-image" />
@@ -43,12 +45,13 @@
         </div>
       </div>
     </div>
-    <div class="ui-g-12 confirmed-nests" *ngIf="availableCities?.length > 1 && nestReports?.length >= 3">   
+    <div class="ui-g-12 confirmed-nests" *ngIf="availableCities?.length > 1 && nestReports?.length >= 3">
       <div *ngFor="let byCity of filteredByCity; index as j; first as $isFirst" class="ui-g-12">
         <h3 [ngClass]="{ 'first-city-name': $isFirst }">{{ availableCities[j].name }}</h3>
         <ng-container *ngFor="let report of byCity; index as k">
           <div class="ui-g-4 report-cell">
-            <div class="report-text">
+            <div class="report-text" [ngClass]="{ 'not-confirmed': underForcedMigration }">
+              <div class="not-confirmed-indicator">{{ notConfirmedText }}</div>
               <span class="species">{{ report?.species.name }}</span>
               <span class="point"><a href="{{ report?.spawnPoint.link }}"
                   target="_blank">{{ report?.spawnPoint.name }}</a></span>

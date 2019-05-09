@@ -24,6 +24,9 @@ export class NrShareableComponent implements OnInit {
   availableCities: City[] = [];
   nestReportsByCity: any = {};
   filteredByCity: any = [];
+  underForcedMigration = true;
+  forcedMigrationDate: moment.Moment;
+  notConfirmedText = 'No confirmado';
 
   constructor(private migrationsService: MigrationsService,
     private nestReportsService: NestReportsService, private route: ActivatedRoute) { }
@@ -47,6 +50,7 @@ export class NrShareableComponent implements OnInit {
   ngOnInit() {
     const migrations = this.route.snapshot.data['migrations'];
     const nestReports = this.route.snapshot.data['nestReports'];
+    this.underForcedMigration = true;
 
     if (migrations) {
       this.migration = this.retrieveActiveMigration(migrations);
