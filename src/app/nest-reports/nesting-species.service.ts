@@ -71,7 +71,9 @@ mutation modifySpecies($data: NestingSpeciesInput) {
 
         return inp;
       }))
-      .pipe(map((resultData) => {
+      .pipe(map((result) => {
+        const resultData = (<any>(<any>result).data).modifySpecies;
+
         if (!!messageService) {
           messageService.add({ severity: 'success', summary: 'Operación completada', detail: `Especie "${resultData.name}" actualizada!` });
         }
