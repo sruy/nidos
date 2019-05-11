@@ -11,6 +11,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { AccordionModule } from 'primeng/accordion';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -29,7 +31,9 @@ import { RouterModule } from '@angular/router';
     AutoCompleteModule,
     DropdownModule,
     InputTextareaModule,
-    CalendarModule
+    CalendarModule,
+    InputSwitchModule,
+    AccordionModule
   ]
 })
 export class UILibsModule { }

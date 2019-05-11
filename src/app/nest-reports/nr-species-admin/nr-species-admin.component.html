@@ -1,0 +1,23 @@
+<div class="ui-g-12">
+  <div class="ui-g-12 table-title">
+    <h3>{{ title }}</h3>
+    <div class="ui-g-12" style="padding-left: 0; padding-right: 0">
+      Selecciona la generación donde está la especie que deseas actualizar.
+      El cambio se reflejará inmediatamente en los formularios para nuevo reporte de nido.
+    </div>
+  </div>
+  <div class="ui-g-12" style="padding: 0">
+    <p-accordion class="accordion-override">
+      <p-accordionTab *ngFor="let gen of speciesByGeneration; index as i" [header]="generations[i]">
+        <div class="" style="padding: 0">
+          <div class="species-block" *ngFor="let species of speciesByGeneration[i]; index as j">
+            <p-inputSwitch [(ngModel)]="species.nests" name="{{ species?.id }}_toggle" ngDefaultControl
+              (onChange)="toggleNesting($event, species)"></p-inputSwitch>
+            <span class="species-label">{{ species.name }}</span>
+          </div>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+</div>
+<p-toast></p-toast>

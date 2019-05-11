@@ -35,6 +35,8 @@ import { UsPublicComponent } from './users/us-public/us-public.component';
 import { UsersModule } from './users/users.module';
 import { AuthenticatedGuard } from './authenticated.guard';
 import { UsNotAuthorizedComponent } from './users/us-not-authorized/us-not-authorized.component';
+import { NrSpeciesAdminComponent } from './nest-reports/nr-species-admin/nr-species-admin.component';
+import { AllSpeciesResolver } from './nest-reports/allSpecies-resolver';
 
 const routes: Routes = [
   { path: '', component: UsPublicComponent, pathMatch: 'full' },
@@ -42,7 +44,7 @@ const routes: Routes = [
   {
     path: 'points', component: SpListComponent, resolve: {
       points: AllSpawnPointsResolver
-    }, 
+    },
     canActivate: [AuthenticatedGuard]
   },
   { path: 'new-point', component: SpCrudComponent, canActivate: [AuthenticatedGuard] },
@@ -50,7 +52,7 @@ const routes: Routes = [
   {
     path: 'migrations', component: MgListComponent, resolve: {
       migrations: AllMigrationsResolver
-    }, 
+    },
     canActivate: [AuthenticatedGuard]
   },
   { path: 'new-migration', component: MgCrudComponent, canActivate: [AuthenticatedGuard] },
@@ -59,7 +61,7 @@ const routes: Routes = [
     path: 'reports', component: NrListComponent, resolve: {
       nestReports: AllNestReportsResolver,
       migrations: AllMigrationsResolver
-    }, 
+    },
     canActivate: [AuthenticatedGuard]
   },
   {
@@ -67,7 +69,7 @@ const routes: Routes = [
       migrations: AllMigrationsResolver,
       nestingSpecies: AllNestingSpeciesResolver,
       spawnPoints: AllSpawnPointsResolver
-    }, 
+    },
     canActivate: [AuthenticatedGuard]
   },
   {
@@ -89,7 +91,13 @@ const routes: Routes = [
   { path: 'infographic/:id', component: NrShareableComponent },
   { path: 'signUp', component: UsSignUpComponent },
   { path: 'login', component: UsLoginComponent },
-  { path: 'notAuthorized', component: UsNotAuthorizedComponent}
+  { path: 'notAuthorized', component: UsNotAuthorizedComponent },
+  {
+    path: 'nesting-species', component: NrSpeciesAdminComponent, resolve: {
+      nestingSpecies: AllSpeciesResolver
+    },
+    canActivate: [AuthenticatedGuard]
+  }
   // { path: '**', redirectTo: 'home', pathMatch: '' },
 ];
 

@@ -16,4 +16,8 @@ export class DesktopComponent implements OnInit {
   goToInfographic() {
     this.router.navigate(['/infographic']);
   }
+
+  goToSpeciesAdmin() {
+    this.router.navigate(['/nesting-species']);
+  }
 }

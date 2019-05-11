@@ -10,6 +10,7 @@ import { AllNestReportsResolver } from '../nest-reports/allNestReports-resolver'
 import { AllSpawnPointsResolver } from '../spawn-points/allSpawnPoints-resolver';
 import { SpawnPointsModule } from '../spawn-points/spawn-points.module';
 import { EnabledNestReportsResolver } from '../nest-reports/enabledNestReports-resolver';
+import { AllSpeciesResolver } from '../nest-reports/allSpecies-resolver';
 
 @NgModule({
   declarations: [],
@@ -25,7 +26,8 @@ import { EnabledNestReportsResolver } from '../nest-reports/enabledNestReports-r
     AllNestingSpeciesResolver,
     AllNestReportsResolver,
     AllSpawnPointsResolver,
-    EnabledNestReportsResolver
+    EnabledNestReportsResolver,
+    AllSpeciesResolver
   ]
 })
 export class ServicesModule { }

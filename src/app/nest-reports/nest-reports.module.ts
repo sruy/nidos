@@ -7,9 +7,10 @@ import { NrShareableComponent } from './nr-shareable/nr-shareable.component';
 import { NestingSpeciesService } from './nesting-species.service';
 import { NestReportsService } from './nest-reports.service';
 import { MigrationsService } from '../migrations/migrations.service';
+import { NrSpeciesAdminComponent } from './nr-species-admin/nr-species-admin.component';
 
 @NgModule({
-  declarations: [NrListComponent, NrCrudComponent, NrShareableComponent],
+  declarations: [NrListComponent, NrCrudComponent, NrShareableComponent, NrSpeciesAdminComponent],
   imports: [
     UILibsModule,
   ],

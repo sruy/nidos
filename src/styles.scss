@@ -91,6 +91,17 @@ body {
         }
     }
 }
+.accordion-override {
+    .ui-accordion {
+         .ui-accordion-header {
+            background-color: $ludicolo;
+            
+            & .ui-accordion-header-text {
+                font-weight: bold;
+            }
+        }
+    }
+}
 @media (min-width: 320px) and (max-width: 480px) {
     .main-menu {
         display: none;
