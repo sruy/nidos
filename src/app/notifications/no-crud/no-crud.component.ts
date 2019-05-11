@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { Notification } from '../model/notification';
 import { NotificationsService } from '../notifications.service';
 import * as moment from 'moment';
+import { UsersService } from 'src/app/users/users.service';
 
 @Component({
   selector: 'app-no-crud',
@@ -25,7 +26,8 @@ export class NoCrudComponent implements OnInit {
     this.form = this.fb.group({
       date: [this.date.toDate(), Validators.required],
       title: [this.title, Validators.required],
-      richMessage: [this.message, Validators.required]
+      richMessage: [this.message, Validators.required],
+      user: [UsersService.authUser, Validators.required]
     });
 
     const id = Number.parseInt(this.route.snapshot.paramMap.get('id'));
@@ -37,7 +39,8 @@ export class NoCrudComponent implements OnInit {
         this.form.setValue({
           date: notification.date.format('yyyy-MM-ddThh:mm:ss'),
           title: notification.title,
-          richMessage: notification.richMessage
+          richMessage: notification.richMessage,
+          user: notification.user
         });
       });
     }

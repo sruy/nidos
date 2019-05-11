@@ -100,9 +100,9 @@ mutation removeNotification($id: Int) {
   }
 
   newNotification(notification: Notification, messageService: MessageService) {
-    const input: any = notification;
+    const input: any = Object.assign({}, notification);
     const statusId = 1;
-    const userId = 1;
+    const userId = notification.user.id;
     delete input.status;
     delete input.user;
     delete input.notifId;
@@ -130,9 +130,9 @@ mutation removeNotification($id: Int) {
   }
 
   editNotification(id: number, values: any, messageService: MessageService) {
-    const input: any = values;
+    const input: any = Object.assign({}, values);
     const statusId = 1;
-    const userId = 1;
+    const userId = values.user.id;
     delete input.status;
     delete input.user;
     input.statusId = statusId;
