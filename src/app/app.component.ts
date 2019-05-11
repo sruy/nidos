@@ -12,7 +12,6 @@ import * as moment from 'moment';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  logged: boolean;
   menuItems: MenuItem[];
   releaseDate = tz(moment('2019-04-30 17:00:00'), 'America/Montevideo');
   releaseInterval: any;
@@ -21,10 +20,19 @@ export class AppComponent implements OnInit {
 
   constructor(gtag: Gtag, private usersService: UsersService, private router: Router) { }
 
+  get logged() {
+    return this.usersService.isLogged();
+  }
+
+  hasAuthorizedRole() {
+    return this.usersService.hasAuthorizedRole();
+  }
+  
   ngOnInit() {
     this.usersService.getAuthenticatedUser().subscribe((result) => {
       UsersService.authUser = result;
       this.router.navigate(['/home']);
+      this.updateMenuItems();
     });
 
     if (this.releaseDate && moment().isBefore(this.releaseDate)) {
@@ -48,11 +56,6 @@ export class AppComponent implements OnInit {
         label: 'Reportes',
         items: [
           {
-            label: 'Agregar Nuevo',
-            icon: 'pi pw pi-plus',
-            routerLink: 'new-report'
-          },
-          {
             label: 'Lista Por Migración',
             routerLink: 'reports'
           },
@@ -61,61 +64,76 @@ export class AppComponent implements OnInit {
             routerLink: 'infographic'
           }
         ]
-      },
-      {
-        label: 'Configurar',
-        items: [{
-          label: 'Punto',
-          items: [
-            {
-              label: 'Nuevo',
-              icon: 'pi pw pi-plus',
-              routerLink: 'new-point'
-            },
-            {
-              label: 'Lista',
-              routerLink: 'points'
-            }
-          ]
-        },
+      }      
+    ]; 
+  }
+
+  updateMenuItems() {
+    if (this.hasAuthorizedRole()) {
+      const reports = [{
+        label: 'Agregar Nuevo',
+        icon: 'pi pw pi-plus',
+        routerLink: 'new-report'
+      }, ...this.menuItems[0].items];
+
+      this.menuItems[0].items = <any>reports;
+      
+      this.menuItems.push(...[
         {
-          label: 'Migración',
-          items: [
-            {
-              label: 'Nueva',
-              icon: 'pi pw pi-plus',
-              routerLink: 'new-migration'
-            },
-            {
-              label: 'Lista',
-              routerLink: 'migrations'
-            }
-          ]
-        },
-        {
-          label: 'Notificación',
-          items: [
-            {
-              label: 'Nueva',
-              icon: 'pi pi-plus',
-              routerLink: 'new-notification'
-            },
-            /*{
-              label: 'Lista',
-              icon: 'pi pi-list',
-              routerLink: 'notifications'
-            }*/
-          ]
-        }]
-      },
-      {
-        label: 'Estadísticas',
-        items: [
+          label: 'Configurar',
+          items: [{
+            label: 'Punto',
+            items: [
+              {
+                label: 'Nuevo',
+                icon: 'pi pw pi-plus',
+                routerLink: 'new-point'
+              },
+              {
+                label: 'Lista',
+                routerLink: 'points'
+              }
+            ]
+          },
           {
-            label: 'Ver Históricos'
-          }
-        ]
-      }
-    ];
+            label: 'Migración',
+            items: [
+              {
+                label: 'Nueva',
+                icon: 'pi pw pi-plus',
+                routerLink: 'new-migration'
+              },
+              {
+                label: 'Lista',
+                routerLink: 'migrations'
+              }
+            ]
+          },
+          {
+            label: 'Notificación',
+            items: [
+              {
+                label: 'Nueva',
+                icon: 'pi pi-plus',
+                routerLink: 'new-notification'
+              },
+              /*{
+                label: 'Lista',
+                icon: 'pi pi-list',
+                routerLink: 'notifications'
+              }*/
+            ]
+          }]
+        },
+        {
+          label: 'Estadísticas',
+          items: [
+            {
+              label: 'Ver Históricos'
+            }
+          ]
+        }
+      ]);
+    }
   }
 }
