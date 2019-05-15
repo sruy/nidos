@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  graphqlURL: 'https://graphql-sruy.7e14.starter-us-west-2.openshiftapps.com'
+  graphqlURL: 'https://platform-nest.7e14.starter-us-west-2.openshiftapps.com/graphql'
 };
 
 /*

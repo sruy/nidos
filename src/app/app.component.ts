@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   releaseInterval: any;
   timeRemaining = [];
   shownTimer: string = '';
-  maintenanceMode = true;
+  maintenanceMode = false;
 
   constructor(gtag: Gtag, private usersService: UsersService, private router: Router) { }
 
