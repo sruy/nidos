@@ -167,4 +167,10 @@ body {
         font-size: 1.5rem;
         font-weight: 900;
     }
+    &.maintenance {
+        left: -60px;
+        font-size: 1rem;
+        font-weight: 700;
+        width: 100%;
+    }
 }

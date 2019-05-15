@@ -7,7 +7,17 @@
     </div>
   </div>
 </div>
-<div *ngIf="!shownTimer && !releaseDate">
+<div class="splash-screen maintenance" *ngIf="maintenanceMode">
+    <div class="splash-screen-middle">
+      <div class="splash-screen-logo"></div>
+      <div class="splash-screen-title">SRUY</div>
+      <div class="splash-screen-text maintenance">
+        <span>La aplicación se encuentra en modo de mantenimiento, agradecemos tu paciencia!</span><br/>
+        <span>Para tener actualizaciones del estado, contáctanos en <a href="https://bit.do/sruy">Discord</a></span>
+      </div>
+    </div>
+  </div>
+<div *ngIf="!shownTimer && !releaseDate && !maintenanceMode">
   <app-top-header *ngIf="!shownTimer"></app-top-header>
   <div *ngIf="!shownTimer" class="ui-g" style="padding: 0;">
     <div class="ui-g-12 main-menu" [hidden]="!logged">
