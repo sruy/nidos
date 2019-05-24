@@ -145,7 +145,7 @@ mutation removePoint($pointId: Int) {
     return this.apollo.subscribe({
       query: this.backendSingle,
       variables: {
-        id: pointId
+        pointId: Number.parseInt(pointId)
       }
     })
       .pipe(map(result => {
