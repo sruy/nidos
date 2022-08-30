@@ -31,7 +31,7 @@
     "graphql": "^0.13.2",
     "graphql-tag": "^2.10.0",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.25",
+    "moment-timezone": "^0.5.35",
     "primeicons": "^1.0.0",
     "primeng": "^7.0.3",
     "rxjs": "~6.3.3",
